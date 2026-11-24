@@ -1,31 +1,58 @@
 ﻿row_id,split,video,label_before,label_after,subtype_after,source,source_id,reason
+Shakira:055,dev,Shakira,spam,ham,,full_review,D229,"EC3, likes on the comment"
 Shakira:066,dev,Shakira,spam,ham,,audit_flag,F060,"ham – EC3 (""1 like = 1 prayer"" pattern)"
 Shakira:081,dev,Shakira,spam,ham,,audit_flag,F044,ham – reaction; +shakiraVEVO is a mention (EC7)
 Shakira:097,dev,Shakira,spam,ham,,audit_flag,F008,"ham – reaction, plus EC3"
+Shakira:132,dev,Shakira,spam,ham,,full_review,D235,EC1/EC8: links this video; view campaign for this artist (P1)
+Shakira:147,dev,Shakira,spam,ham,,full_review,D143,Says they subscribed; asks for nothing
+Shakira:149,dev,Shakira,spam,ham,,full_review,D244,"EC8: ranks this artist's songs, no link; EC3 likes on the comment"
+Shakira:171,dev,Shakira,spam,ham,,full_review,D226,Reply comparing subscriber counts; asks for nothing
+Shakira:187,dev,Shakira,spam,ham,,full_review,D130,"Reaction to the song; says they subscribed, asks for nothing"
+Shakira:209,dev,Shakira,spam,ham,,full_review,D176,"EC10: one-off off-topic opinion, asks for nothing"
 Shakira:216,dev,Shakira,spam,ham,,audit_flag,F062,"ham – EC9/EC10, view count, asks nothing"
+Shakira:293,dev,Shakira,spam,ham,,full_review,D215,Conversation about other comments; asks for nothing
+Shakira:294,dev,Shakira,spam,ham,,full_review,D086,"Reply to another commenter; offers to subscribe, asks for nothing"
+Shakira:296,dev,Shakira,spam,ham,,full_review,D025,"EC5: offensive opinion, asks for nothing"
+Shakira:351,dev,Shakira,spam,ham,,full_review,D113,EC4: share text followed by own reaction to the song
 Shakira:356,dev,Shakira,spam,ham,,audit_flag,F013,"ham – reaction, plus EC3"
 Eminem:004,test,Eminem,spam,ham,,audit_flag;subtype_sample,F048;S107,"ham – EC10, greeting"
 Eminem:008,test,Eminem,spam,ham,,audit_flag,F031,"ham – EC10, greeting"
+Eminem:021,test,Eminem,spam,ham,,full_review,T224,"EC3, likes on the comment; EC9 very short"
 Eminem:027,test,Eminem,spam,ham,,audit_flag,F027,"ham – parody of spam comments, a joke about the thread"
+Eminem:030,test,Eminem,spam,ham,,full_review,T039,EC4: share text followed by own reaction to the song
 Eminem:040,test,Eminem,spam,ham,,audit_flag,F012,ham – opinion on Eminem vs Canibus
 Eminem:057,test,Eminem,spam,ham,,subtype_sample,S116,EC4 own words: joke about Rihanna
+Eminem:062,test,Eminem,spam,ham,,full_review,T333,"EC5: offensive remark, asks for nothing"
 Eminem:072,test,Eminem,spam,ham,,subtype_sample,S119,"P1: share campaign for this video, no link"
 Eminem:073,test,Eminem,spam,ham,,subtype_sample,S120,"P1: another song by this artist; self_promotion if ""LYRIC VIDEO"" is read as the commenter's own"
 Eminem:076,test,Eminem,spam,ham,,audit_flag,F011,ham – EC3
 Eminem:081,test,Eminem,spam,ham,,audit_flag,F033,ham – EC3
+Eminem:085,test,Eminem,spam,ham,,full_review,T254,"EC5/EC10: off-topic insult, asks for nothing"
 Eminem:088,test,Eminem,spam,ham,,audit_flag;subtype_sample,F010;S121,ham – opinion comparing this song with Gangnam Style
 Eminem:104,test,Eminem,spam,ham,,subtype_sample,S125,"borderline: EC4, hashtags name the song and praise Eminem; bulk if hashtags count as junk"
+Eminem:122,test,Eminem,spam,ham,,full_review,T237,"Reply to another commenter; says they subscribed, asks for nothing"
 Eminem:142,test,Eminem,spam,ham,,subtype_sample,S134,"EC8: vote/share for this artist, no link; plus EC3"
 Eminem:144,test,Eminem,spam,ham,,subtype_sample,S135,EC4 own words: reaction
 Eminem:156,test,Eminem,spam,ham,,audit_flag;subtype_sample,F015;S137,"ham – EC8, vote for this video's artist, no link"
+Eminem:160,test,Eminem,spam,ham,,full_review,T045,Reply to another commenter; asks for nothing for the writer
+Eminem:238,test,Eminem,spam,ham,,full_review,T202,Comment on the artist's views vs subscribers
 Eminem:239,test,Eminem,spam,ham,,subtype_sample,S153,"P1: another song by this artist, no link"
 Eminem:241,test,Eminem,spam,ham,,audit_flag,F024,ham – reaction about views
+Eminem:253,test,Eminem,spam,ham,,full_review,T151,"EC8: share campaign for this video, no link (P1)"
+Eminem:343,test,Eminem,spam,ham,,full_review,T259,"Reply to another commenter; says they subscribed, asks for nothing"
+Eminem:345,test,Eminem,spam,ham,,full_review,T116,Reply to another commenter; asks how to subscribe to them
+Eminem:361,test,Eminem,ham,spam,self_promotion,full_review,T327,"EC6/P2: ""you should listen to Cruz Supat"" sends viewers to a named outside creator; the Eminem comparison doesn't change that"
+Eminem:377,test,Eminem,spam,ham,,full_review,T344,Warns against work-from-home scams; EC3 likes on the comment
+Eminem:379,test,Eminem,spam,ham,,full_review,T137,Comment on this video's views and the artist's subscribers
+Eminem:395,test,Eminem,spam,ham,,full_review,T343,"Reply to another commenter; says they subscribed, asks for nothing"
 Eminem:442,test,Eminem,spam,ham,,subtype_sample,S197,"P1: another song by this artist, no link"
 LMFAO:090,test,LMFAO,spam,ham,,audit_flag,F050,ham – EC3
 LMFAO:109,test,LMFAO,spam,ham,,subtype_sample,S005,"statement, not a request (EC9)"
 LMFAO:122,test,LMFAO,spam,ham,,audit_flag,F014,"ham – EC10, off-topic question"
+LMFAO:123,test,LMFAO,spam,ham,,full_review,T026,"EC3, likes on the comment"
 LMFAO:126,test,LMFAO,spam,ham,,subtype_sample,S006,EC3 likes on the comment; off-topic joke
 LMFAO:140,test,LMFAO,spam,ham,,subtype_sample,S007,EC4 own words: reaction to the song
+LMFAO:149,test,LMFAO,spam,ham,,full_review,T222,"EC3, likes on the comment"
 LMFAO:161,test,LMFAO,spam,ham,,audit_flag,F043,ham – EC3
 LMFAO:205,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F045;S011,ham – EC3
 LMFAO:209,test,LMFAO,spam,ham,,audit_flag,F029,"ham – EC9; invites comments in the thread (EC3), nothing outside"
@@ -34,6 +61,7 @@ LMFAO:223,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F019;S017,"ham – EC3 
 LMFAO:225,test,LMFAO,spam,ham,,audit_flag,F061,"ham – EC3, joke"
 LMFAO:232,test,LMFAO,spam,ham,,audit_flag,F004,"ham – EC10, one-off off-topic rant, asks nothing"
 LMFAO:243,test,LMFAO,spam,ham,,audit_flag,F036,"ham – reaction (party); the trailing ""share"" asks for nothing outside"
+LMFAO:251,test,LMFAO,spam,ham,,full_review,T100,"Names a dance style, not a channel/video/song/creator; on topic"
 LMFAO:260,test,LMFAO,spam,ham,,audit_flag,F038,ham – EC3
 LMFAO:261,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F063;S033,"ham – reaction, plus EC3"
 LMFAO:263,test,LMFAO,spam,ham,,audit_flag,F028,ham – EC3
@@ -46,7 +74,9 @@ LMFAO:282,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F025;S042,ham – EC3
 LMFAO:285,test,LMFAO,spam,ham,,subtype_sample,S044,reaction to the video's views and subscribers
 LMFAO:304,test,LMFAO,spam,ham,,audit_flag,F035,ham – EC3
 LMFAO:305,test,LMFAO,spam,ham,,audit_flag,F051,ham – joke about YouTube comments
+LMFAO:372,test,LMFAO,spam,ham,,full_review,T154,"EC8: names another song by this artist, no link (P1)"
 LMFAO:374,test,LMFAO,spam,ham,,subtype_sample,S084,"EC4 own words: reaction (""still bad"" = still good)"
+LMFAO:382,test,LMFAO,spam,ham,,full_review,T191,"Read as ""great, I subscribe"": a statement, not a request (EC15)"
 LMFAO:385,test,LMFAO,spam,ham,,subtype_sample,S089,reaction to views and subscribers
 LMFAO:392,test,LMFAO,spam,ham,,subtype_sample,S094,"borderline: pun on the song's ""Everyday I'm shufflin'"", no request"
 LMFAO:395,test,LMFAO,spam,ham,,audit_flag,F056,ham – EC3

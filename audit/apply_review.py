@@ -289,12 +289,30 @@ def write(tables: dict) -> None:
         t.to_csv(AUDIT / name, index=False, encoding="utf-8-sig", lineterminator="\n")
 
 
+def differences(name: str, t: pd.DataFrame, limit: int = 20) -> list:
+    """Why a fresh table differs from the file on disk: missing file, shape, or the cells
+    (row ID, column, file value -> workbook value; non-ASCII escaped for any console)."""
+    if not (AUDIT / name).exists():
+        return ["  file not in audit/ yet"]
+    old, new = read(name), t.astype(str).reset_index(drop=True)
+    if list(old.columns) != list(new.columns) or len(old) != len(new):
+        return [f"  shape: file {len(old)} rows {list(old.columns)}, workbooks {len(new)} rows {list(new.columns)}"]
+    cells = list(zip(*(old != new).values.nonzero()))
+    out = [f"  {new.iloc[i, 0]} {new.columns[c]}: {ascii(old.iloc[i, c])} -> {ascii(new.iloc[i, c])}"
+           for i, c in cells[:limit]]
+    if len(cells) > limit:
+        out.append(f"  ... and {len(cells) - limit} more cells")
+    return out
+
+
 def check(tables: dict) -> int:
     bad = 0
     for name, t in tables.items():
-        same = (AUDIT / name).exists() and read(name).equals(t.astype(str).reset_index(drop=True))
-        print(("OK      " if same else "DIFFERS ") + f"audit/{name} ({len(t)} rows)")
-        bad += not same
+        diff = differences(name, t)
+        print(("DIFFERS " if diff else "OK      ") + f"audit/{name} ({len(t)} rows)")
+        for line in diff:
+            print(line)
+        bad += bool(diff)
     return 1 if bad else 0
 
 

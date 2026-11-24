@@ -59,14 +59,31 @@ def test_subtype_labels_after_p9():
 
 def test_corrections_record():
     c = read("corrections.csv")
-    assert len(c) == 55 and c.row_id.is_unique
-    assert c.groupby("split").size().to_dict() == {"dev": 5, "test": 49, "train": 1}
-    assert set(zip(c.label_before, c.label_after)) == {("spam", "ham")}
+    assert len(c) == 85 and c.row_id.is_unique
+    assert c.groupby("split").size().to_dict() == {"dev": 16, "test": 68, "train": 1}
+    assert c.groupby(["label_before", "label_after"]).size().to_dict() == {("ham", "spam"): 1, ("spam", "ham"): 84}
     assert (c.label_before == c.row_id.map(LABEL)).all()
     assert c.source.value_counts().to_dict() == {
-        "audit_flag": 29, "subtype_sample": 17, "audit_flag;subtype_sample": 9}
+        "full_review": 30, "audit_flag": 29, "subtype_sample": 17, "audit_flag;subtype_sample": 9}
+    to_spam = c[c.label_after == "spam"]
+    assert list(zip(to_spam.row_id, to_spam.subtype_after, to_spam.source_id)) == [("Eminem:361", "self_promotion", "T327")]
     # random-sample estimate of test spam that is not spam (decision 21): 26 of 200
     assert (read("subtype_labels.csv").subtype == "not_spam").sum() == 26
+
+
+def test_full_review_labels_record():
+    f = read("full_review_labels.csv")
+    assert list(f.review_id) == list(read("full_review.csv").review_id)
+    assert list(f.row_id) == list(read("full_review.csv").row_id)
+    says = f.subtype.map(lambda a: {"not_spam": "ham", "unsure": "unsure"}.get(a, "spam"))
+    assert pd.crosstab([f.split, f.row_id.map(LABEL)], says).to_dict() == {
+        "ham": {("dev", "ham"): 100, ("dev", "spam"): 11, ("test", "ham"): 99, ("test", "spam"): 18},
+        "spam": {("dev", "ham"): 0, ("dev", "spam"): 146, ("test", "ham"): 1, ("test", "spam"): 233},
+        "unsure": {("dev", "ham"): 0, ("dev", "spam"): 3, ("test", "ham"): 0, ("test", "spam"): 3},
+    }
+    # with the S1 reviews, every test spam comment has now been reviewed once: 67 of 481 judged not spam
+    c = read("corrections.csv")
+    assert ((c.split == "test") & (c.label_before == "spam")).sum() == 67
 
 
 def test_scoring_exclusions():
@@ -76,10 +93,26 @@ def test_scoring_exclusions():
 
 
 def test_round_trip_through_workbooks(tmp_path):
-    pa, ps = s1_books(tmp_path)
-    tables = apply_review.build(args(pa, ps))
+    pa, ps = s1_books(tmp_path / "s1")
+    f = read("full_review_labels.csv").set_index("review_id")
+    dev, test = workbook.build_full(tmp_path / "full")
+    answers = f[["subtype", "notes"]].to_dict("index")
+    fill(dev, "review", "review_id", answers)
+    fill(test, "review", "review_id", answers)
+    tables = apply_review.build(args(pa, ps, dev=dev, test=test))
+    assert set(tables) == {"review_verdicts.csv", "subtype_labels.csv", "full_review_labels.csv",
+                           "corrections.csv", "scoring_exclusions.csv"}
     for name, t in tables.items():
-        assert read(name).equals(t.astype(str).reset_index(drop=True)), name
+        assert apply_review.differences(name, t) == [], name
+
+
+def test_check_lists_differing_cells(tmp_path, capsys):
+    pa, ps = s1_books(tmp_path, audit_edit=lambda a: a.__setitem__(
+        "subtype_if_spam", a.subtype_if_spam.where(a.index != "F040", "scam")))   # F040 is not in the subtype sample
+    assert apply_review.main(["--audit", str(pa), "--subtypes", str(ps), "--check"]) == 1
+    out = capsys.readouterr().out
+    assert "DIFFERS audit/review_verdicts.csv" in out
+    assert "F040 subtype_if_spam: 'link' -> 'scam'" in out
 
 
 # --- validation ---
@@ -172,7 +205,7 @@ def test_full_review_corrections(tmp_path):
     pa, ps, dev, test, spam_rid = full_books(tmp_path)
     tables = apply_review.build(args(pa, ps, dev=dev, test=test))
     c = tables["corrections.csv"].set_index("source_id")
-    assert len(c) == 57
+    assert len(c) == 55 + 2
     assert (c.label_before["D001"], c.label_after["D001"], c.subtype_after["D001"]) == ("ham", "spam", "link")
     assert (c.label_before[spam_rid], c.label_after[spam_rid]) == ("spam", "ham")
     assert len(tables["full_review_labels.csv"]) == 614
