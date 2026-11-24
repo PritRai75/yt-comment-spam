@@ -1,0 +1,47 @@
+{
+  "source": {
+    "name": "YouTube Spam Collection",
+    "url": "https://archive.ics.uci.edu/static/public/380/youtube+spam+collection.zip",
+    "landing_page": "https://archive.ics.uci.edu/dataset/380/",
+    "creators": [
+      "T.C. Alberto",
+      "J.V. Lochter"
+    ],
+    "licence": "CC BY 4.0",
+    "doi": "10.24432/C58885",
+    "citation": "Alberto, T. & Lochter, J. (2015). YouTube Spam Collection [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C58885"
+  },
+  "retrieved_utc": "2026-11-24T19:24:07Z",
+  "zip": {
+    "path": "data/raw/youtube-spam-collection.zip",
+    "bytes": 163567,
+    "sha256": "bd6182891adb3cfc8334b82c062176dfbebc563bf0ba07e31c2645f916865a0a"
+  },
+  "members": [
+    {
+      "name": "Youtube01-Psy.csv",
+      "bytes": 57438,
+      "sha256": "19797e6c77690e3c8809cfd2853ae7341390636367ba66cf5d4f4083f0b88535"
+    },
+    {
+      "name": "Youtube02-KatyPerry.csv",
+      "bytes": 64279,
+      "sha256": "902c614f8ef24f987d6f614d7e6111aa5160b89a0646b68e007bd6044a3d123b"
+    },
+    {
+      "name": "Youtube03-LMFAO.csv",
+      "bytes": 64419,
+      "sha256": "702ef589860a1831956f527760a3d9737ef8a07ab36c7de35b92b8898b8c3928"
+    },
+    {
+      "name": "Youtube04-Eminem.csv",
+      "bytes": 82896,
+      "sha256": "92f54eb6b22fdf3b7ae85e1f500e5aa7442edd025e504b988a97078756187e76"
+    },
+    {
+      "name": "Youtube05-Shakira.csv",
+      "bytes": 72706,
+      "sha256": "1d8ab47b71e8037c51183b2fc62f0591a48a4b54f3a4f5d9d3043113b274e98e"
+    }
+  ]
+}

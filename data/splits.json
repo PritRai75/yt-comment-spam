@@ -1,0 +1,13 @@
+{
+  "description": "Split by video, fixed before any model is built. Labels are read from the pinned zip as served; label corrections live in audit/corrections.csv and never change this file.",
+  "splits": {
+    "train": ["Psy", "KatyPerry"],
+    "dev": ["Shakira"],
+    "test": ["LMFAO", "Eminem"]
+  },
+  "expected_counts": {
+    "train": {"rows": 700, "spam": 350, "ham": 350},
+    "dev": {"rows": 370, "spam": 174, "ham": 196},
+    "test": {"rows": 886, "spam": 481, "ham": 405}
+  }
+}
