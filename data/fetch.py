@@ -59,7 +59,7 @@ def describe_zip(path: Path) -> dict:
 
 
 def download(url: str, dest: Path) -> None:
-    req = urllib.request.Request(url, headers={"User-Agent": "yt-comment-spam-llm data fetch"})
+    req = urllib.request.Request(url, headers={"User-Agent": "yt-comment-spam data fetch"})
     with urllib.request.urlopen(req, timeout=60) as resp:
         body = resp.read()
     dest.parent.mkdir(parents=True, exist_ok=True)

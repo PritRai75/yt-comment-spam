@@ -28,6 +28,12 @@ To verify the stored copy without a download:
 python data/fetch.py --check
 ```
 
+**What the raw data contains.** 1,548 comments end in an invisible U+FEFF character whose presence tracks the label on some videos (on Eminem: every ham comment, 21% of spam); the Eminem video has no dates on any spam comment; 106 comments contain HTML tags and 263 HTML entities; three rows appear twice. Every classifier therefore sees the same cleaned text (`data/clean.py`: the text a viewer saw, without U+FEFF), and none uses the date or author.
+
+## Policy and label audit
+
+`policy/spam_policy.md` defines spam, four subtypes (scam or giveaway, link spam, self-promotion, bulk or off-topic) and the edge cases. The label audit (`audit/`) flags comments where a keyword-rule baseline and a logistic-regression baseline both disagree with the label, and every flag is hand-reviewed against the policy. See `audit/README.md`.
+
 **Credit and licence.** Alberto, T. & Lochter, J. (2015). YouTube Spam Collection [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C58885. Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); the copy in `data/raw/` is unmodified.
 
 ## Quick start
