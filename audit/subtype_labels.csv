@@ -1,0 +1,201 @@
+﻿sample_id,row_id,subtype,notes
+S001,LMFAO:002,self_promotion,"joke wrapper, then ""check out my first song"" (EC2)"
+S002,LMFAO:048,bulk,EC4: bare share text
+S003,LMFAO:057,bulk,EC4: bare share text
+S004,LMFAO:075,bulk,EC4: bare share text
+S005,LMFAO:109,not_spam,"statement, not a request (EC9)"
+S006,LMFAO:126,not_spam,EC3 likes on the comment; off-topic joke
+S007,LMFAO:140,not_spam,EC4 own words: reaction to the song
+S008,LMFAO:175,self_promotion,asks viewers to subscribe to own channel
+S009,LMFAO:181,bulk,"Same as F052. EC4: truncated share text + stray ""You""; P8"
+S010,LMFAO:187,bulk,EC4: bare share text
+S011,LMFAO:205,not_spam,Same as F045. EC3 likes on the comment
+S012,LMFAO:208,bulk,EC4: bare share text
+S013,LMFAO:211,self_promotion,sub-for-sub request
+S014,LMFAO:214,bulk,"EC4: share text + stray ""m"""
+S015,LMFAO:215,bulk,EC4: bare share text
+S016,LMFAO:221,bulk,EC4: bare share text
+S017,LMFAO:223,not_spam,"Same as F019. EC3 (reverse ""don't like"")"
+S018,LMFAO:224,bulk,EC4: bare share text
+S019,LMFAO:227,bulk,EC4: bare playlist share text
+S020,LMFAO:228,bulk,EC4: bare share text
+S021,LMFAO:229,bulk,EC4: bare share text
+S022,LMFAO:235,bulk,EC4: bare share text
+S023,LMFAO:236,bulk,EC4: playlist share text + stray characters and emoji
+S024,LMFAO:239,bulk,EC4: bare share text
+S025,LMFAO:244,self_promotion,asks viewers to check out and subscribe to own channel
+S026,LMFAO:247,self_promotion,sub-for-sub request
+S027,LMFAO:248,bulk,EC4: bare share text
+S028,LMFAO:250,self_promotion,asks viewers to watch and subscribe to own music
+S029,LMFAO:254,self_promotion,"P7: bare ""subscribe"" with no target"
+S030,LMFAO:255,bulk,EC4: bare share text
+S031,LMFAO:256,self_promotion,asks viewers to subscribe to the commenter
+S032,LMFAO:259,bulk,EC4: bare playlist share text
+S033,LMFAO:261,not_spam,Same as F063. reaction + EC3
+S034,LMFAO:262,self_promotion,asks for subscribers to own channel
+S035,LMFAO:267,not_spam,Same as F001. EC3 likes on the comment
+S036,LMFAO:268,not_spam,"borderline: self-labelled joke about sub-begging, cf. F027"
+S037,LMFAO:271,bulk,EC4: bare share text
+S038,LMFAO:273,bulk,EC4: bare playlist share text
+S039,LMFAO:277,bulk,EC4: bare playlist share text
+S040,LMFAO:280,self_promotion,P2: pushes a third-party channel via +mention
+S041,LMFAO:281,bulk,EC4: bare playlist share text
+S042,LMFAO:282,not_spam,Same as F025. EC3 likes on the comment
+S043,LMFAO:283,self_promotion,"P7: bare ""subscribe"" with no target"
+S044,LMFAO:285,not_spam,reaction to the video's views and subscribers
+S045,LMFAO:287,self_promotion,asks viewers to subscribe to own channel
+S046,LMFAO:288,self_promotion,Spanish: invites viewers to subscribe to own channel
+S047,LMFAO:289,bulk,EC4: bare share text
+S048,LMFAO:292,bulk,EC4: bare share text
+S049,LMFAO:293,self_promotion,asks for subscribers to own channel
+S050,LMFAO:294,bulk,EC4: bare share text
+S051,LMFAO:296,bulk,EC4: bare share text
+S052,LMFAO:299,bulk,EC4: bare share text
+S053,LMFAO:301,bulk,EC4: bare share text
+S054,LMFAO:302,scam,money offer; scam comes before self-promotion
+S055,LMFAO:310,bulk,EC4: bare share text
+S056,LMFAO:312,self_promotion,asks viewers to come to own channel and subscribe
+S057,LMFAO:317,bulk,EC4: bare share text
+S058,LMFAO:319,bulk,"EC4: share text + Arabic word for ""advertisements"" (UI text, not the commenter's words)"
+S059,LMFAO:322,bulk,EC4: bare share text
+S060,LMFAO:326,bulk,EC4: bare share text
+S061,LMFAO:327,bulk,"EC4: playlist share text + stray ""a"""
+S062,LMFAO:328,bulk,EC4: bare share text
+S063,LMFAO:329,bulk,EC4: playlist share text + stray letters
+S064,LMFAO:333,bulk,"EC4: share text + stray word ""hjalp"""
+S065,LMFAO:334,bulk,EC4: bare share text
+S066,LMFAO:337,bulk,EC4: bare share text
+S067,LMFAO:339,bulk,EC4: bare share text
+S068,LMFAO:340,bulk,"EC4: share text + stray ""Qq"""
+S069,LMFAO:343,bulk,EC4: bare share text
+S070,LMFAO:345,self_promotion,asks viewers to subscribe to own channel
+S071,LMFAO:346,bulk,EC4: bare share text
+S072,LMFAO:347,bulk,EC4: bare share text
+S073,LMFAO:350,bulk,EC4: bare playlist share text
+S074,LMFAO:353,bulk,"EC4: playlist share text + stray ""pl"""
+S075,LMFAO:354,bulk,EC4: bare share text
+S076,LMFAO:355,bulk,EC4: bare share text
+S077,LMFAO:356,bulk,EC4: bare share text
+S078,LMFAO:358,bulk,EC4: share text without colon; P8
+S079,LMFAO:359,bulk,EC4: bare share text
+S080,LMFAO:360,bulk,"EC4: share text + stray ""I"""
+S081,LMFAO:365,bulk,EC4: bare share text
+S082,LMFAO:369,bulk,EC4: share text + emoji only
+S083,LMFAO:373,link,link to an outside app-store page
+S084,LMFAO:374,not_spam,"EC4 own words: reaction (""still bad"" = still good)"
+S085,LMFAO:377,self_promotion,asks viewers to check out and subscribe to own band's channel
+S086,LMFAO:379,self_promotion,asks viewers to check out own Minecraft channel
+S087,LMFAO:380,self_promotion,P7; written as if the commenter were the uploader
+S088,LMFAO:384,bulk,EC4: bare share text
+S089,LMFAO:385,not_spam,reaction to views and subscribers
+S090,LMFAO:386,bulk,EC4: bare share text
+S091,LMFAO:387,self_promotion,asks viewers to check out own channel
+S092,LMFAO:389,bulk,EC4: truncated share text; P8
+S093,LMFAO:391,bulk,EC4: bare share text
+S094,LMFAO:392,not_spam,"borderline: pun on the song's ""Everyday I'm shufflin'"", no request"
+S095,LMFAO:393,self_promotion,asks viewers to check out own raps; the abuse doesn't change it (EC5)
+S096,LMFAO:394,self_promotion,asks viewers to watch own video
+S097,LMFAO:397,self_promotion,"P7: bare ""Subscribe"" with no target"
+S098,LMFAO:398,not_spam,"EC4 own words: off-topic joke, asks nothing (EC10)"
+S099,LMFAO:401,bulk,EC4: bare share text
+S100,LMFAO:404,self_promotion,asks viewers to subscribe to own channel
+S101,LMFAO:407,self_promotion,"P2: named outside song, owner not stated"
+S102,LMFAO:408,self_promotion,"asks for likes and shares on an unlinked Facebook page, read as own or friends'"
+S103,LMFAO:422,scam,free stuff with a referral link; scam comes before link
+S104,LMFAO:433,not_spam,Same as F005. EC3 likes on the comment
+S105,Eminem:000,link,P4: phone number; self_promotion if P4 is rejected
+S106,Eminem:002,scam,Same as F034. written-out address for a fake-views service; P9
+S107,Eminem:004,not_spam,Same as F048. EC10 greeting
+S108,Eminem:012,self_promotion,"own channel: ""hear his songs on my channel"""
+S109,Eminem:015,link,link to a Facebook group
+S110,Eminem:033,bulk,EC4: bare playlist share text
+S111,Eminem:035,bulk,EC4: bare share text
+S112,Eminem:038,bulk,EC4: playlist share text + stray letters
+S113,Eminem:041,bulk,EC4: bare share text
+S114,Eminem:048,self_promotion,asks viewers to subscribe to the commenter
+S115,Eminem:056,bulk,EC4: bare share text
+S116,Eminem:057,not_spam,EC4 own words: joke about Rihanna
+S117,Eminem:058,self_promotion,asks viewers to subscribe to the commenter
+S118,Eminem:059,self_promotion,asks viewers to visit and subscribe to own channel
+S119,Eminem:072,not_spam,"P1: share campaign for this video, no link"
+S120,Eminem:073,not_spam,"P1: another song by this artist; self_promotion if ""LYRIC VIDEO"" is read as the commenter's own"
+S121,Eminem:088,not_spam,Same as F010. opinion comparing this song with Gangnam Style
+S122,Eminem:089,self_promotion,P2: video by a named outside artist
+S123,Eminem:095,self_promotion,"asks viewers to watch, like and subscribe to own music"
+S124,Eminem:102,self_promotion,P2: a third party's video about Eminem
+S125,Eminem:104,not_spam,"borderline: EC4, hashtags name the song and praise Eminem; bulk if hashtags count as junk"
+S126,Eminem:107,self_promotion,asks viewers to subscribe to own feed
+S127,Eminem:111,self_promotion,asks viewers to watch own video
+S128,Eminem:118,link,link to another YouTube video (ID isn't this video's)
+S129,Eminem:119,self_promotion,asks viewers to watch own videos and subscribe
+S130,Eminem:123,self_promotion,promotes own track and asks for subscriptions
+S131,Eminem:129,scam,earn-from-home offer with a written-out address; scam comes before link
+S132,Eminem:131,scam,earn-from-home offer with a written-out address; scam comes before link
+S133,Eminem:133,scam,earn-from-home offer with a written-out address; scam comes before link
+S134,Eminem:142,not_spam,"EC8: vote/share for this artist, no link; plus EC3"
+S135,Eminem:144,not_spam,EC4 own words: reaction
+S136,Eminem:148,bulk,EC4: bare share text
+S137,Eminem:156,not_spam,"Same as F015. EC8 vote for this artist, no link"
+S138,Eminem:163,scam,earn-from-home offer with a written-out address; scam comes before link
+S139,Eminem:175,scam,earn-from-home offer with a written-out address; scam comes before link
+S140,Eminem:182,link,link to another YouTube video (partial URL)
+S141,Eminem:184,self_promotion,"asks viewers to check out, like and subscribe to own channel"
+S142,Eminem:186,self_promotion,asks viewers to check out own cover and subscribe
+S143,Eminem:191,scam,earn-from-home offer with a written-out address; scam comes before link
+S144,Eminem:192,scam,earn-from-home offer with a written-out address; scam comes before link
+S145,Eminem:194,scam,earn-from-home offer with a written-out address; scam comes before link
+S146,Eminem:195,scam,"sells subscribers via a Facebook name, not an address; P3, P9"
+S147,Eminem:214,self_promotion,sub-for-sub request
+S148,Eminem:218,scam,earn-from-home offer with a written-out address; scam comes before link
+S149,Eminem:219,scam,earn-from-home offer with a written-out address; scam comes before link
+S150,Eminem:220,scam,earn-from-home offer with a written-out address; scam comes before link
+S151,Eminem:221,scam,earn-from-home offer with a written-out address; scam comes before link
+S152,Eminem:226,self_promotion,asks viewers to subscribe to own channel
+S153,Eminem:239,not_spam,"P1: another song by this artist, no link"
+S154,Eminem:243,bulk,EC4: bare share text
+S155,Eminem:244,self_promotion,P3: search term isn't an address; asks viewers to check out and subscribe to own music
+S156,Eminem:245,link,link to an outside shop (kpopcity.net)
+S157,Eminem:255,self_promotion,asks viewers to check out own remix
+S158,Eminem:256,self_promotion,asks viewers to check out own channel
+S159,Eminem:257,self_promotion,asks viewers to subscribe to own channel
+S160,Eminem:263,self_promotion,asks viewers to watch own videos and subscribe
+S161,Eminem:264,self_promotion,own site mentioned with no address; asks viewers to subscribe
+S162,Eminem:265,bulk,EC4: bare share text
+S163,Eminem:269,unsure,parse error: about 6 merged comments; its own text is ham (EC10); the spam is a swallowed self-promo
+S164,Eminem:278,self_promotion,asks viewers to check out own rap video
+S165,Eminem:281,self_promotion,asks viewers to check out own music channel
+S166,Eminem:282,scam,giveaway (signed photo)
+S167,Eminem:284,self_promotion,asks viewers to check out own page
+S168,Eminem:287,link,link to another YouTube video (partial URL)
+S169,Eminem:291,self_promotion,asks viewers to subscribe to own channel
+S170,Eminem:306,self_promotion,asks viewers to check out own music video
+S171,Eminem:311,bulk,EC4: bare share text
+S172,Eminem:314,self_promotion,asks viewers to check out own video and album
+S173,Eminem:315,self_promotion,P3: search term isn't an address; own music
+S174,Eminem:318,self_promotion,asks for likes on own song
+S175,Eminem:319,self_promotion,asks viewers to subscribe to own channel
+S176,Eminem:322,self_promotion,asks viewers to check out own covers
+S177,Eminem:326,link,shortened link; destination can't be told from the URL
+S178,Eminem:327,self_promotion,"mentions a link, none shown; asks viewers to check out own channel"
+S179,Eminem:330,self_promotion,asks viewers to visit own channel
+S180,Eminem:335,self_promotion,P2: named third-party creator
+S181,Eminem:336,self_promotion,EC2: reply wrapped around a sub-for-sub offer
+S182,Eminem:338,link,link to another YouTube video (partial URL)
+S183,Eminem:340,self_promotion,asks viewers to check out own covers
+S184,Eminem:348,scam,easy-money offer; scam comes before link
+S185,Eminem:350,link,shortened link to an outside site
+S186,Eminem:355,self_promotion,asks viewers to check out and subscribe to own channel
+S187,Eminem:365,self_promotion,asks viewers to check out own channel
+S188,Eminem:383,link,link to own video (partial URL)
+S189,Eminem:384,link,link to another YouTube video; asks viewers to subscribe
+S190,Eminem:388,self_promotion,asks viewers to check out own channel and subscribe
+S191,Eminem:390,self_promotion,asks viewers to check out own videos
+S192,Eminem:399,self_promotion,P2: vouches for another person's channel
+S193,Eminem:403,self_promotion,asks viewers to check out own channel
+S194,Eminem:404,self_promotion,asks viewers to check out own channel
+S195,Eminem:423,self_promotion,asks viewers to subscribe to own channel
+S196,Eminem:427,self_promotion,asks viewers to check out own cover video
+S197,Eminem:442,not_spam,"P1: another song by this artist, no link"
+S198,Eminem:443,self_promotion,asks viewers to subscribe to own channel
+S199,Eminem:444,self_promotion,asks viewers to check out own videos
+S200,Eminem:445,self_promotion,asks viewers to come and see own channel

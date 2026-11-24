@@ -1,27 +1,36 @@
-"""Excel working copies of the review sheet and the subtype sample, for hand labelling.
+"""Excel working copies for hand labelling.
 
 Every cell is written as text (so "+Name" or "=..." is never read as a formula), long
 text wraps, and the answer columns have drop-down lists. Each row shows the video the
 comment was posted under, and each workbook has a "videos" sheet with the five videos'
 YouTube IDs, so a link can be checked against "this video" without leaving the sheet.
-Comments in both samples carry the other sheet's ID. Model scores are never shown.
+Model scores are never shown.
 
-The CSVs in audit/ stay the record; these workbooks are filled in by hand and read back
-by a later script.
+Sets:
+  s1       audit_review.xlsx (63 flags) and subtype_labels.xlsx (200 test spam); comments
+           in both carry the other sheet's ID
+  full     review_dev.xlsx and review_test.xlsx (option A, audit/full_review.csv): current
+           label hidden, spam and ham shuffled together
+  recheck  blind_recheck.xlsx: the 20 flags in audit/blind_recheck.csv in a new order,
+           with new IDs (R01-R20) and no first answers
 
-    python -m audit.workbook <folder>
+The CSVs in audit/ stay the record; the workbooks are filled in by hand and read back by
+audit/apply_review.py. An existing workbook is never overwritten.
+
+    python -m audit.workbook <folder> --set {s1,full,recheck}
 """
 import argparse
 import json
 import sys
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font
 from openpyxl.worksheet.datavalidation import DataValidation
 
-from audit.flags import read
+from audit.flags import SEED, read
 from data.fetch import ROOT
 
 VERDICTS = ["keep", "correct", "unsure"]
@@ -67,6 +76,59 @@ def subtype_table() -> pd.DataFrame:
     })
 
 
+def full_tables() -> dict:
+    """Option A review, one table per split; the current label is not a column."""
+    t = read("full_review.csv")
+    out = {}
+    for split in ["dev", "test"]:
+        sub = t[t.split == split]
+        out[split] = pd.DataFrame({
+            "review_id": sub.review_id.values,
+            "row_id": sub.row_id.values,
+            "video": [video_label(r.split(":")[0]) for r in sub.row_id],
+            "text": sub.text.values,
+            "subtype": "",
+            "notes": "",
+        })
+    return out
+
+
+def recheck_table() -> pd.DataFrame:
+    """The blind re-check flags, re-ordered, under new IDs; R-id to flag_id is recheck_ids()."""
+    review = review_table().set_index("flag_id")
+    ids = recheck_ids()
+    return pd.DataFrame({
+        "recheck_id": list(ids),
+        "video": [review.video[f] for f in ids.values()],
+        "text": [review.text[f] for f in ids.values()],
+        "current_label": [review.current_label[f] for f in ids.values()],
+        "verdict": "",
+        "subtype_if_spam": "",
+        "reason": "",
+    })
+
+
+def recheck_ids() -> dict:
+    flags = list(read("blind_recheck.csv").flag_id)
+    order = np.random.default_rng([SEED, 6]).permutation(len(flags))
+    return {f"R{i + 1:02d}": flags[j] for i, j in enumerate(order)}
+
+
+def _save(wb, path: Path) -> Path:
+    if path.exists():
+        raise FileExistsError(f"{path} exists; a filled workbook is never overwritten")
+    wb.save(path)
+    return path
+
+
+def _prepare(out_dir: Path, names: list) -> None:
+    """Create the folder, and refuse before writing anything if any target exists."""
+    out_dir.mkdir(parents=True, exist_ok=True)
+    taken = [n for n in names if (out_dir / n).exists()]
+    if taken:
+        raise FileExistsError(f"{', '.join(taken)} already in {out_dir}; a filled workbook is never overwritten")
+
+
 def _sheet(ws, df, widths, choices):
     ws.append(list(df.columns))
     for c in ws[1]:
@@ -99,39 +161,56 @@ def _videos_sheet(wb):
         ws.column_dimensions[col].width = w
 
 
+def _book(title, df, widths, choices, path) -> Path:
+    wb = Workbook()
+    ws = wb.active
+    ws.title = title
+    _sheet(ws, df, widths, choices)
+    _videos_sheet(wb)
+    return _save(wb, path)
+
+
 def build(out_dir: Path) -> list:
-    out_dir.mkdir(parents=True, exist_ok=True)
-    paths = []
+    """Set s1: the two session 1 workbooks."""
+    _prepare(out_dir, ["audit_review.xlsx", "subtype_labels.xlsx"])
+    return [
+        _book("review", review_table(),
+              {"A": 8, "B": 12, "C": 24, "D": 60, "E": 13, "F": 10, "G": 16, "H": 40, "I": 11},
+              {"F": VERDICTS, "G": SUBTYPES}, out_dir / "audit_review.xlsx"),
+        _book("subtypes", subtype_table(),
+              {"A": 9, "B": 12, "C": 24, "D": 60, "E": 16, "F": 40, "G": 8},
+              {"E": SUBTYPE_SHEET_CHOICES}, out_dir / "subtype_labels.xlsx"),
+    ]
 
-    wb = Workbook()
-    ws = wb.active
-    ws.title = "review"
-    _sheet(ws, review_table(),
-           {"A": 8, "B": 12, "C": 24, "D": 60, "E": 13, "F": 10, "G": 16, "H": 40, "I": 11},
-           {"F": VERDICTS, "G": SUBTYPES})
-    _videos_sheet(wb)
-    p = out_dir / "audit_review.xlsx"
-    wb.save(p)
-    paths.append(p)
 
-    wb = Workbook()
-    ws = wb.active
-    ws.title = "subtypes"
-    _sheet(ws, subtype_table(),
-           {"A": 9, "B": 12, "C": 24, "D": 60, "E": 16, "F": 40, "G": 8},
-           {"E": SUBTYPE_SHEET_CHOICES})
-    _videos_sheet(wb)
-    p = out_dir / "subtype_labels.xlsx"
-    wb.save(p)
-    paths.append(p)
-    return paths
+def build_full(out_dir: Path) -> list:
+    _prepare(out_dir, ["review_dev.xlsx", "review_test.xlsx"])
+    return [_book("review", t, {"A": 10, "B": 12, "C": 24, "D": 60, "E": 16, "F": 40},
+                  {"E": SUBTYPE_SHEET_CHOICES}, out_dir / f"review_{split}.xlsx")
+            for split, t in full_tables().items()]
+
+
+def build_recheck(out_dir: Path) -> list:
+    _prepare(out_dir, ["blind_recheck.xlsx"])
+    return [_book("recheck", recheck_table(),
+                  {"A": 10, "B": 24, "C": 60, "D": 13, "E": 10, "F": 16, "G": 40},
+                  {"E": VERDICTS, "F": SUBTYPES}, out_dir / "blind_recheck.xlsx")]
+
+
+SETS = {"s1": build, "full": build_full, "recheck": build_recheck}
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("out_dir", type=Path)
+    ap.add_argument("--set", required=True, choices=list(SETS), dest="which")
     args = ap.parse_args(argv)
-    for p in build(args.out_dir):
+    try:
+        paths = SETS[args.which](args.out_dir)
+    except FileExistsError as e:
+        print(e, file=sys.stderr)
+        return 1
+    for p in paths:
         print(f"wrote {p}")
     return 0
 

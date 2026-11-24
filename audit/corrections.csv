@@ -1,0 +1,56 @@
+﻿row_id,split,video,label_before,label_after,subtype_after,source,source_id,reason
+Shakira:066,dev,Shakira,spam,ham,,audit_flag,F060,"ham – EC3 (""1 like = 1 prayer"" pattern)"
+Shakira:081,dev,Shakira,spam,ham,,audit_flag,F044,ham – reaction; +shakiraVEVO is a mention (EC7)
+Shakira:097,dev,Shakira,spam,ham,,audit_flag,F008,"ham – reaction, plus EC3"
+Shakira:216,dev,Shakira,spam,ham,,audit_flag,F062,"ham – EC9/EC10, view count, asks nothing"
+Shakira:356,dev,Shakira,spam,ham,,audit_flag,F013,"ham – reaction, plus EC3"
+Eminem:004,test,Eminem,spam,ham,,audit_flag;subtype_sample,F048;S107,"ham – EC10, greeting"
+Eminem:008,test,Eminem,spam,ham,,audit_flag,F031,"ham – EC10, greeting"
+Eminem:027,test,Eminem,spam,ham,,audit_flag,F027,"ham – parody of spam comments, a joke about the thread"
+Eminem:040,test,Eminem,spam,ham,,audit_flag,F012,ham – opinion on Eminem vs Canibus
+Eminem:057,test,Eminem,spam,ham,,subtype_sample,S116,EC4 own words: joke about Rihanna
+Eminem:072,test,Eminem,spam,ham,,subtype_sample,S119,"P1: share campaign for this video, no link"
+Eminem:073,test,Eminem,spam,ham,,subtype_sample,S120,"P1: another song by this artist; self_promotion if ""LYRIC VIDEO"" is read as the commenter's own"
+Eminem:076,test,Eminem,spam,ham,,audit_flag,F011,ham – EC3
+Eminem:081,test,Eminem,spam,ham,,audit_flag,F033,ham – EC3
+Eminem:088,test,Eminem,spam,ham,,audit_flag;subtype_sample,F010;S121,ham – opinion comparing this song with Gangnam Style
+Eminem:104,test,Eminem,spam,ham,,subtype_sample,S125,"borderline: EC4, hashtags name the song and praise Eminem; bulk if hashtags count as junk"
+Eminem:142,test,Eminem,spam,ham,,subtype_sample,S134,"EC8: vote/share for this artist, no link; plus EC3"
+Eminem:144,test,Eminem,spam,ham,,subtype_sample,S135,EC4 own words: reaction
+Eminem:156,test,Eminem,spam,ham,,audit_flag;subtype_sample,F015;S137,"ham – EC8, vote for this video's artist, no link"
+Eminem:239,test,Eminem,spam,ham,,subtype_sample,S153,"P1: another song by this artist, no link"
+Eminem:241,test,Eminem,spam,ham,,audit_flag,F024,ham – reaction about views
+Eminem:442,test,Eminem,spam,ham,,subtype_sample,S197,"P1: another song by this artist, no link"
+LMFAO:090,test,LMFAO,spam,ham,,audit_flag,F050,ham – EC3
+LMFAO:109,test,LMFAO,spam,ham,,subtype_sample,S005,"statement, not a request (EC9)"
+LMFAO:122,test,LMFAO,spam,ham,,audit_flag,F014,"ham – EC10, off-topic question"
+LMFAO:126,test,LMFAO,spam,ham,,subtype_sample,S006,EC3 likes on the comment; off-topic joke
+LMFAO:140,test,LMFAO,spam,ham,,subtype_sample,S007,EC4 own words: reaction to the song
+LMFAO:161,test,LMFAO,spam,ham,,audit_flag,F043,ham – EC3
+LMFAO:205,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F045;S011,ham – EC3
+LMFAO:209,test,LMFAO,spam,ham,,audit_flag,F029,"ham – EC9; invites comments in the thread (EC3), nothing outside"
+LMFAO:222,test,LMFAO,spam,ham,,audit_flag,F030,ham – EC3
+LMFAO:223,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F019;S017,"ham – EC3 (reverse ""don't like"")"
+LMFAO:225,test,LMFAO,spam,ham,,audit_flag,F061,"ham – EC3, joke"
+LMFAO:232,test,LMFAO,spam,ham,,audit_flag,F004,"ham – EC10, one-off off-topic rant, asks nothing"
+LMFAO:243,test,LMFAO,spam,ham,,audit_flag,F036,"ham – reaction (party); the trailing ""share"" asks for nothing outside"
+LMFAO:260,test,LMFAO,spam,ham,,audit_flag,F038,ham – EC3
+LMFAO:261,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F063;S033,"ham – reaction, plus EC3"
+LMFAO:263,test,LMFAO,spam,ham,,audit_flag,F028,ham – EC3
+LMFAO:267,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F001;S035,"ham – EC3, likes on the comment"
+LMFAO:268,test,LMFAO,spam,ham,,subtype_sample,S036,"borderline: self-labelled joke about sub-begging, cf. F027"
+LMFAO:270,test,LMFAO,spam,ham,,audit_flag,F026,ham – EC3
+LMFAO:272,test,LMFAO,spam,ham,,audit_flag,F023,ham – EC3
+LMFAO:275,test,LMFAO,spam,ham,,audit_flag,F059,ham – EC3
+LMFAO:282,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F025;S042,ham – EC3
+LMFAO:285,test,LMFAO,spam,ham,,subtype_sample,S044,reaction to the video's views and subscribers
+LMFAO:304,test,LMFAO,spam,ham,,audit_flag,F035,ham – EC3
+LMFAO:305,test,LMFAO,spam,ham,,audit_flag,F051,ham – joke about YouTube comments
+LMFAO:374,test,LMFAO,spam,ham,,subtype_sample,S084,"EC4 own words: reaction (""still bad"" = still good)"
+LMFAO:385,test,LMFAO,spam,ham,,subtype_sample,S089,reaction to views and subscribers
+LMFAO:392,test,LMFAO,spam,ham,,subtype_sample,S094,"borderline: pun on the song's ""Everyday I'm shufflin'"", no request"
+LMFAO:395,test,LMFAO,spam,ham,,audit_flag,F056,ham – EC3
+LMFAO:398,test,LMFAO,spam,ham,,subtype_sample,S098,"EC4 own words: off-topic joke, asks nothing (EC10)"
+LMFAO:433,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F005;S104,ham – EC3
+LMFAO:436,test,LMFAO,spam,ham,,audit_flag,F037,ham – EC3
+KatyPerry:286,train,KatyPerry,spam,ham,,audit_flag,F055,"ham – EC8, vote for Katy, no link"

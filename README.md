@@ -32,7 +32,7 @@ python data/fetch.py --check
 
 ## Policy and label audit
 
-`policy/spam_policy.md` defines spam, four subtypes (scam or giveaway, link spam, self-promotion, bulk or off-topic) and the edge cases. The label audit (`audit/`) flags comments where a keyword-rule baseline and a logistic-regression baseline both disagree with the label, and every flag is hand-reviewed against the policy. See `audit/README.md`.
+`policy/spam_policy.md` defines spam, four subtypes (scam or giveaway, link spam, self-promotion, bulk) and the edge cases. The label audit (`audit/`) flags comments where a keyword-rule baseline and a logistic-regression baseline both disagree with the label, and every flag is hand-reviewed against the policy. See `audit/README.md`.
 
 **Credit and licence.** Alberto, T. & Lochter, J. (2015). YouTube Spam Collection [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C58885. Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); the copy in `data/raw/` is unmodified.
 

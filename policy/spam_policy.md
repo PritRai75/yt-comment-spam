@@ -1,12 +1,12 @@
 # Comment spam policy
 
-**Version 1 (draft, revised 25 Nov 2026).** This is the single standard used for the label audit, the subtype labels and every classifier prompt. It is written for comments on the five music videos in this dataset and follows YouTube's spam, deceptive practices and scams policies; it is a working guideline for this project, not YouTube's internal rulebook.
+**Version 1 (final, 25 Nov 2026).** This is the single standard used for the label audit, the subtype labels and every classifier prompt. It is written for comments on the five music videos in this dataset and follows YouTube's spam, deceptive practices and scams policies; it is a working guideline for this project, not YouTube's internal rulebook. Changes from the draft are listed at the end.
 
 ## Definition
 
 A comment is **spam** when either
 
-- its main purpose is to get something from the people reading it (a click, a subscription, a follow, a vote, money or personal details) for the commenter or a third party, rather than to respond to the video or the conversation under it; or
+- its main purpose is to get something from the people reading it (a click, a view, a subscription, a follow, a vote, money or personal details) for the commenter or a third party, rather than to respond to the video or the conversation under it; or
 - it is **bulk**: generic, templated text that could be pasted under any video and says nothing about this one, whatever it promotes.
 
 A comment is **ham** (not spam) when it is a reaction, opinion, question, joke or conversation about the video, the artist, the song or other comments, even if it is rude, off-colour or badly written. A one-off comment that is off-topic but asks for nothing and is not templated is also ham (edge case 10).
@@ -32,39 +32,63 @@ When a spam comment fits more than one subtype, label the first that applies in 
 
 | Subtype | What it covers | Examples (invented) |
 |---|---|---|
-| **Scam or giveaway** | Free money, gift cards, prizes, giveaways, "earn $ from home", hacking tools, pyramid or referral schemes, requests for donations or for personal details | "Get free gift cards here, just enter your email"; "I made $500 today working from home"; "share this page to win a signed photo" |
-| **Link spam** | A link, or an address written out ("site dot com"), to anywhere except this video or this artist's own channel (see "Which links count") | "Best movies free http://example.com/watch"; "visit mysite dot com"; "youtu.be/abc123xyz00" |
-| **Self-promotion** | Asking viewers to watch, subscribe to, follow, like or vote for something the commenter is pushing: their own or a friend's channel, music, page or account, or an outside vote or petition; with or without a link | "Check out my channel, I post covers"; "sub to me and I'll sub back"; "please like my pic on IG"; "vote for my idol in the fan contest" |
-| **Bulk** | Generic, templated text that says nothing about this video: chain messages, YouTube's automatic share notice, slogans that could be pasted anywhere | "Check out this video on YouTube:" with nothing else; "If you read this, your crush will text you tonight, copy it to 10 videos" |
+| **Scam or giveaway** | Free money, gift cards, prizes, giveaways, "earn $ from home", hacking tools, pyramid or referral schemes, requests for donations or for personal details, and selling or offering views, likes, subscribers or other engagement (P9) | "Get free gift cards here, just enter your email"; "I made $500 today working from home"; "share this page to win a signed photo"; "get 1000 views on your video at boostviews dot com" |
+| **Link spam** | An address to anywhere except this video or this artist's own channel (see "Which links count"): a link, an address written out ("site dot com"), a phone number or an email address (P4) | "Best movies free http://example.com/watch"; "visit mysite dot com"; "youtu.be/abc123xyz00"; "call me 555 0100 and share" |
+| **Self-promotion** | Pushing something other than this video and its artist: the commenter's own or a friend's channel, music, page or account, any named outside channel, video, song or creator whoever owns it (P2), or an outside vote or petition; with or without a link. It covers an explicit ask (watch, subscribe, follow, like, vote, search for), an implicit plug (P6) and a bare "subscribe" (P7) | "Check out my channel, I post covers"; "sub to me and I'll sub back"; "please like my pic on IG"; "vote for my idol in the fan contest"; "search Night Lights by DJ Example"; "Subscribe!!" |
+| **Bulk** | Generic, templated text that says nothing about this video: chain messages, YouTube's automatic share text (edge case 4), set religious texts, numbered parts and sermons that ask to be spread (P5), slogans that could be pasted anywhere | "Check out this video on YouTube:" with nothing else; "If you read this, your crush will text you tonight, copy it to 10 videos"; "Prayer for the nations, part 3 … spread this" |
 
 ## Which links count
 
 - **This video**: a YouTube link whose ID is this video's ID (any timestamp). Not link spam.
 - **This artist's own channel**: only when the URL itself names the artist (for example youtube.com/user/shakira). Not link spam.
 - **Everything else is a link to somewhere else**, including links whose destination cannot be told from the URL (shortened links, bare video IDs) and other videos by the same artist.
-- Timestamps, hashtags and "+Name" mentions show as text after cleaning ("2:19", "#Eminem", "+SomeName") and are not links.
+- **Phone numbers and email addresses** are addresses and count as links to somewhere else (P4).
+- **Not addresses**: timestamps, hashtags and "+Name" mentions, which show as text after cleaning ("2:19", "#Eminem", "+SomeName"); a site or page named without an address ("my site", "find me on Facebook as Jo"); a search direction ("search X on YouTube", P3). Judge their words (edge cases 7 and 12).
 
 ## Edge cases
 
 1. **A fan linking this video or this artist's own channel** (see "Which links count"): **ham**, unless the rest of the comment is spam.
 2. **"Subscribe to me" inside an otherwise on-topic comment** ("Love this song! Sub to my channel?"): **spam, self-promotion**. The request is for the commenter's benefit; the on-topic part is a wrapper.
 3. **Asking for likes on the comment itself** ("Like if you're watching in 2015"; "1 like = 1 prayer"): **ham**. YouTube allows encouraging viewers to like, share or comment; this promotes nothing outside the thread.
-4. **YouTube's automatic share text** ("Check out this video on YouTube:" or "…this playlist on YouTube:"):
+4. **YouTube's automatic share text**: a comment that starts with "Check out this video on YouTube", "Check out this playlist on YouTube" or "Take a look at this video on YouTube", with or without the colon, including the truncated endings "on YouTu" and "on YouTub" (P8):
    - with nothing after it, or only stray characters or emoji a viewer could not read as a comment: **spam, bulk**;
    - followed by the commenter's own words: judge the words. A reaction to the video is **ham**; a link or promotion is spam with that subtype, by the order above.
 5. **Abusive, hateful or offensive comments** about the artist or other viewers: **ham** for this policy. They break other YouTube policies, not the spam policy.
-6. **Naming another artist or song** ("Uptown Funk is better"): **ham** when it discusses music without a link; **self-promotion** when the commenter is promoting their own or a friend's work ("my band covered this, check it out"); **link spam** when it carries a link (any link other than this video or this artist's channel).
+6. **Naming another artist, song or creator**: **ham** when the comment discusses music, such as a comparison or an opinion ("Uptown Funk is better"), and does not send viewers to it; **self-promotion** when it sends viewers to a named outside channel, video, song or creator ("watch X's new video", "search X"), whoever owns it (P2), including the commenter's own or a friend's work ("my band covered this, check it out"); **link spam** when it carries a link (any link other than this video or this artist's channel).
 7. **Timestamps, hashtags and mentions**: not links. Judge the words.
-8. **Votes and petitions**: for this video's artist with no link ("vote for Katy at the VMAs"): **ham**, fan activity about the video. For anything else ("vote for my idol", "sign this petition"): **spam**, self-promotion, or link spam if a link is given.
+8. **Fan activity for this video's artist** with no link, such as a vote ("vote for Katy at the VMAs"), a view or share campaign, or naming another song by this artist: **ham** (P1). A link to another video by this artist is still link spam. Any other vote or petition ("vote for my idol", "sign this petition"): **spam**, self-promotion, or link spam if a link is given.
 9. **Very short comments** (":)", "wow", emoji only): **ham** unless they contain a link or a request.
-10. **One-off off-topic comments** that ask for nothing and are not templated ("anyone here like football?", a personal story, preaching): **ham**.
+10. **One-off off-topic comments** that ask for nothing and are not templated ("anyone here like football?", a personal story, preaching in the commenter's own words): **ham**.
+11. **Religious and chain texts**: a set text such as a prayer or litany, a text posted as a numbered part ("Part 5"), or a sermon that asks readers to spread it ("spread the truth", "share this"): **spam, bulk** (P5). Preaching in the commenter's own words that asks for nothing is ham (edge case 10).
+12. **Search directions** ("search X on YouTube", "look up X"): not an address, so never link spam on its own (P3). Judge the words: sending viewers to a named outside channel, video, song or creator is **self-promotion** (P2); sending them to this video or this artist is **ham** (P1).
+13. **Phone numbers and email addresses**: **spam, link** (P4), whatever the request around them.
+14. **Implicit plugs**: praise or chat wrapped around a mention of the commenter's own work, with no explicit ask ("great song, my raps sound like this too, on my channel"): **spam, self-promotion** (P6).
+15. **A bare "subscribe"** with no target ("Subscribe!", "subscribe pls"): **spam, self-promotion** (P7). "Subscribe" aimed at this artist ("total subscribe to Katy") is fan activity: ham (P1).
+16. **Selling engagement**: offering views, likes, subscribers or comments, for money or in exchange: **spam, scam** (P9), even when a link or a named account is given, because scam comes first in the order.
 
 ## How the policy is used
 
 - The label audit reviews flagged items against this policy and records keep, correct or unsure, with a reason naming the section or edge case.
-- Subtype labels on the 200-comment test sample use the order above.
+- Subtype labels on the 200-comment test sample and on the full review of dev and test use the order above.
+- The share-text family in edge case 4 is defined in code (`data/share_text.py`): 164 comments (dev 10, test 153, train 1). A second result without the whole family is reported alongside the main one.
 - The LLM prompts include the Definition, How to judge, Subtypes, Which links count and Edge cases sections; comment text is passed as data, never as instructions.
 - A change to this policy after either LLM prompt has been run on dev is a new version with a dated note; the test run uses the version committed before it.
+
+## Changes from the draft (25 Nov 2026)
+
+Made after the first labelling pass, before any classifier was run on dev or test. Edge case 3 was reviewed and kept as ham.
+
+| Change | What it settles | Where |
+|---|---|---|
+| P1 | Fan activity for this video's artist with no link is ham | Edge cases 8, 12, 15 |
+| P2 | Sending viewers to any named outside channel, video, song or creator is self-promotion, whoever owns it | Subtypes; edge cases 6, 12 |
+| P3 | A search direction is not an address; judge its words | Which links count; edge case 12 |
+| P4 | Phone numbers and email addresses are link spam | Subtypes; Which links count; edge case 13 |
+| P5 | Set religious texts, numbered parts and "spread this" sermons are bulk; own-words preaching stays ham | Subtypes; edge cases 10, 11 |
+| P6 | Implicit plugs for the commenter's own work are self-promotion | Subtypes; edge case 14 |
+| P7 | A bare "subscribe" is self-promotion | Subtypes; edge case 15 |
+| P8 | Share-text wording widened ("Take a look at…", no colon, truncated endings) | Edge case 4; `data/share_text.py` |
+| P9 | Selling engagement is scam | Subtypes; edge case 16 |
 
 ## Sources
 

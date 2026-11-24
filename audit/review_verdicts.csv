@@ -1,0 +1,64 @@
+﻿flag_id,row_id,current_label,verdict,subtype_if_spam,reason
+F001,LMFAO:267,spam,correct,,"ham – EC3, likes on the comment"
+F002,Shakira:353,spam,keep,link,spam – written-out address (TrumpetCallOfGodOnline. co m); the preaching alone would be EC10
+F003,Shakira:277,spam,unsure,bulk,"unsure – EC10 says preaching is ham, but this is a set prayer text posted as ""Part 5""; P5"
+F004,LMFAO:232,spam,correct,,"ham – EC10, one-off off-topic rant, asks nothing"
+F005,LMFAO:433,spam,correct,,ham – EC3
+F006,KatyPerry:050,spam,keep,self_promotion,spam – asks viewers to watch the commenters' own cover
+F007,KatyPerry:247,spam,unsure,self_promotion,"unsure – view campaign for another video by this artist (Firework), no link; EC8 covers only votes; P1 makes it ham"
+F008,Shakira:097,spam,correct,,"ham – reaction, plus EC3"
+F009,LMFAO:435,spam,unsure,self_promotion,"unsure – generic praise around a plug for own rapping, no explicit ask; the thumbs-up joke is EC3; P6"
+F010,Eminem:088,spam,correct,,ham – opinion comparing this song with Gangnam Style
+F011,Eminem:076,spam,correct,,ham – EC3
+F012,Eminem:040,spam,correct,,ham – opinion on Eminem vs Canibus
+F013,Shakira:356,spam,correct,,"ham – reaction, plus EC3"
+F014,LMFAO:122,spam,correct,,"ham – EC10, off-topic question"
+F015,Eminem:156,spam,correct,,"ham – EC8, vote for this video's artist, no link"
+F016,KatyPerry:194,spam,unsure,self_promotion,unsure – same pattern as F009; P6
+F017,LMFAO:266,spam,keep,bulk,"spam – chain message (""share this to 666 people"")"
+F018,Eminem:016,spam,keep,bulk,"spam – EC4 bare share text, ""Take a look at…"" variant; P8"
+F019,LMFAO:223,spam,correct,,"ham – EC3 (reverse ""don't like"")"
+F020,Shakira:007,spam,keep,self_promotion,spam – sends viewers to search an outside source (GuruOfMovie); not an address (P3); owner not stated (P2)
+F021,KatyPerry:188,ham,keep,,"ham – reaction; ""total subscribe"" means subscribing to Katy, not a request"
+F022,LMFAO:143,spam,keep,bulk,spam – EC4 bare share text; P8
+F023,LMFAO:272,spam,correct,,ham – EC3
+F024,Eminem:241,spam,correct,,ham – reaction about views
+F025,LMFAO:282,spam,correct,,ham – EC3
+F026,LMFAO:270,spam,correct,,ham – EC3
+F027,Eminem:027,spam,correct,,"ham – parody of spam comments, a joke about the thread"
+F028,LMFAO:263,spam,correct,,ham – EC3
+F029,LMFAO:209,spam,correct,,"ham – EC9; invites comments in the thread (EC3), nothing outside"
+F030,LMFAO:222,spam,correct,,ham – EC3
+F031,Eminem:008,spam,correct,,"ham – EC10, greeting"
+F032,Shakira:089,spam,unsure,link,"unsure – phone number plus ""share""; not a link under current wording; P4 makes it link spam"
+F033,Eminem:081,spam,correct,,ham – EC3
+F034,Eminem:002,spam,keep,scam,spam – written-out address (pimpmyviews. com) for a fake-views service; P9
+F035,LMFAO:304,spam,correct,,ham – EC3
+F036,LMFAO:243,spam,correct,,"ham – reaction (party); the trailing ""share"" asks for nothing outside"
+F037,LMFAO:436,spam,correct,,ham – EC3
+F038,LMFAO:260,spam,correct,,ham – EC3
+F039,Psy:156,spam,keep,self_promotion,"spam – directs viewers to search for a named outside song; P2, P3"
+F040,Shakira:232,spam,keep,link,spam – link to an outside site (miley-celeb-news.co.uk)
+F041,Shakira:231,spam,keep,link,spam – same outside site
+F042,Shakira:278,spam,unsure,bulk,"unsure – as F003 (""Part 2"" of a litany); P5"
+F043,LMFAO:161,spam,correct,,ham – EC3
+F044,Shakira:081,spam,correct,,ham – reaction; +shakiraVEVO is a mention (EC7)
+F045,LMFAO:205,spam,correct,,ham – EC3
+F046,Psy:343,ham,keep,,"ham – EC1, youtu.be/9bZkp7q19f0 is this video"
+F047,Shakira:262,spam,keep,link,"spam – eBay URL in full-width characters, still a visible URL"
+F048,Eminem:004,spam,correct,,"ham – EC10, greeting"
+F049,Shakira:229,spam,unsure,bulk,"unsure – sermon ending ""Spread the truth"": EC10 preaching or chain/bulk; P5"
+F050,LMFAO:090,spam,correct,,ham – EC3
+F051,LMFAO:305,spam,correct,,ham – joke about YouTube comments
+F052,LMFAO:181,spam,keep,bulk,"spam – EC4 share text, truncated, stray ""You"""
+F053,KatyPerry:277,spam,unsure,self_promotion,unsure – as F009; P6
+F054,KatyPerry:266,ham,keep,,"ham – EC1, youtu.be/CevxZvSJLk8 is this video"
+F055,KatyPerry:286,spam,correct,,"ham – EC8, vote for Katy, no link"
+F056,LMFAO:395,spam,correct,,ham – EC3
+F057,KatyPerry:260,spam,unsure,self_promotion,"unsure – reply pointing another commenter to a named third party, plus ""hit me up""; P2"
+F058,KatyPerry:128,spam,keep,link,spam – link to an outside site (trojmiasto.pl)
+F059,LMFAO:275,spam,correct,,ham – EC3
+F060,Shakira:066,spam,correct,,"ham – EC3 (""1 like = 1 prayer"" pattern)"
+F061,LMFAO:225,spam,correct,,"ham – EC3, joke"
+F062,Shakira:216,spam,correct,,"ham – EC9/EC10, view count, asks nothing"
+F063,LMFAO:261,spam,correct,,"ham – reaction, plus EC3"
