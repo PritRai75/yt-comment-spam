@@ -32,10 +32,10 @@ When a spam comment fits more than one subtype, label the first that applies in 
 
 | Subtype | What it covers | Examples (invented) |
 |---|---|---|
-| **Scam or giveaway** | Free money, gift cards, prizes, giveaways, "earn $ from home", hacking tools, pyramid or referral schemes, requests for donations or for personal details, and selling or offering views, likes, subscribers or other engagement (P9) | "Get free gift cards here, just enter your email"; "I made $500 today working from home"; "share this page to win a signed photo"; "get 1000 views on your video at boostviews dot com" |
+| **Scam or giveaway** | Free money, gift cards, prizes, giveaways, "earn $ from home", hacking tools, pyramid or referral schemes, requests for donations or for personal details, and services that sell views, likes, subscribers or other engagement (P9) | "Get free gift cards here, just enter your email"; "I made $500 today working from home"; "share this page to win a signed photo"; "get 1000 views on your video at boostviews dot com" |
 | **Link spam** | An address to anywhere except this video or this artist's own channel (see "Which links count"): a link, an address written out ("site dot com"), a phone number or an email address (P4) | "Best movies free http://example.com/watch"; "visit mysite dot com"; "youtu.be/abc123xyz00"; "call me 555 0100 and share" |
 | **Self-promotion** | Pushing something other than this video and its artist: the commenter's own or a friend's channel, music, page or account, any named outside channel, video, song or creator whoever owns it (P2), or an outside vote or petition; with or without a link. It covers an explicit ask (watch, subscribe, follow, like, vote, search for), an implicit plug (P6) and a bare "subscribe" (P7) | "Check out my channel, I post covers"; "sub to me and I'll sub back"; "please like my pic on IG"; "vote for my idol in the fan contest"; "search Night Lights by DJ Example"; "Subscribe!!" |
-| **Bulk** | Generic, templated text that says nothing about this video: chain messages, YouTube's automatic share text (edge case 4), set religious texts, numbered parts and sermons that ask to be spread (P5), slogans that could be pasted anywhere | "Check out this video on YouTube:" with nothing else; "If you read this, your crush will text you tonight, copy it to 10 videos"; "Prayer for the nations, part 3 … spread this" |
+| **Bulk** | Generic, templated text that says nothing about this video: chain messages, YouTube's automatic share text (edge case 4), pasted religious texts and sermons that tell readers to spread them (P5), slogans that could be pasted anywhere | "Check out this video on YouTube:" with nothing else; "If you read this, your crush will text you tonight, copy it to 10 videos"; "Prayer for the nations, part 3 … spread this" |
 
 ## Which links count
 
@@ -43,7 +43,7 @@ When a spam comment fits more than one subtype, label the first that applies in 
 - **This artist's own channel**: only when the URL itself names the artist (for example youtube.com/user/shakira). Not link spam.
 - **Everything else is a link to somewhere else**, including links whose destination cannot be told from the URL (shortened links, bare video IDs) and other videos by the same artist.
 - **Phone numbers and email addresses** are addresses and count as links to somewhere else (P4).
-- **Not addresses**: timestamps, hashtags and "+Name" mentions, which show as text after cleaning ("2:19", "#Eminem", "+SomeName"); a site or page named without an address ("my site", "find me on Facebook as Jo"); a search direction ("search X on YouTube", P3). Judge their words (edge cases 7 and 12).
+- **Not addresses**: timestamps, hashtags and "+Name" mentions, which show as text after cleaning ("2:19", "#Eminem", "+SomeName"); a site or page named without an address ("my site", "find me on Facebook as Jo"); a search direction ("search X", "type in X", "google X"; P3). Judge their words (edge cases 7 and 12).
 
 ## Edge cases
 
@@ -59,12 +59,12 @@ When a spam comment fits more than one subtype, label the first that applies in 
 8. **Fan activity for this video's artist** with no link, such as a vote ("vote for Katy at the VMAs"), a view or share campaign, or naming another song by this artist: **ham** (P1). A link to another video by this artist is still link spam. Any other vote or petition ("vote for my idol", "sign this petition"): **spam**, self-promotion, or link spam if a link is given.
 9. **Very short comments** (":)", "wow", emoji only): **ham** unless they contain a link or a request.
 10. **One-off off-topic comments** that ask for nothing and are not templated ("anyone here like football?", a personal story, preaching in the commenter's own words): **ham**.
-11. **Religious and chain texts**: a set text such as a prayer or litany, a text posted as a numbered part ("Part 5"), or a sermon that asks readers to spread it ("spread the truth", "share this"): **spam, bulk** (P5). Preaching in the commenter's own words that asks for nothing is ham (edge case 10).
-12. **Search directions** ("search X on YouTube", "look up X"): not an address, so never link spam on its own (P3). Judge the words: sending viewers to a named outside channel, video, song or creator is **self-promotion** (P2); sending them to this video or this artist is **ham** (P1).
+11. **Pasted religious text**: a set text such as a prayer or a litany (including one posted as a numbered part, "Part 5"), or a sermon that tells readers to spread it ("spread the truth"): **spam, bulk** (P5). Preaching in the commenter's own words that asks for nothing is ham (edge case 10).
+12. **Search directions** ("search X", "type in X", "google X"): not an address, so never link spam on its own (P3). Judge the words: sending viewers to a named outside channel, video, song or creator is **self-promotion** (P2); sending them to this video or this artist is **ham** (P1).
 13. **Phone numbers and email addresses**: **spam, link** (P4), whatever the request around them.
-14. **Implicit plugs**: praise or chat wrapped around a mention of the commenter's own work, with no explicit ask ("great song, my raps sound like this too, on my channel"): **spam, self-promotion** (P6).
-15. **A bare "subscribe"** with no target ("Subscribe!", "subscribe pls"): **spam, self-promotion** (P7). "Subscribe" aimed at this artist ("total subscribe to Katy") is fan activity: ham (P1).
-16. **Selling engagement**: offering views, likes, subscribers or comments, for money or in exchange: **spam, scam** (P9), even when a link or a named account is given, because scam comes first in the order.
+14. **Implicit plugs**: generic praise wrapped around a boast about the commenter's own channel or music, with no explicit ask ("great song! my channel is blowing up because my raps are real"): **spam, self-promotion** (P6). This extends edge case 2.
+15. **A bare "subscribe"** with no target ("Subscribe!", "subscribe pls"): **spam, self-promotion** (P7), read as a request to subscribe to the commenter. "Subscribe" aimed at this artist ("total subscribe to Katy") is fan activity: ham (P1).
+16. **Fake-engagement services**: selling views, likes, subscribers or comments: **spam, scam** (P9), even when a link or a named account is given, because scam comes first in the order. A swap between viewers ("sub to me and I'll sub back") sells nothing and is self-promotion.
 
 ## How the policy is used
 
@@ -84,11 +84,11 @@ Made after the first labelling pass, before any classifier was run on dev or tes
 | P2 | Sending viewers to any named outside channel, video, song or creator is self-promotion, whoever owns it | Subtypes; edge cases 6, 12 |
 | P3 | A search direction is not an address; judge its words | Which links count; edge case 12 |
 | P4 | Phone numbers and email addresses are link spam | Subtypes; Which links count; edge case 13 |
-| P5 | Set religious texts, numbered parts and "spread this" sermons are bulk; own-words preaching stays ham | Subtypes; edge cases 10, 11 |
-| P6 | Implicit plugs for the commenter's own work are self-promotion | Subtypes; edge case 14 |
+| P5 | Pasted religious texts (set texts, numbered parts) and sermons that tell readers to spread them are bulk; own-words preaching stays ham | Subtypes; edge cases 10, 11 |
+| P6 | Implicit plugs (praise around a boast about the commenter's own channel or music) are self-promotion | Subtypes; edge case 14 |
 | P7 | A bare "subscribe" is self-promotion | Subtypes; edge case 15 |
 | P8 | Share-text wording widened ("Take a look at…", no colon, truncated endings) | Edge case 4; `data/share_text.py` |
-| P9 | Selling engagement is scam | Subtypes; edge case 16 |
+| P9 | Fake-engagement services (selling views, likes, subscribers) are scam | Subtypes; edge case 16 |
 
 ## Sources
 
