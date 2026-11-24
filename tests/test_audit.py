@@ -51,8 +51,38 @@ def test_workbooks_write_text_cells(tmp_path):
     from openpyxl import load_workbook
     paths = workbook.build(tmp_path)
     assert [p.name for p in paths] == ["audit_review.xlsx", "subtype_labels.xlsx"]
-    ws = load_workbook(paths[1]).active
+    wb = load_workbook(paths[1])
+    assert wb.sheetnames == ["subtypes", "videos"]
+    ws = wb["subtypes"]
     assert ws.max_row == 201
-    texts = [ws.cell(row=r, column=3).value for r in range(2, ws.max_row + 1)]
+    assert [c.value for c in ws[1]] == ["sample_id", "row_id", "video", "text", "subtype", "notes", "flag_id"]
+    texts = [ws.cell(row=r, column=4).value for r in range(2, ws.max_row + 1)]
     assert texts == list(TABLES["subtype_sample.csv"].text)
-    assert all(ws.cell(row=r, column=3).data_type == "s" for r in range(2, ws.max_row + 1))
+    assert all(ws.cell(row=r, column=4).data_type == "s" for r in range(2, ws.max_row + 1))
+    assert load_workbook(paths[0])["videos"].max_row == 6
+
+
+def test_review_workbook_columns_hide_scores():
+    t = workbook.review_table()
+    assert list(t.columns) == ["flag_id", "row_id", "video", "text", "current_label", "verdict",
+                               "subtype_if_spam", "reason", "subtype_sample_id"]
+    assert len(t) == 63
+    assert not any("proba" in c or "score" in c or "hits" in c for c in t.columns)
+
+
+def test_cross_references_between_workbooks():
+    r, s = workbook.review_table(), workbook.subtype_table()
+    pairs_r = {(f, x) for f, x in zip(r.flag_id, r.subtype_sample_id) if x}
+    pairs_s = {(f, x) for x, f in zip(s.sample_id, s.flag_id) if f}
+    assert pairs_r == pairs_s
+    assert len(pairs_r) == 11
+    rows = dict(zip(r.flag_id, r.row_id))
+    srows = dict(zip(s.sample_id, s.row_id))
+    assert all(rows[f] == srows[x] for f, x in pairs_r)
+
+
+def test_videos_file_covers_every_video():
+    from data.load import load_comments
+    assert set(workbook.VIDEOS) == set(load_comments().video.unique())
+    assert all(len(v["youtube_id"]) == 11 for v in workbook.VIDEOS.values())
+    assert workbook.video_label("Eminem") == "Eminem – Love the Way You Lie (ft. Rihanna)"

@@ -1,0 +1,10 @@
+{
+  "description": "The five videos the comments were posted under. Songs are identified from the comments themselves (song titles in the text and timestamp links back to the video). YouTube IDs come from those timestamp links, except Eminem's, which no comment links; it was looked up on the web.",
+  "videos": {
+    "Psy": {"artist": "PSY", "song": "Gangnam Style", "youtube_id": "9bZkp7q19f0"},
+    "KatyPerry": {"artist": "Katy Perry", "song": "Roar", "youtube_id": "CevxZvSJLk8"},
+    "LMFAO": {"artist": "LMFAO", "song": "Party Rock Anthem (ft. Lauren Bennett, GoonRock)", "youtube_id": "KQ6zr6kCPj8"},
+    "Eminem": {"artist": "Eminem", "song": "Love the Way You Lie (ft. Rihanna)", "youtube_id": "uelHwf8o7_U"},
+    "Shakira": {"artist": "Shakira", "song": "Waka Waka (This Time for Africa)", "youtube_id": "pRpeEdMmmQ0"}
+  }
+}
