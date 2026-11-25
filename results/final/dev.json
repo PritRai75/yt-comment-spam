@@ -1,0 +1,1805 @@
+{
+  "split": "dev",
+  "comments_scored": 370,
+  "primary_label_set": "corrected",
+  "cutoffs": {
+    "rules": 1.0,
+    "logreg": 0.5,
+    "tree": 0.5,
+    "llm_v1": 3.0,
+    "llm_v2": 3.0
+  },
+  "alpha": 0.05,
+  "results": {
+    "corrected": {
+      "all": {
+        "comments": 370,
+        "spam": 157,
+        "systems": {
+          "rules": {
+            "metrics": {
+              "tp": 147,
+              "fp": 11,
+              "fn": 10,
+              "tn": 202,
+              "n": 370,
+              "spam": 157,
+              "ham": 213,
+              "flagged": 158,
+              "precision": 0.930379746835443,
+              "precision_lo": 0.879645023165513,
+              "precision_hi": 0.9606835365929348,
+              "recall": 0.9363057324840764,
+              "recall_lo": 0.8867325004344941,
+              "recall_hi": 0.9650379386332555,
+              "fpr": 0.051643192488262914,
+              "fpr_lo": 0.029078238434561497,
+              "fpr_hi": 0.09009389295227996,
+              "f1": 0.9333333333333333,
+              "f1_lo": 0.9028213166144201,
+              "f1_hi": 0.9585798816568047
+            },
+            "average_precision": 0.9278574712743866,
+            "recall_by_subtype": [
+              {
+                "group": "bulk",
+                "spam": 12,
+                "caught": 9,
+                "recall": 0.75,
+                "recall_lo": 0.46769466506643426,
+                "recall_hi": 0.9110583316059453
+              },
+              {
+                "group": "link",
+                "spam": 24,
+                "caught": 19,
+                "recall": 0.7916666666666666,
+                "recall_lo": 0.5952954674681133,
+                "recall_hi": 0.9075517464714814
+              },
+              {
+                "group": "scam",
+                "spam": 28,
+                "caught": 27,
+                "recall": 0.9642857142857143,
+                "recall_lo": 0.8228780225664668,
+                "recall_hi": 0.9936674801509623
+              },
+              {
+                "group": "self_promotion",
+                "spam": 93,
+                "caught": 92,
+                "recall": 0.989247311827957,
+                "recall_lo": 0.94158082764513,
+                "recall_hi": 0.9980993579713445
+              }
+            ],
+            "recall_by_video": [
+              {
+                "group": "Shakira",
+                "spam": 157,
+                "caught": 147,
+                "recall": 0.9363057324840764,
+                "recall_lo": 0.8867325004344941,
+                "recall_hi": 0.9650379386332555
+              }
+            ],
+            "enforcement": {
+              "comments": 370,
+              "spam": 157,
+              "remove": {
+                "n": 67,
+                "spam": 67,
+                "precision": 1.0,
+                "precision_lo": 0.9457738606086981,
+                "precision_hi": 0.9999999999999998
+              },
+              "review": {
+                "n": 303,
+                "spam": 90
+              },
+              "allow": {
+                "n": 0,
+                "spam": 0
+              },
+              "remove_recall": 0.4267515923566879,
+              "remove_or_review_recall": 1.0,
+              "review_per_1000": 818.918918918919,
+              "remove_per_1000": 181.0810810810811
+            }
+          },
+          "logreg": {
+            "metrics": {
+              "tp": 134,
+              "fp": 6,
+              "fn": 23,
+              "tn": 207,
+              "n": 370,
+              "spam": 157,
+              "ham": 213,
+              "flagged": 140,
+              "precision": 0.9571428571428572,
+              "precision_lo": 0.9096561579126599,
+              "precision_hi": 0.9802124588924483,
+              "recall": 0.8535031847133758,
+              "recall_lo": 0.7897649957763438,
+              "recall_hi": 0.9003555789427818,
+              "fpr": 0.028169014084507043,
+              "fpr_lo": 0.012972704478212662,
+              "fpr_hi": 0.0600827845728613,
+              "f1": 0.9023569023569024,
+              "f1_lo": 0.8642813588850174,
+              "f1_hi": 0.9349945225053584
+            },
+            "average_precision": 0.9634908050918889,
+            "recall_by_subtype": [
+              {
+                "group": "bulk",
+                "spam": 12,
+                "caught": 9,
+                "recall": 0.75,
+                "recall_lo": 0.46769466506643426,
+                "recall_hi": 0.9110583316059453
+              },
+              {
+                "group": "link",
+                "spam": 24,
+                "caught": 14,
+                "recall": 0.5833333333333334,
+                "recall_lo": 0.3883466586522876,
+                "recall_hi": 0.7553239739018824
+              },
+              {
+                "group": "scam",
+                "spam": 28,
+                "caught": 23,
+                "recall": 0.8214285714285714,
+                "recall_lo": 0.6440857521065705,
+                "recall_hi": 0.9212149805439572
+              },
+              {
+                "group": "self_promotion",
+                "spam": 93,
+                "caught": 88,
+                "recall": 0.946236559139785,
+                "recall_lo": 0.8802516127823959,
+                "recall_hi": 0.9768193257469159
+              }
+            ],
+            "recall_by_video": [
+              {
+                "group": "Shakira",
+                "spam": 157,
+                "caught": 134,
+                "recall": 0.8535031847133758,
+                "recall_lo": 0.7897649957763438,
+                "recall_hi": 0.9003555789427818
+              }
+            ],
+            "enforcement": {
+              "comments": 370,
+              "spam": 157,
+              "remove": {
+                "n": 74,
+                "spam": 73,
+                "precision": 0.9864864864864865,
+                "precision_lo": 0.9273464348015678,
+                "precision_hi": 0.9976105365965432
+              },
+              "review": {
+                "n": 122,
+                "spam": 78
+              },
+              "allow": {
+                "n": 174,
+                "spam": 6
+              },
+              "remove_recall": 0.46496815286624205,
+              "remove_or_review_recall": 0.9617834394904459,
+              "review_per_1000": 329.72972972972974,
+              "remove_per_1000": 200.0
+            }
+          },
+          "tree": {
+            "metrics": {
+              "tp": 134,
+              "fp": 14,
+              "fn": 23,
+              "tn": 199,
+              "n": 370,
+              "spam": 157,
+              "ham": 213,
+              "flagged": 148,
+              "precision": 0.9054054054054054,
+              "precision_lo": 0.8474837473393878,
+              "precision_hi": 0.9428142446056517,
+              "recall": 0.8535031847133758,
+              "recall_lo": 0.7897649957763438,
+              "recall_hi": 0.9003555789427818,
+              "fpr": 0.06572769953051644,
+              "fpr_lo": 0.03955286268497478,
+              "fpr_hi": 0.10728925410332714,
+              "f1": 0.8786885245901639,
+              "f1_lo": 0.8372093023255814,
+              "f1_hi": 0.9144736842105263
+            },
+            "average_precision": 0.9621680896348854,
+            "recall_by_subtype": [
+              {
+                "group": "bulk",
+                "spam": 12,
+                "caught": 10,
+                "recall": 0.8333333333333334,
+                "recall_lo": 0.5519691377470266,
+                "recall_hi": 0.9530348578161463
+              },
+              {
+                "group": "link",
+                "spam": 24,
+                "caught": 15,
+                "recall": 0.625,
+                "recall_lo": 0.42709962442674276,
+                "recall_hi": 0.7884063244045122
+              },
+              {
+                "group": "scam",
+                "spam": 28,
+                "caught": 21,
+                "recall": 0.75,
+                "recall_lo": 0.5664432968100104,
+                "recall_hi": 0.8732350508070668
+              },
+              {
+                "group": "self_promotion",
+                "spam": 93,
+                "caught": 88,
+                "recall": 0.946236559139785,
+                "recall_lo": 0.8802516127823959,
+                "recall_hi": 0.9768193257469159
+              }
+            ],
+            "recall_by_video": [
+              {
+                "group": "Shakira",
+                "spam": 157,
+                "caught": 134,
+                "recall": 0.8535031847133758,
+                "recall_lo": 0.7897649957763438,
+                "recall_hi": 0.9003555789427818
+              }
+            ],
+            "enforcement": {
+              "comments": 370,
+              "spam": 157,
+              "remove": {
+                "n": 88,
+                "spam": 87,
+                "precision": 0.9886363636363636,
+                "precision_lo": 0.9384050610770144,
+                "precision_hi": 0.9979912146822955
+              },
+              "review": {
+                "n": 105,
+                "spam": 63
+              },
+              "allow": {
+                "n": 177,
+                "spam": 7
+              },
+              "remove_recall": 0.554140127388535,
+              "remove_or_review_recall": 0.9554140127388535,
+              "review_per_1000": 283.7837837837838,
+              "remove_per_1000": 237.83783783783784
+            }
+          },
+          "llm_v1": {
+            "metrics": {
+              "tp": 156,
+              "fp": 1,
+              "fn": 1,
+              "tn": 212,
+              "n": 370,
+              "spam": 157,
+              "ham": 213,
+              "flagged": 157,
+              "precision": 0.9936305732484076,
+              "precision_lo": 0.964807130088783,
+              "precision_hi": 0.9988747535280136,
+              "recall": 0.9936305732484076,
+              "recall_lo": 0.964807130088783,
+              "recall_hi": 0.9988747535280136,
+              "fpr": 0.004694835680751174,
+              "fpr_lo": 0.0008292350759758448,
+              "fpr_hi": 0.026109611639330656,
+              "f1": 0.9936305732484076,
+              "f1_lo": 0.9832775919732442,
+              "f1_hi": 1.0
+            },
+            "average_precision": 0.9992006356904652,
+            "recall_by_subtype": [
+              {
+                "group": "bulk",
+                "spam": 12,
+                "caught": 12,
+                "recall": 1.0,
+                "recall_lo": 0.7575059933447592,
+                "recall_hi": 1.0
+              },
+              {
+                "group": "link",
+                "spam": 24,
+                "caught": 24,
+                "recall": 1.0,
+                "recall_lo": 0.8620237953250198,
+                "recall_hi": 1.0
+              },
+              {
+                "group": "scam",
+                "spam": 28,
+                "caught": 28,
+                "recall": 1.0,
+                "recall_lo": 0.8793566952341543,
+                "recall_hi": 0.9999999999999998
+              },
+              {
+                "group": "self_promotion",
+                "spam": 93,
+                "caught": 92,
+                "recall": 0.989247311827957,
+                "recall_lo": 0.94158082764513,
+                "recall_hi": 0.9980993579713445
+              }
+            ],
+            "recall_by_video": [
+              {
+                "group": "Shakira",
+                "spam": 157,
+                "caught": 156,
+                "recall": 0.9936305732484076,
+                "recall_lo": 0.964807130088783,
+                "recall_hi": 0.9988747535280136
+              }
+            ],
+            "enforcement": {
+              "comments": 370,
+              "spam": 157,
+              "remove": {
+                "n": 157,
+                "spam": 156,
+                "precision": 0.9936305732484076,
+                "precision_lo": 0.964807130088783,
+                "precision_hi": 0.9988747535280136
+              },
+              "review": {
+                "n": 0,
+                "spam": 0
+              },
+              "allow": {
+                "n": 213,
+                "spam": 1
+              },
+              "remove_recall": 0.9936305732484076,
+              "remove_or_review_recall": 0.9936305732484076,
+              "review_per_1000": 0.0,
+              "remove_per_1000": 424.3243243243243
+            }
+          },
+          "llm_v2": {
+            "metrics": {
+              "tp": 156,
+              "fp": 0,
+              "fn": 1,
+              "tn": 213,
+              "n": 370,
+              "spam": 157,
+              "ham": 213,
+              "flagged": 156,
+              "precision": 1.0,
+              "precision_lo": 0.9759670685625849,
+              "precision_hi": 0.9999999999999999,
+              "recall": 0.9936305732484076,
+              "recall_lo": 0.964807130088783,
+              "recall_hi": 0.9988747535280136,
+              "fpr": 0.0,
+              "fpr_lo": 0.0,
+              "fpr_hi": 0.017715518248153008,
+              "f1": 0.9968051118210862,
+              "f1_lo": 0.988929889298893,
+              "f1_hi": 1.0
+            },
+            "average_precision": 0.9998805732484076,
+            "recall_by_subtype": [
+              {
+                "group": "bulk",
+                "spam": 12,
+                "caught": 12,
+                "recall": 1.0,
+                "recall_lo": 0.7575059933447592,
+                "recall_hi": 1.0
+              },
+              {
+                "group": "link",
+                "spam": 24,
+                "caught": 24,
+                "recall": 1.0,
+                "recall_lo": 0.8620237953250198,
+                "recall_hi": 1.0
+              },
+              {
+                "group": "scam",
+                "spam": 28,
+                "caught": 28,
+                "recall": 1.0,
+                "recall_lo": 0.8793566952341543,
+                "recall_hi": 0.9999999999999998
+              },
+              {
+                "group": "self_promotion",
+                "spam": 93,
+                "caught": 92,
+                "recall": 0.989247311827957,
+                "recall_lo": 0.94158082764513,
+                "recall_hi": 0.9980993579713445
+              }
+            ],
+            "recall_by_video": [
+              {
+                "group": "Shakira",
+                "spam": 157,
+                "caught": 156,
+                "recall": 0.9936305732484076,
+                "recall_lo": 0.964807130088783,
+                "recall_hi": 0.9988747535280136
+              }
+            ],
+            "enforcement": {
+              "comments": 370,
+              "spam": 157,
+              "remove": {
+                "n": 156,
+                "spam": 156,
+                "precision": 1.0,
+                "precision_lo": 0.9759670685625849,
+                "precision_hi": 0.9999999999999999
+              },
+              "review": {
+                "n": 0,
+                "spam": 0
+              },
+              "allow": {
+                "n": 214,
+                "spam": 1
+              },
+              "remove_recall": 0.9936305732484076,
+              "remove_or_review_recall": 0.9936305732484076,
+              "review_per_1000": 0.0,
+              "remove_per_1000": 421.6216216216216
+            }
+          }
+        },
+        "hypotheses": {
+          "H1": {
+            "a": "llm_v2",
+            "b": "llm_v1",
+            "n": 370,
+            "both_right": 368,
+            "a_only_right": 1,
+            "b_only_right": 0,
+            "both_wrong": 1,
+            "errors_a": 1,
+            "errors_b": 2,
+            "p": 1.0,
+            "f1": {
+              "f1_a": 0.9968051118210862,
+              "f1_b": 0.9936305732484076,
+              "difference": 0.0031745385726785758,
+              "lo": 0.0,
+              "hi": 0.010828898829218553
+            },
+            "p_holm": 1.0,
+            "reject_at_alpha": false
+          },
+          "H2": {
+            "a": "llm_v2",
+            "b": "logreg",
+            "n": 370,
+            "both_right": 341,
+            "a_only_right": 28,
+            "b_only_right": 0,
+            "both_wrong": 1,
+            "errors_a": 1,
+            "errors_b": 29,
+            "p": 7.450580596923828e-09,
+            "f1": {
+              "f1_a": 0.9968051118210862,
+              "f1_b": 0.9023569023569024,
+              "difference": 0.09444820946418386,
+              "lo": 0.062109475691835225,
+              "hi": 0.1314770704720795
+            },
+            "p_holm": 1.4901161193847656e-08,
+            "reject_at_alpha": true
+          }
+        }
+      },
+      "no_share_text": {
+        "comments": 360,
+        "spam": 148,
+        "systems": {
+          "rules": {
+            "metrics": {
+              "tp": 138,
+              "fp": 10,
+              "fn": 10,
+              "tn": 202,
+              "n": 360,
+              "spam": 148,
+              "ham": 212,
+              "flagged": 148,
+              "precision": 0.9324324324324325,
+              "precision_lo": 0.8800967458634464,
+              "precision_hi": 0.9628877788779292,
+              "recall": 0.9324324324324325,
+              "recall_lo": 0.8800967458634464,
+              "recall_hi": 0.9628877788779292,
+              "fpr": 0.04716981132075472,
+              "fpr_lo": 0.025820566338564593,
+              "fpr_hi": 0.08463763270696692,
+              "f1": 0.9324324324324325,
+              "f1_lo": 0.8999913494809689,
+              "f1_hi": 0.9602654983623019
+            },
+            "average_precision": 0.9277960392825259
+          },
+          "logreg": {
+            "metrics": {
+              "tp": 125,
+              "fp": 5,
+              "fn": 23,
+              "tn": 207,
+              "n": 360,
+              "spam": 148,
+              "ham": 212,
+              "flagged": 130,
+              "precision": 0.9615384615384616,
+              "precision_lo": 0.9131216006422269,
+              "precision_hi": 0.9834615736398364,
+              "recall": 0.8445945945945946,
+              "recall_lo": 0.777596026541791,
+              "recall_hi": 0.8941572666114926,
+              "fpr": 0.02358490566037736,
+              "fpr_lo": 0.010115169718183683,
+              "fpr_hi": 0.0540127271943026,
+              "f1": 0.8992805755395683,
+              "f1_lo": 0.859312844024104,
+              "f1_hi": 0.9352576003713158
+            },
+            "average_precision": 0.9651730561210858
+          },
+          "tree": {
+            "metrics": {
+              "tp": 125,
+              "fp": 13,
+              "fn": 23,
+              "tn": 199,
+              "n": 360,
+              "spam": 148,
+              "ham": 212,
+              "flagged": 138,
+              "precision": 0.9057971014492754,
+              "precision_lo": 0.8454945222747072,
+              "precision_hi": 0.9441194659851178,
+              "recall": 0.8445945945945946,
+              "recall_lo": 0.777596026541791,
+              "recall_hi": 0.8941572666114926,
+              "fpr": 0.06132075471698113,
+              "fpr_lo": 0.03618285886696714,
+              "fpr_hi": 0.10207352145839149,
+              "f1": 0.8741258741258742,
+              "f1_lo": 0.8307692307692308,
+              "f1_hi": 0.9142954656265235
+            },
+            "average_precision": 0.9619827748377756
+          },
+          "llm_v1": {
+            "metrics": {
+              "tp": 147,
+              "fp": 1,
+              "fn": 1,
+              "tn": 211,
+              "n": 360,
+              "spam": 148,
+              "ham": 212,
+              "flagged": 148,
+              "precision": 0.9932432432432432,
+              "precision_lo": 0.962722954423538,
+              "precision_hi": 0.9988062691095932,
+              "recall": 0.9932432432432432,
+              "recall_lo": 0.962722954423538,
+              "recall_hi": 0.9988062691095932,
+              "fpr": 0.0047169811320754715,
+              "fpr_lo": 0.0008331488458669795,
+              "fpr_hi": 0.026230506360183113,
+              "f1": 0.9932432432432432,
+              "f1_lo": 0.9823290117324548,
+              "f1_hi": 1.0
+            },
+            "average_precision": 0.9990983560659391
+          },
+          "llm_v2": {
+            "metrics": {
+              "tp": 147,
+              "fp": 0,
+              "fn": 1,
+              "tn": 212,
+              "n": 360,
+              "spam": 148,
+              "ham": 212,
+              "flagged": 147,
+              "precision": 1.0,
+              "precision_lo": 0.9745331366407661,
+              "precision_hi": 1.0,
+              "recall": 0.9932432432432432,
+              "recall_lo": 0.962722954423538,
+              "recall_hi": 0.9988062691095932,
+              "fpr": 0.0,
+              "fpr_lo": 0.0,
+              "fpr_hi": 0.017797594779441046,
+              "f1": 0.9966101694915255,
+              "f1_lo": 0.9890909090909091,
+              "f1_hi": 1.0
+            },
+            "average_precision": 0.99990990990991
+          }
+        },
+        "hypotheses": {
+          "H1": {
+            "a": "llm_v2",
+            "b": "llm_v1",
+            "n": 360,
+            "both_right": 358,
+            "a_only_right": 1,
+            "b_only_right": 0,
+            "both_wrong": 1,
+            "errors_a": 1,
+            "errors_b": 2,
+            "p": 1.0,
+            "f1": {
+              "f1_a": 0.9966101694915255,
+              "f1_b": 0.9932432432432432,
+              "difference": 0.003366926248282276,
+              "lo": 0.0,
+              "hi": 0.01098749793468079
+            },
+            "p_holm": 1.0,
+            "reject_at_alpha": false
+          },
+          "H2": {
+            "a": "llm_v2",
+            "b": "logreg",
+            "n": 360,
+            "both_right": 332,
+            "a_only_right": 27,
+            "b_only_right": 0,
+            "both_wrong": 1,
+            "errors_a": 1,
+            "errors_b": 28,
+            "p": 1.4901161193847656e-08,
+            "f1": {
+              "f1_a": 0.9966101694915255,
+              "f1_b": 0.8992805755395683,
+              "difference": 0.09732959395195717,
+              "lo": 0.06159409610537646,
+              "hi": 0.1362081722226964
+            },
+            "p_holm": 2.9802322387695312e-08,
+            "reject_at_alpha": true
+          }
+        }
+      },
+      "no_quoted": {
+        "comments": 368,
+        "spam": 156,
+        "systems": {
+          "rules": {
+            "metrics": {
+              "tp": 146,
+              "fp": 10,
+              "fn": 10,
+              "tn": 202,
+              "n": 368,
+              "spam": 156,
+              "ham": 212,
+              "flagged": 156,
+              "precision": 0.9358974358974359,
+              "precision_lo": 0.8860316681582444,
+              "precision_hi": 0.9648114172552912,
+              "recall": 0.9358974358974359,
+              "recall_lo": 0.8860316681582444,
+              "recall_hi": 0.9648114172552912,
+              "fpr": 0.04716981132075472,
+              "fpr_lo": 0.025820566338564593,
+              "fpr_hi": 0.08463763270696692,
+              "f1": 0.9358974358974359,
+              "f1_lo": 0.9057965508127396,
+              "f1_hi": 0.9612936728247343
+            },
+            "average_precision": 0.9306091530171797
+          },
+          "logreg": {
+            "metrics": {
+              "tp": 133,
+              "fp": 5,
+              "fn": 23,
+              "tn": 207,
+              "n": 368,
+              "spam": 156,
+              "ham": 212,
+              "flagged": 138,
+              "precision": 0.9637681159420289,
+              "precision_lo": 0.9179895740080798,
+              "precision_hi": 0.9844264125745771,
+              "recall": 0.8525641025641025,
+              "recall_lo": 0.7884789138447561,
+              "recall_hi": 0.8997029934750154,
+              "fpr": 0.02358490566037736,
+              "fpr_lo": 0.010115169718183683,
+              "fpr_hi": 0.0540127271943026,
+              "f1": 0.9047619047619048,
+              "f1_lo": 0.8661971830985915,
+              "f1_hi": 0.9386287125423579
+            },
+            "average_precision": 0.9676859417845256
+          },
+          "tree": {
+            "metrics": {
+              "tp": 133,
+              "fp": 13,
+              "fn": 23,
+              "tn": 199,
+              "n": 368,
+              "spam": 156,
+              "ham": 212,
+              "flagged": 146,
+              "precision": 0.910958904109589,
+              "precision_lo": 0.8536207190922465,
+              "precision_hi": 0.9472257285093915,
+              "recall": 0.8525641025641025,
+              "recall_lo": 0.7884789138447561,
+              "recall_hi": 0.8997029934750154,
+              "fpr": 0.06132075471698113,
+              "fpr_lo": 0.03618285886696714,
+              "fpr_hi": 0.10207352145839149,
+              "f1": 0.8807947019867549,
+              "f1_lo": 0.8389346237994586,
+              "f1_hi": 0.9156626506024096
+            },
+            "average_precision": 0.9629270985409124
+          },
+          "llm_v1": {
+            "metrics": {
+              "tp": 155,
+              "fp": 1,
+              "fn": 1,
+              "tn": 211,
+              "n": 368,
+              "spam": 156,
+              "ham": 212,
+              "flagged": 156,
+              "precision": 0.9935897435897436,
+              "precision_lo": 0.9645871355648048,
+              "precision_hi": 0.998867534682875,
+              "recall": 0.9935897435897436,
+              "recall_lo": 0.9645871355648048,
+              "recall_hi": 0.998867534682875,
+              "fpr": 0.0047169811320754715,
+              "fpr_lo": 0.0008331488458669795,
+              "fpr_hi": 0.026230506360183113,
+              "f1": 0.9935897435897436,
+              "f1_lo": 0.9833859265102946,
+              "f1_hi": 1.0
+            },
+            "average_precision": 0.9991901557785563
+          },
+          "llm_v2": {
+            "metrics": {
+              "tp": 155,
+              "fp": 0,
+              "fn": 1,
+              "tn": 212,
+              "n": 368,
+              "spam": 156,
+              "ham": 212,
+              "flagged": 155,
+              "precision": 1.0,
+              "precision_lo": 0.9758157671856282,
+              "precision_hi": 1.0,
+              "recall": 0.9935897435897436,
+              "recall_lo": 0.9645871355648048,
+              "recall_hi": 0.998867534682875,
+              "fpr": 0.0,
+              "fpr_lo": 0.0,
+              "fpr_hi": 0.017797594779441046,
+              "f1": 0.9967845659163987,
+              "f1_lo": 0.9896889380373132,
+              "f1_hi": 1.0
+            },
+            "average_precision": 0.9998790517658442
+          }
+        },
+        "hypotheses": {
+          "H1": {
+            "a": "llm_v2",
+            "b": "llm_v1",
+            "n": 368,
+            "both_right": 366,
+            "a_only_right": 1,
+            "b_only_right": 0,
+            "both_wrong": 1,
+            "errors_a": 1,
+            "errors_b": 2,
+            "p": 1.0,
+            "f1": {
+              "f1_a": 0.9967845659163987,
+              "f1_b": 0.9935897435897436,
+              "difference": 0.0031948223266551334,
+              "lo": 0.0,
+              "hi": 0.010454762315164814
+            },
+            "p_holm": 1.0,
+            "reject_at_alpha": false
+          },
+          "H2": {
+            "a": "llm_v2",
+            "b": "logreg",
+            "n": 368,
+            "both_right": 340,
+            "a_only_right": 27,
+            "b_only_right": 0,
+            "both_wrong": 1,
+            "errors_a": 1,
+            "errors_b": 28,
+            "p": 1.4901161193847656e-08,
+            "f1": {
+              "f1_a": 0.9967845659163987,
+              "f1_b": 0.9047619047619048,
+              "difference": 0.09202266115449398,
+              "lo": 0.05918603945383509,
+              "hi": 0.1297723315923396
+            },
+            "p_holm": 2.9802322387695312e-08,
+            "reject_at_alpha": true
+          }
+        }
+      }
+    },
+    "original": {
+      "all": {
+        "comments": 370,
+        "spam": 174,
+        "systems": {
+          "rules": {
+            "metrics": {
+              "tp": 157,
+              "fp": 1,
+              "fn": 17,
+              "tn": 195,
+              "n": 370,
+              "spam": 174,
+              "ham": 196,
+              "flagged": 158,
+              "precision": 0.9936708860759493,
+              "precision_lo": 0.9650244082110109,
+              "precision_hi": 0.998881880923679,
+              "recall": 0.9022988505747126,
+              "recall_lo": 0.8491150029526895,
+              "recall_hi": 0.938103010936596,
+              "fpr": 0.00510204081632653,
+              "fpr_lo": 0.0009012039505642017,
+              "fpr_hi": 0.028329261315080803,
+              "f1": 0.9457831325301205,
+              "f1_lo": 0.9180327868852459,
+              "f1_hi": 0.9687540479274611
+            },
+            "average_precision": 0.9449711169047701,
+            "recall_by_subtype": [
+              {
+                "group": "bulk",
+                "spam": 12,
+                "caught": 9,
+                "recall": 0.75,
+                "recall_lo": 0.46769466506643426,
+                "recall_hi": 0.9110583316059453
+              },
+              {
+                "group": "link",
+                "spam": 24,
+                "caught": 19,
+                "recall": 0.7916666666666666,
+                "recall_lo": 0.5952954674681133,
+                "recall_hi": 0.9075517464714814
+              },
+              {
+                "group": "not_spam",
+                "spam": 17,
+                "caught": 10,
+                "recall": 0.5882352941176471,
+                "recall_lo": 0.3600544264299978,
+                "recall_hi": 0.7838894320978518
+              },
+              {
+                "group": "scam",
+                "spam": 28,
+                "caught": 27,
+                "recall": 0.9642857142857143,
+                "recall_lo": 0.8228780225664668,
+                "recall_hi": 0.9936674801509623
+              },
+              {
+                "group": "self_promotion",
+                "spam": 93,
+                "caught": 92,
+                "recall": 0.989247311827957,
+                "recall_lo": 0.94158082764513,
+                "recall_hi": 0.9980993579713445
+              }
+            ],
+            "recall_by_video": [
+              {
+                "group": "Shakira",
+                "spam": 174,
+                "caught": 157,
+                "recall": 0.9022988505747126,
+                "recall_lo": 0.8491150029526895,
+                "recall_hi": 0.938103010936596
+              }
+            ],
+            "enforcement": {
+              "comments": 370,
+              "spam": 174,
+              "remove": {
+                "n": 67,
+                "spam": 67,
+                "precision": 1.0,
+                "precision_lo": 0.9457738606086981,
+                "precision_hi": 0.9999999999999998
+              },
+              "review": {
+                "n": 303,
+                "spam": 107
+              },
+              "allow": {
+                "n": 0,
+                "spam": 0
+              },
+              "remove_recall": 0.3850574712643678,
+              "remove_or_review_recall": 1.0,
+              "review_per_1000": 818.918918918919,
+              "remove_per_1000": 181.0810810810811
+            }
+          },
+          "logreg": {
+            "metrics": {
+              "tp": 139,
+              "fp": 1,
+              "fn": 35,
+              "tn": 195,
+              "n": 370,
+              "spam": 174,
+              "ham": 196,
+              "flagged": 140,
+              "precision": 0.9928571428571429,
+              "precision_lo": 0.9606516069372742,
+              "precision_hi": 0.9987379955557328,
+              "recall": 0.7988505747126436,
+              "recall_lo": 0.7331279496636152,
+              "recall_hi": 0.8516625749398541,
+              "fpr": 0.00510204081632653,
+              "fpr_lo": 0.0009012039505642017,
+              "fpr_hi": 0.028329261315080803,
+              "f1": 0.8853503184713376,
+              "f1_lo": 0.8480961451804514,
+              "f1_hi": 0.9192583665523314
+            },
+            "average_precision": 0.9590590678204955,
+            "recall_by_subtype": [
+              {
+                "group": "bulk",
+                "spam": 12,
+                "caught": 9,
+                "recall": 0.75,
+                "recall_lo": 0.46769466506643426,
+                "recall_hi": 0.9110583316059453
+              },
+              {
+                "group": "link",
+                "spam": 24,
+                "caught": 14,
+                "recall": 0.5833333333333334,
+                "recall_lo": 0.3883466586522876,
+                "recall_hi": 0.7553239739018824
+              },
+              {
+                "group": "not_spam",
+                "spam": 17,
+                "caught": 5,
+                "recall": 0.29411764705882354,
+                "recall_lo": 0.1327998961029523,
+                "recall_hi": 0.5313311006653985
+              },
+              {
+                "group": "scam",
+                "spam": 28,
+                "caught": 23,
+                "recall": 0.8214285714285714,
+                "recall_lo": 0.6440857521065705,
+                "recall_hi": 0.9212149805439572
+              },
+              {
+                "group": "self_promotion",
+                "spam": 93,
+                "caught": 88,
+                "recall": 0.946236559139785,
+                "recall_lo": 0.8802516127823959,
+                "recall_hi": 0.9768193257469159
+              }
+            ],
+            "recall_by_video": [
+              {
+                "group": "Shakira",
+                "spam": 174,
+                "caught": 139,
+                "recall": 0.7988505747126436,
+                "recall_lo": 0.7331279496636152,
+                "recall_hi": 0.8516625749398541
+              }
+            ],
+            "enforcement": {
+              "comments": 370,
+              "spam": 174,
+              "remove": {
+                "n": 74,
+                "spam": 74,
+                "precision": 1.0,
+                "precision_lo": 0.950650220603614,
+                "precision_hi": 1.0
+              },
+              "review": {
+                "n": 122,
+                "spam": 83
+              },
+              "allow": {
+                "n": 174,
+                "spam": 17
+              },
+              "remove_recall": 0.42528735632183906,
+              "remove_or_review_recall": 0.9022988505747126,
+              "review_per_1000": 329.72972972972974,
+              "remove_per_1000": 200.0
+            }
+          },
+          "tree": {
+            "metrics": {
+              "tp": 143,
+              "fp": 5,
+              "fn": 31,
+              "tn": 191,
+              "n": 370,
+              "spam": 174,
+              "ham": 196,
+              "flagged": 148,
+              "precision": 0.9662162162162162,
+              "precision_lo": 0.9233577857231483,
+              "precision_hi": 0.9854849050136472,
+              "recall": 0.8218390804597702,
+              "recall_lo": 0.7582209841265338,
+              "recall_hi": 0.8715534269848949,
+              "fpr": 0.025510204081632654,
+              "fpr_lo": 0.010944563377567627,
+              "fpr_hi": 0.0583176352791848,
+              "f1": 0.8881987577639752,
+              "f1_lo": 0.8488648543310923,
+              "f1_hi": 0.9212827988338192
+            },
+            "average_precision": 0.9715854865355589,
+            "recall_by_subtype": [
+              {
+                "group": "bulk",
+                "spam": 12,
+                "caught": 10,
+                "recall": 0.8333333333333334,
+                "recall_lo": 0.5519691377470266,
+                "recall_hi": 0.9530348578161463
+              },
+              {
+                "group": "link",
+                "spam": 24,
+                "caught": 15,
+                "recall": 0.625,
+                "recall_lo": 0.42709962442674276,
+                "recall_hi": 0.7884063244045122
+              },
+              {
+                "group": "not_spam",
+                "spam": 17,
+                "caught": 9,
+                "recall": 0.5294117647058824,
+                "recall_lo": 0.30963235060004424,
+                "recall_hi": 0.7383489355759056
+              },
+              {
+                "group": "scam",
+                "spam": 28,
+                "caught": 21,
+                "recall": 0.75,
+                "recall_lo": 0.5664432968100104,
+                "recall_hi": 0.8732350508070668
+              },
+              {
+                "group": "self_promotion",
+                "spam": 93,
+                "caught": 88,
+                "recall": 0.946236559139785,
+                "recall_lo": 0.8802516127823959,
+                "recall_hi": 0.9768193257469159
+              }
+            ],
+            "recall_by_video": [
+              {
+                "group": "Shakira",
+                "spam": 174,
+                "caught": 143,
+                "recall": 0.8218390804597702,
+                "recall_lo": 0.7582209841265338,
+                "recall_hi": 0.8715534269848949
+              }
+            ],
+            "enforcement": {
+              "comments": 370,
+              "spam": 174,
+              "remove": {
+                "n": 88,
+                "spam": 88,
+                "precision": 1.0,
+                "precision_lo": 0.9581729333351078,
+                "precision_hi": 0.9999999999999999
+              },
+              "review": {
+                "n": 105,
+                "spam": 76
+              },
+              "allow": {
+                "n": 177,
+                "spam": 10
+              },
+              "remove_recall": 0.5057471264367817,
+              "remove_or_review_recall": 0.9425287356321839,
+              "review_per_1000": 283.7837837837838,
+              "remove_per_1000": 237.83783783783784
+            }
+          },
+          "llm_v1": {
+            "metrics": {
+              "tp": 156,
+              "fp": 1,
+              "fn": 18,
+              "tn": 195,
+              "n": 370,
+              "spam": 174,
+              "ham": 196,
+              "flagged": 157,
+              "precision": 0.9936305732484076,
+              "precision_lo": 0.964807130088783,
+              "precision_hi": 0.9988747535280136,
+              "recall": 0.896551724137931,
+              "recall_lo": 0.8424147134345383,
+              "recall_hi": 0.9335573288277577,
+              "fpr": 0.00510204081632653,
+              "fpr_lo": 0.0009012039505642017,
+              "fpr_hi": 0.028329261315080803,
+              "f1": 0.9425981873111783,
+              "f1_lo": 0.9137279020234291,
+              "f1_hi": 0.9661064559131594
+            },
+            "average_precision": 0.9776864006162478,
+            "recall_by_subtype": [
+              {
+                "group": "bulk",
+                "spam": 12,
+                "caught": 12,
+                "recall": 1.0,
+                "recall_lo": 0.7575059933447592,
+                "recall_hi": 1.0
+              },
+              {
+                "group": "link",
+                "spam": 24,
+                "caught": 24,
+                "recall": 1.0,
+                "recall_lo": 0.8620237953250198,
+                "recall_hi": 1.0
+              },
+              {
+                "group": "not_spam",
+                "spam": 17,
+                "caught": 0,
+                "recall": 0.0,
+                "recall_lo": 0.0,
+                "recall_hi": 0.1843181350088518
+              },
+              {
+                "group": "scam",
+                "spam": 28,
+                "caught": 28,
+                "recall": 1.0,
+                "recall_lo": 0.8793566952341543,
+                "recall_hi": 0.9999999999999998
+              },
+              {
+                "group": "self_promotion",
+                "spam": 93,
+                "caught": 92,
+                "recall": 0.989247311827957,
+                "recall_lo": 0.94158082764513,
+                "recall_hi": 0.9980993579713445
+              }
+            ],
+            "recall_by_video": [
+              {
+                "group": "Shakira",
+                "spam": 174,
+                "caught": 156,
+                "recall": 0.896551724137931,
+                "recall_lo": 0.8424147134345383,
+                "recall_hi": 0.9335573288277577
+              }
+            ],
+            "enforcement": {
+              "comments": 370,
+              "spam": 174,
+              "remove": {
+                "n": 157,
+                "spam": 156,
+                "precision": 0.9936305732484076,
+                "precision_lo": 0.964807130088783,
+                "precision_hi": 0.9988747535280136
+              },
+              "review": {
+                "n": 0,
+                "spam": 0
+              },
+              "allow": {
+                "n": 213,
+                "spam": 18
+              },
+              "remove_recall": 0.896551724137931,
+              "remove_or_review_recall": 0.896551724137931,
+              "review_per_1000": 0.0,
+              "remove_per_1000": 424.3243243243243
+            }
+          },
+          "llm_v2": {
+            "metrics": {
+              "tp": 156,
+              "fp": 0,
+              "fn": 18,
+              "tn": 196,
+              "n": 370,
+              "spam": 174,
+              "ham": 196,
+              "flagged": 156,
+              "precision": 1.0,
+              "precision_lo": 0.9759670685625849,
+              "precision_hi": 0.9999999999999999,
+              "recall": 0.896551724137931,
+              "recall_lo": 0.8424147134345383,
+              "recall_hi": 0.9335573288277577,
+              "fpr": 0.0,
+              "fpr_lo": 1.734723475976807e-18,
+              "fpr_hi": 0.019222531917868144,
+              "f1": 0.9454545454545454,
+              "f1_lo": 0.9178438878330405,
+              "f1_hi": 0.9681528662420382
+            },
+            "average_precision": 0.9818923284096299,
+            "recall_by_subtype": [
+              {
+                "group": "bulk",
+                "spam": 12,
+                "caught": 12,
+                "recall": 1.0,
+                "recall_lo": 0.7575059933447592,
+                "recall_hi": 1.0
+              },
+              {
+                "group": "link",
+                "spam": 24,
+                "caught": 24,
+                "recall": 1.0,
+                "recall_lo": 0.8620237953250198,
+                "recall_hi": 1.0
+              },
+              {
+                "group": "not_spam",
+                "spam": 17,
+                "caught": 0,
+                "recall": 0.0,
+                "recall_lo": 0.0,
+                "recall_hi": 0.1843181350088518
+              },
+              {
+                "group": "scam",
+                "spam": 28,
+                "caught": 28,
+                "recall": 1.0,
+                "recall_lo": 0.8793566952341543,
+                "recall_hi": 0.9999999999999998
+              },
+              {
+                "group": "self_promotion",
+                "spam": 93,
+                "caught": 92,
+                "recall": 0.989247311827957,
+                "recall_lo": 0.94158082764513,
+                "recall_hi": 0.9980993579713445
+              }
+            ],
+            "recall_by_video": [
+              {
+                "group": "Shakira",
+                "spam": 174,
+                "caught": 156,
+                "recall": 0.896551724137931,
+                "recall_lo": 0.8424147134345383,
+                "recall_hi": 0.9335573288277577
+              }
+            ],
+            "enforcement": {
+              "comments": 370,
+              "spam": 174,
+              "remove": {
+                "n": 156,
+                "spam": 156,
+                "precision": 1.0,
+                "precision_lo": 0.9759670685625849,
+                "precision_hi": 0.9999999999999999
+              },
+              "review": {
+                "n": 0,
+                "spam": 0
+              },
+              "allow": {
+                "n": 214,
+                "spam": 18
+              },
+              "remove_recall": 0.896551724137931,
+              "remove_or_review_recall": 0.896551724137931,
+              "review_per_1000": 0.0,
+              "remove_per_1000": 421.6216216216216
+            }
+          }
+        },
+        "hypotheses": {
+          "H1": {
+            "a": "llm_v2",
+            "b": "llm_v1",
+            "n": 370,
+            "both_right": 351,
+            "a_only_right": 1,
+            "b_only_right": 0,
+            "both_wrong": 18,
+            "errors_a": 18,
+            "errors_b": 19,
+            "p": 1.0,
+            "f1": {
+              "f1_a": 0.9454545454545454,
+              "f1_b": 0.9425981873111783,
+              "difference": 0.0028563581433671548,
+              "lo": 0.0,
+              "hi": 0.00962451530501561
+            },
+            "p_holm": 1.0,
+            "reject_at_alpha": false
+          },
+          "H2": {
+            "a": "llm_v2",
+            "b": "logreg",
+            "n": 370,
+            "both_right": 329,
+            "a_only_right": 23,
+            "b_only_right": 5,
+            "both_wrong": 13,
+            "errors_a": 18,
+            "errors_b": 36,
+            "p": 0.0009122341871261597,
+            "f1": {
+              "f1_a": 0.9454545454545454,
+              "f1_b": 0.8853503184713376,
+              "difference": 0.06010422698320783,
+              "lo": 0.026849360348296897,
+              "hi": 0.0964907196002798
+            },
+            "p_holm": 0.0018244683742523193,
+            "reject_at_alpha": true
+          }
+        }
+      },
+      "no_share_text": {
+        "comments": 360,
+        "spam": 164,
+        "systems": {
+          "rules": {
+            "metrics": {
+              "tp": 147,
+              "fp": 1,
+              "fn": 17,
+              "tn": 195,
+              "n": 360,
+              "spam": 164,
+              "ham": 196,
+              "flagged": 148,
+              "precision": 0.9932432432432432,
+              "precision_lo": 0.962722954423538,
+              "precision_hi": 0.9988062691095932,
+              "recall": 0.8963414634146342,
+              "recall_lo": 0.8402719638865523,
+              "recall_hi": 0.9342684918114623,
+              "fpr": 0.00510204081632653,
+              "fpr_lo": 0.0009012039505642017,
+              "fpr_hi": 0.028329261315080803,
+              "f1": 0.9423076923076923,
+              "f1_lo": 0.9127453859060403,
+              "f1_hi": 0.9671680811628134
+            },
+            "average_precision": 0.9402677067311213
+          },
+          "logreg": {
+            "metrics": {
+              "tp": 129,
+              "fp": 1,
+              "fn": 35,
+              "tn": 195,
+              "n": 360,
+              "spam": 164,
+              "ham": 196,
+              "flagged": 130,
+              "precision": 0.9923076923076923,
+              "precision_lo": 0.9577145601364474,
+              "precision_hi": 0.9986408257644204,
+              "recall": 0.7865853658536586,
+              "recall_lo": 0.7176955274090704,
+              "recall_hi": 0.842356802095648,
+              "fpr": 0.00510204081632653,
+              "fpr_lo": 0.0009012039505642017,
+              "fpr_hi": 0.028329261315080803,
+              "f1": 0.8775510204081632,
+              "f1_lo": 0.8362340204864065,
+              "f1_hi": 0.9157662337662337
+            },
+            "average_precision": 0.9551458093918037
+          },
+          "tree": {
+            "metrics": {
+              "tp": 133,
+              "fp": 5,
+              "fn": 31,
+              "tn": 191,
+              "n": 360,
+              "spam": 164,
+              "ham": 196,
+              "flagged": 138,
+              "precision": 0.9637681159420289,
+              "precision_lo": 0.9179895740080798,
+              "precision_hi": 0.9844264125745771,
+              "recall": 0.8109756097560976,
+              "recall_lo": 0.7441994269930745,
+              "recall_hi": 0.8635169305545987,
+              "fpr": 0.025510204081632654,
+              "fpr_lo": 0.010944563377567627,
+              "fpr_hi": 0.0583176352791848,
+              "f1": 0.8807947019867549,
+              "f1_lo": 0.8380281690140845,
+              "f1_hi": 0.9193023666548922
+            },
+            "average_precision": 0.9684718883197787
+          },
+          "llm_v1": {
+            "metrics": {
+              "tp": 147,
+              "fp": 1,
+              "fn": 17,
+              "tn": 195,
+              "n": 360,
+              "spam": 164,
+              "ham": 196,
+              "flagged": 148,
+              "precision": 0.9932432432432432,
+              "precision_lo": 0.962722954423538,
+              "precision_hi": 0.9988062691095932,
+              "recall": 0.8963414634146342,
+              "recall_lo": 0.8402719638865523,
+              "recall_hi": 0.9342684918114623,
+              "fpr": 0.00510204081632653,
+              "fpr_lo": 0.0009012039505642017,
+              "fpr_hi": 0.028329261315080803,
+              "f1": 0.9423076923076923,
+              "f1_lo": 0.9136631590250188,
+              "f1_hi": 0.9677512856474988
+            },
+            "average_precision": 0.9753877606864282
+          },
+          "llm_v2": {
+            "metrics": {
+              "tp": 147,
+              "fp": 0,
+              "fn": 17,
+              "tn": 196,
+              "n": 360,
+              "spam": 164,
+              "ham": 196,
+              "flagged": 147,
+              "precision": 1.0,
+              "precision_lo": 0.9745331366407661,
+              "precision_hi": 1.0,
+              "recall": 0.8963414634146342,
+              "recall_lo": 0.8402719638865523,
+              "recall_hi": 0.9342684918114623,
+              "fpr": 0.0,
+              "fpr_lo": 1.734723475976807e-18,
+              "fpr_hi": 0.019222531917868144,
+              "f1": 0.9453376205787781,
+              "f1_lo": 0.9172402811333187,
+              "f1_hi": 0.9706870111034499
+            },
+            "average_precision": 0.9800256974959292
+          }
+        },
+        "hypotheses": {
+          "H1": {
+            "a": "llm_v2",
+            "b": "llm_v1",
+            "n": 360,
+            "both_right": 342,
+            "a_only_right": 1,
+            "b_only_right": 0,
+            "both_wrong": 17,
+            "errors_a": 17,
+            "errors_b": 18,
+            "p": 1.0,
+            "f1": {
+              "f1_a": 0.9453376205787781,
+              "f1_b": 0.9423076923076923,
+              "difference": 0.0030299282710858355,
+              "lo": 0.0,
+              "hi": 0.00972887575184496
+            },
+            "p_holm": 1.0,
+            "reject_at_alpha": false
+          },
+          "H2": {
+            "a": "llm_v2",
+            "b": "logreg",
+            "n": 360,
+            "both_right": 320,
+            "a_only_right": 23,
+            "b_only_right": 4,
+            "both_wrong": 13,
+            "errors_a": 17,
+            "errors_b": 36,
+            "p": 0.000310748815536499,
+            "f1": {
+              "f1_a": 0.9453376205787781,
+              "f1_b": 0.8775510204081632,
+              "difference": 0.06778660017061489,
+              "lo": 0.032450454659541085,
+              "hi": 0.1052684990763541
+            },
+            "p_holm": 0.000621497631072998,
+            "reject_at_alpha": true
+          }
+        }
+      },
+      "no_quoted": {
+        "comments": 368,
+        "spam": 172,
+        "systems": {
+          "rules": {
+            "metrics": {
+              "tp": 155,
+              "fp": 1,
+              "fn": 17,
+              "tn": 195,
+              "n": 368,
+              "spam": 172,
+              "ham": 196,
+              "flagged": 156,
+              "precision": 0.9935897435897436,
+              "precision_lo": 0.9645871355648048,
+              "precision_hi": 0.998867534682875,
+              "recall": 0.9011627906976745,
+              "recall_lo": 0.8474255227303822,
+              "recall_hi": 0.9373723339611897,
+              "fpr": 0.00510204081632653,
+              "fpr_lo": 0.0009012039505642017,
+              "fpr_hi": 0.028329261315080803,
+              "f1": 0.9451219512195121,
+              "f1_lo": 0.9173754789272031,
+              "f1_hi": 0.9691405362417632
+            },
+            "average_precision": 0.9440787768012238
+          },
+          "logreg": {
+            "metrics": {
+              "tp": 137,
+              "fp": 1,
+              "fn": 35,
+              "tn": 195,
+              "n": 368,
+              "spam": 172,
+              "ham": 196,
+              "flagged": 138,
+              "precision": 0.9927536231884058,
+              "precision_lo": 0.960097296527902,
+              "precision_hi": 0.9987196892161712,
+              "recall": 0.7965116279069767,
+              "recall_lo": 0.7301774755309806,
+              "recall_hi": 0.8498905055019202,
+              "fpr": 0.00510204081632653,
+              "fpr_lo": 0.0009012039505642017,
+              "fpr_hi": 0.028329261315080803,
+              "f1": 0.8838709677419355,
+              "f1_lo": 0.8436363636363636,
+              "f1_hi": 0.9210583857603191
+            },
+            "average_precision": 0.9582463328389832
+          },
+          "tree": {
+            "metrics": {
+              "tp": 141,
+              "fp": 5,
+              "fn": 31,
+              "tn": 191,
+              "n": 368,
+              "spam": 172,
+              "ham": 196,
+              "flagged": 146,
+              "precision": 0.9657534246575342,
+              "precision_lo": 0.9223410974481712,
+              "precision_hi": 0.9852848765003517,
+              "recall": 0.8197674418604651,
+              "recall_lo": 0.7555406691277304,
+              "recall_hi": 0.8700228398293195,
+              "fpr": 0.025510204081632654,
+              "fpr_lo": 0.010944563377567627,
+              "fpr_hi": 0.0583176352791848,
+              "f1": 0.8867924528301887,
+              "f1_lo": 0.8469040701939725,
+              "f1_hi": 0.921286443148688
+            },
+            "average_precision": 0.9710017402829529
+          },
+          "llm_v1": {
+            "metrics": {
+              "tp": 155,
+              "fp": 1,
+              "fn": 17,
+              "tn": 195,
+              "n": 368,
+              "spam": 172,
+              "ham": 196,
+              "flagged": 156,
+              "precision": 0.9935897435897436,
+              "precision_lo": 0.9645871355648048,
+              "precision_hi": 0.998867534682875,
+              "recall": 0.9011627906976745,
+              "recall_lo": 0.8474255227303822,
+              "recall_hi": 0.9373723339611897,
+              "fpr": 0.00510204081632653,
+              "fpr_lo": 0.0009012039505642017,
+              "fpr_hi": 0.028329261315080803,
+              "f1": 0.9451219512195121,
+              "f1_lo": 0.9174311926605505,
+              "f1_hi": 0.96875
+            },
+            "average_precision": 0.979168871220335
+          },
+          "llm_v2": {
+            "metrics": {
+              "tp": 155,
+              "fp": 0,
+              "fn": 17,
+              "tn": 196,
+              "n": 368,
+              "spam": 172,
+              "ham": 196,
+              "flagged": 155,
+              "precision": 1.0,
+              "precision_lo": 0.9758157671856282,
+              "precision_hi": 1.0,
+              "recall": 0.9011627906976745,
+              "recall_lo": 0.8474255227303822,
+              "recall_hi": 0.9373723339611897,
+              "fpr": 0.0,
+              "fpr_lo": 1.734723475976807e-18,
+              "fpr_hi": 0.019222531917868144,
+              "f1": 0.9480122324159022,
+              "f1_lo": 0.9207292876500194,
+              "f1_hi": 0.9709302325581395
+            },
+            "average_precision": 0.9835546867572218
+          }
+        },
+        "hypotheses": {
+          "H1": {
+            "a": "llm_v2",
+            "b": "llm_v1",
+            "n": 368,
+            "both_right": 350,
+            "a_only_right": 1,
+            "b_only_right": 0,
+            "both_wrong": 17,
+            "errors_a": 17,
+            "errors_b": 18,
+            "p": 1.0,
+            "f1": {
+              "f1_a": 0.9480122324159022,
+              "f1_b": 0.9451219512195121,
+              "difference": 0.00289028119639001,
+              "lo": 0.0,
+              "hi": 0.0093082641597492
+            },
+            "p_holm": 1.0,
+            "reject_at_alpha": false
+          },
+          "H2": {
+            "a": "llm_v2",
+            "b": "logreg",
+            "n": 368,
+            "both_right": 328,
+            "a_only_right": 23,
+            "b_only_right": 4,
+            "both_wrong": 13,
+            "errors_a": 17,
+            "errors_b": 36,
+            "p": 0.000310748815536499,
+            "f1": {
+              "f1_a": 0.9480122324159022,
+              "f1_b": 0.8838709677419355,
+              "difference": 0.06414126467396664,
+              "lo": 0.03173613306692138,
+              "hi": 0.09992537115236502
+            },
+            "p_holm": 0.000621497631072998,
+            "reject_at_alpha": true
+          }
+        }
+      }
+    }
+  },
+  "llm_usage": {
+    "llm_v1": {
+      "calls": 1620,
+      "attempts": 1620,
+      "invalid": 0,
+      "input_tokens": 6133190,
+      "output_tokens": 159403,
+      "latency_s": 1757.1,
+      "comments": 370,
+      "input_tokens_per_1000": 16576189.18918919,
+      "output_tokens_per_1000": 430818.91891891893,
+      "model_seconds_per_1000": 4748.918918918919
+    },
+    "llm_v2": {
+      "calls": 1620,
+      "attempts": 1620,
+      "invalid": 0,
+      "input_tokens": 7185855,
+      "output_tokens": 158669,
+      "latency_s": 1710.9,
+      "comments": 370,
+      "input_tokens_per_1000": 19421229.72972973,
+      "output_tokens_per_1000": 428835.13513513515,
+      "model_seconds_per_1000": 4624.054054054054
+    }
+  }
+}

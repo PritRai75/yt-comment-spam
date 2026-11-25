@@ -11,3 +11,6 @@ results/*.csv -text
 
 # LLM call caches: one JSON line per vote, kept byte for byte
 results/llm/** -text
+
+# Final analysis outputs: keep bytes exactly as written
+results/final/** -text

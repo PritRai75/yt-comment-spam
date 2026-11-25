@@ -32,7 +32,9 @@ and the SHA-256 of the rendered system prompt (so the policy text and v2's examp
 in it, and v2's normalisation step), model ID,
 region, temperature, maximum output tokens and the SHA-256 of the pinned data zip.
 
-Cache: one JSON line per vote in results/llm/<version>-<hash>/r<replicate>/calls.jsonl,
+Cache: one JSON line per vote in results/llm/<version>-<hash>/r<replicate>/calls.jsonl
+(dev; the test split's votes go to calls-test.jsonl beside it, and only through the
+test lock in eval/lock.py with --final),
 keyed by (configuration, video, cleaned text, vote index). A run that stops part-way
 resumes where it stopped and pays only for missing votes. Comments with the same
 cleaned text under the same video get the same prompt, so they share their votes
@@ -86,7 +88,7 @@ MANIFEST = ROOT / "data" / "manifest.json"
 RUNS = ROOT / "results" / "llm"
 FAKE_RUNS = ROOT / "results" / "llm-fake"  # offline runs, not committed
 POLICY_SECTIONS = ["Definition", "How to judge", "Subtypes", "Which links count", "Edge cases"]
-ALLOWED_SPLITS = ["dev"]  # the test split is added with the test lock (step 6)
+ALLOWED_SPLITS = ["dev", "test"]  # test only through the lock in eval/lock.py (--final)
 NORMALIZED = {"v1": False, "v2": True}  # text steps per prompt version
 
 
@@ -312,6 +314,19 @@ def run_dir(config: Config, replicate: int = 0) -> Path:
     return RUNS / config.name / f"r{replicate}"
 
 
+def cache_name(split: str) -> str:
+    """Dev votes in calls.jsonl, test votes in calls-test.jsonl, so the committed dev
+    caches never change after the test run."""
+    return "calls.jsonl" if split == "dev" else f"calls-{split}.jsonl"
+
+
+def _split_of(rows: pd.DataFrame) -> str:
+    splits = sorted(set(rows.split))
+    if len(splits) != 1:
+        raise ValueError(f"rows must come from one split, not {splits}")
+    return splits[0]
+
+
 def one_vote(client, config, prompt, video, text):
     """Ask once, and once more if the answer fails a check. Returns the vote record fields."""
     tokens_in = tokens_out = latency = 0
@@ -334,13 +349,19 @@ def one_vote(client, config, prompt, video, text):
 
 
 def run(rows: pd.DataFrame, client, prompt: Prompt, *, votes: int = N_VOTES, replicate: int = 0,
-        rpm: float = RPM, limit: int = None, cache: Cache = None, pacer: Pacer = None, log=print) -> dict:
-    """Fill the cache for `rows` (row_id, video, split, content). Returns counts for the run."""
+        rpm: float = RPM, limit: int = None, cache: Cache = None, pacer: Pacer = None, log=print,
+        final: bool = False) -> dict:
+    """Fill the cache for `rows` (row_id, video, split, content). Returns counts for the run.
+    Test comments only with `final=True` and the lock open (eval/lock.py)."""
     bad = sorted(set(rows.split) - set(ALLOWED_SPLITS))
     if bad:
-        raise ValueError(f"split(s) {bad} refused: only {ALLOWED_SPLITS} until the test lock exists")
+        raise ValueError(f"split(s) {bad} refused: only {ALLOWED_SPLITS}")
+    split = _split_of(rows)
+    if split == "test":
+        from eval import lock
+        lock.require(final)
     config = make_config(prompt)
-    cache = cache or Cache(run_dir(config, replicate) / "calls.jsonl")
+    cache = cache or Cache(run_dir(config, replicate) / cache_name(split))
     pacer = pacer or Pacer(rpm)
     if limit is not None:
         rows = rows.head(limit)
@@ -369,7 +390,7 @@ def scores(rows: pd.DataFrame, prompt: Prompt, *, replicate: int = 0, votes: int
            cache: Cache = None) -> pd.DataFrame:
     """One row per comment with its votes and score, from the cache."""
     config = make_config(prompt)
-    cache = cache or Cache(run_dir(config, replicate) / "calls.jsonl")
+    cache = cache or Cache(run_dir(config, replicate) / cache_name(_split_of(rows)))
     out = []
     for r in rows.itertuples():
         text = prompt.text(r.content)
@@ -458,22 +479,31 @@ def main(argv=None) -> int:
         if name == "run":
             p.add_argument("--limit", type=int, default=None, help="only the first N comments")
             p.add_argument("--rpm", type=float, default=RPM)
+            p.add_argument("--final", action="store_true", help="the single test run (needs the test lock open)")
     args = ap.parse_args(argv)
     if not 1 <= args.votes <= N_VOTES:
         ap.error(f"--votes must be 1 to {N_VOTES}")
     prompt = load_prompt(args.prompt)
     config = make_config(prompt)
     base = FAKE_RUNS if args.fake else RUNS
-    path = base / config.name / f"r{args.replicate}" / "calls.jsonl"
+    path = base / config.name / f"r{args.replicate}" / cache_name(args.split)
     cache = Cache(path)
     rows = _rows(args.split)
     if args.cmd == "run":
+        if args.split == "test":
+            from eval import lock
+            try:
+                lock.require(args.final)  # before any file is written or client made
+            except lock.TestLocked as e:
+                print(e, file=sys.stderr)
+                return 2
         cfg_file = path.parent.parent / "config.json"
         cfg_file.parent.mkdir(parents=True, exist_ok=True)
         cfg_file.write_text(json.dumps(dict(asdict(config), hash=config.hash), indent=2) + "\n", encoding="utf-8")
         client = FakeClient() if args.fake else make_client()
         print(json.dumps(run(rows, client, prompt, votes=args.votes, replicate=args.replicate, rpm=args.rpm,
-                             limit=args.limit, cache=cache, pacer=Pacer(0 if args.fake else args.rpm))))
+                             limit=args.limit, cache=cache, pacer=Pacer(0 if args.fake else args.rpm),
+                             final=args.final)))
     u = usage(cache)
     print(f"{config.name} r{args.replicate}: {u['calls']} calls cached ({u['attempts']} attempts, "
           f"{u['invalid']} invalid), {u['input_tokens']:,} input and {u['output_tokens']:,} output tokens, "

@@ -2,6 +2,7 @@ import json
 import math
 
 import boto3
+import pandas as pd
 import pytest
 from botocore.exceptions import ParamValidationError
 from botocore.stub import Stubber
@@ -241,11 +242,31 @@ def test_scores_need_every_vote(tmp_path):
     assert list(s.index) == list(rows.row_id) and (s.n_votes == 3).all()
 
 
-def test_test_split_is_refused(tmp_path):
+def test_test_split_needs_final_and_the_open_lock(tmp_path, monkeypatch, capsys):
+    from eval import lock
+    rows = DF[DF.split == "test"].head(1)
+    with pytest.raises(lock.TestLocked, match="--final"):
+        _run(tmp_path, rows, llm.FakeClient())
+    monkeypatch.setattr(lock, "problems", lambda: ["eval/preregistration.md is not committed"])
+    with pytest.raises(lock.TestLocked, match="not committed"):
+        _run(tmp_path, rows, llm.FakeClient(), final=True)
+    monkeypatch.setattr(llm, "FAKE_RUNS", tmp_path)
+    assert llm.main(["run", "--split", "test", "--fake"]) == 2
+    assert llm.main(["run", "--split", "test", "--fake", "--final"]) == 2
+    assert "locked" in capsys.readouterr().err
+    assert not any(tmp_path.iterdir())  # nothing written while locked
+    monkeypatch.setattr(lock, "problems", lambda: [])
+    assert llm.main(["run", "--split", "test", "--fake", "--final", "--limit", "1", "--votes", "1"]) == 0
+    assert (tmp_path / C.name / "r0" / "calls-test.jsonl").exists()
+    assert not (tmp_path / C.name / "r0" / "calls.jsonl").exists()
+
+
+def test_a_run_takes_one_split():
+    rows = pd.concat([DF[DF.split == "dev"].head(1), DF[DF.split == "test"].head(1)])
+    with pytest.raises(ValueError, match="one split"):
+        llm.run(rows, llm.FakeClient(), P, final=True)
     with pytest.raises(ValueError, match="refused"):
-        _run(tmp_path, DF[DF.split == "test"].head(1), llm.FakeClient())
-    with pytest.raises(SystemExit):
-        llm.main(["run", "--split", "test", "--fake"])
+        llm.run(DF[DF.split == "train"].head(1), llm.FakeClient(), P)
 
 
 def test_usage_sums_tokens(tmp_path):
