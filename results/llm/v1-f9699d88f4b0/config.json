@@ -1,0 +1,10 @@
+{
+  "prompt_version": "v1",
+  "prompt_sha256": "d97b6c547a325122f6561772ed3bf8d2350a560614a75af46950017be956ebed",
+  "model_id": "global.anthropic.claude-haiku-4-5-20251001-v1:0",
+  "region": "ap-south-1",
+  "temperature": 1.0,
+  "max_tokens": 300,
+  "data_sha256": "bd6182891adb3cfc8334b82c062176dfbebc563bf0ba07e31c2645f916865a0a",
+  "hash": "f9699d88f4b0"
+}
