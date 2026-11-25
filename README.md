@@ -1,6 +1,6 @@
 # YouTube Comment Spam Detection with LLMs
 
-A small, complete enforcement-detection workflow for YouTube comment spam: a written spam policy, audited labels, four classifiers (keyword rules, TF-IDF + logistic regression, and two LLM prompt versions), a two-threshold enforcement rule (auto-remove, human review, allow), a pre-registered experiment and adversarial evasion tests.
+A small, complete enforcement-detection workflow for YouTube comment spam: a written spam policy, audited labels, five classifiers (keyword rules, TF-IDF + logistic regression, gradient boosting on readable features, and two LLM prompt versions), a two-threshold enforcement rule (auto-remove, human review, allow), a pre-registered experiment and adversarial evasion tests.
 
 **Status:** in progress. Data is pinned; results will be added here once the single test run is done.
 

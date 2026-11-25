@@ -5,3 +5,6 @@ data/raw/** -text
 
 # Generated audit tables: some cells hold line breaks, so keep bytes exactly as written
 audit/*.csv -text
+
+# Generated result tables: keep bytes exactly as written
+results/*.csv -text
