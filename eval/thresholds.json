@@ -1,0 +1,247 @@
+{
+  "split": "dev",
+  "label_set": "corrected",
+  "precision_target": 0.98,
+  "recall_target": 0.95,
+  "llm_configs": {
+    "llm_v1": "v1-f9699d88f4b0",
+    "llm_v2": "v2-646be57ed779"
+  },
+  "systems": {
+    "rules": {
+      "floor": 1.0,
+      "auto_remove": 1.5,
+      "allow_below": 0.0,
+      "dev_corrected": {
+        "comments": 370,
+        "spam": 157,
+        "remove": {
+          "n": 67,
+          "spam": 67,
+          "precision": 1.0,
+          "precision_lo": 0.9457738606086981,
+          "precision_hi": 0.9999999999999998
+        },
+        "review": {
+          "n": 303,
+          "spam": 90
+        },
+        "allow": {
+          "n": 0,
+          "spam": 0
+        },
+        "remove_recall": 0.4267515923566879,
+        "remove_or_review_recall": 1.0
+      },
+      "dev_original": {
+        "comments": 370,
+        "spam": 174,
+        "remove": {
+          "n": 67,
+          "spam": 67,
+          "precision": 1.0,
+          "precision_lo": 0.9457738606086981,
+          "precision_hi": 0.9999999999999998
+        },
+        "review": {
+          "n": 303,
+          "spam": 107
+        },
+        "allow": {
+          "n": 0,
+          "spam": 0
+        },
+        "remove_recall": 0.3850574712643678,
+        "remove_or_review_recall": 1.0
+      }
+    },
+    "logreg": {
+      "floor": 0.5,
+      "auto_remove": 0.7213070285874905,
+      "allow_below": 0.3608377571055401,
+      "dev_corrected": {
+        "comments": 370,
+        "spam": 157,
+        "remove": {
+          "n": 74,
+          "spam": 73,
+          "precision": 0.9864864864864865,
+          "precision_lo": 0.9273464348015678,
+          "precision_hi": 0.9976105365965432
+        },
+        "review": {
+          "n": 122,
+          "spam": 78
+        },
+        "allow": {
+          "n": 174,
+          "spam": 6
+        },
+        "remove_recall": 0.46496815286624205,
+        "remove_or_review_recall": 0.9617834394904459
+      },
+      "dev_original": {
+        "comments": 370,
+        "spam": 174,
+        "remove": {
+          "n": 74,
+          "spam": 74,
+          "precision": 1.0,
+          "precision_lo": 0.950650220603614,
+          "precision_hi": 1.0
+        },
+        "review": {
+          "n": 122,
+          "spam": 83
+        },
+        "allow": {
+          "n": 174,
+          "spam": 17
+        },
+        "remove_recall": 0.42528735632183906,
+        "remove_or_review_recall": 0.9022988505747126
+      }
+    },
+    "tree": {
+      "floor": 0.5,
+      "auto_remove": 0.9999994502428498,
+      "allow_below": 0.00030871908290460294,
+      "dev_corrected": {
+        "comments": 370,
+        "spam": 157,
+        "remove": {
+          "n": 88,
+          "spam": 87,
+          "precision": 0.9886363636363636,
+          "precision_lo": 0.9384050610770144,
+          "precision_hi": 0.9979912146822955
+        },
+        "review": {
+          "n": 105,
+          "spam": 63
+        },
+        "allow": {
+          "n": 177,
+          "spam": 7
+        },
+        "remove_recall": 0.554140127388535,
+        "remove_or_review_recall": 0.9554140127388535
+      },
+      "dev_original": {
+        "comments": 370,
+        "spam": 174,
+        "remove": {
+          "n": 88,
+          "spam": 88,
+          "precision": 1.0,
+          "precision_lo": 0.9581729333351078,
+          "precision_hi": 0.9999999999999999
+        },
+        "review": {
+          "n": 105,
+          "spam": 76
+        },
+        "allow": {
+          "n": 177,
+          "spam": 10
+        },
+        "remove_recall": 0.5057471264367817,
+        "remove_or_review_recall": 0.9425287356321839
+      }
+    },
+    "llm_v1": {
+      "floor": 3.0,
+      "auto_remove": 3.0,
+      "allow_below": 3.0,
+      "dev_corrected": {
+        "comments": 370,
+        "spam": 157,
+        "remove": {
+          "n": 157,
+          "spam": 156,
+          "precision": 0.9936305732484076,
+          "precision_lo": 0.964807130088783,
+          "precision_hi": 0.9988747535280136
+        },
+        "review": {
+          "n": 0,
+          "spam": 0
+        },
+        "allow": {
+          "n": 213,
+          "spam": 1
+        },
+        "remove_recall": 0.9936305732484076,
+        "remove_or_review_recall": 0.9936305732484076
+      },
+      "dev_original": {
+        "comments": 370,
+        "spam": 174,
+        "remove": {
+          "n": 157,
+          "spam": 156,
+          "precision": 0.9936305732484076,
+          "precision_lo": 0.964807130088783,
+          "precision_hi": 0.9988747535280136
+        },
+        "review": {
+          "n": 0,
+          "spam": 0
+        },
+        "allow": {
+          "n": 213,
+          "spam": 18
+        },
+        "remove_recall": 0.896551724137931,
+        "remove_or_review_recall": 0.896551724137931
+      }
+    },
+    "llm_v2": {
+      "floor": 3.0,
+      "auto_remove": 3.0,
+      "allow_below": 3.0,
+      "dev_corrected": {
+        "comments": 370,
+        "spam": 157,
+        "remove": {
+          "n": 156,
+          "spam": 156,
+          "precision": 1.0,
+          "precision_lo": 0.9759670685625849,
+          "precision_hi": 0.9999999999999999
+        },
+        "review": {
+          "n": 0,
+          "spam": 0
+        },
+        "allow": {
+          "n": 214,
+          "spam": 1
+        },
+        "remove_recall": 0.9936305732484076,
+        "remove_or_review_recall": 0.9936305732484076
+      },
+      "dev_original": {
+        "comments": 370,
+        "spam": 174,
+        "remove": {
+          "n": 156,
+          "spam": 156,
+          "precision": 1.0,
+          "precision_lo": 0.9759670685625849,
+          "precision_hi": 0.9999999999999999
+        },
+        "review": {
+          "n": 0,
+          "spam": 0
+        },
+        "allow": {
+          "n": 214,
+          "spam": 18
+        },
+        "remove_recall": 0.896551724137931,
+        "remove_or_review_recall": 0.896551724137931
+      }
+    }
+  }
+}
