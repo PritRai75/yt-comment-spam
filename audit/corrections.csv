@@ -13,6 +13,7 @@ Shakira:216,dev,Shakira,spam,ham,,audit_flag,F062,"ham – EC9/EC10, view count,
 Shakira:293,dev,Shakira,spam,ham,,full_review,D215,Conversation about other comments; asks for nothing
 Shakira:294,dev,Shakira,spam,ham,,full_review,D086,"Reply to another commenter; offers to subscribe, asks for nothing"
 Shakira:296,dev,Shakira,spam,ham,,full_review,D025,"EC5: offensive opinion, asks for nothing"
+Shakira:307,dev,Shakira,spam,ham,,unsure_resolution,U12,"EC9: very short, no link and no request; the scam row needs an offer and this makes none (unlike D084, which teases a method)"
 Shakira:351,dev,Shakira,spam,ham,,full_review,D113,EC4: share text followed by own reaction to the song
 Shakira:356,dev,Shakira,spam,ham,,audit_flag,F013,"ham – reaction, plus EC3"
 Eminem:004,test,Eminem,spam,ham,,audit_flag;subtype_sample,F048;S107,"ham – EC10, greeting"
@@ -56,6 +57,7 @@ LMFAO:149,test,LMFAO,spam,ham,,full_review,T222,"EC3, likes on the comment"
 LMFAO:161,test,LMFAO,spam,ham,,audit_flag,F043,ham – EC3
 LMFAO:205,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F045;S011,ham – EC3
 LMFAO:209,test,LMFAO,spam,ham,,audit_flag,F029,"ham – EC9; invites comments in the thread (EC3), nothing outside"
+LMFAO:213,test,LMFAO,spam,ham,,unsure_resolution,U14,"EC15: read as a statement of habit (like, watch, subscribe to shake-it songs) inside a reaction, not a request; same reading as T191"
 LMFAO:222,test,LMFAO,spam,ham,,audit_flag,F030,ham – EC3
 LMFAO:223,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F019;S017,"ham – EC3 (reverse ""don't like"")"
 LMFAO:225,test,LMFAO,spam,ham,,audit_flag,F061,"ham – EC3, joke"
@@ -83,4 +85,5 @@ LMFAO:395,test,LMFAO,spam,ham,,audit_flag,F056,ham – EC3
 LMFAO:398,test,LMFAO,spam,ham,,subtype_sample,S098,"EC4 own words: off-topic joke, asks nothing (EC10)"
 LMFAO:433,test,LMFAO,spam,ham,,audit_flag;subtype_sample,F005;S104,ham – EC3
 LMFAO:436,test,LMFAO,spam,ham,,audit_flag,F037,ham – EC3
+KatyPerry:247,train,KatyPerry,spam,ham,,unsure_resolution,U02,"EC8/P1: view campaign for this artist's other song (Firework), named but not linked; asks only for views and thumbs on this artist's work"
 KatyPerry:286,train,KatyPerry,spam,ham,,audit_flag,F055,"ham – EC8, vote for Katy, no link"

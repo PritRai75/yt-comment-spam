@@ -59,12 +59,13 @@ def test_subtype_labels_after_p9():
 
 def test_corrections_record():
     c = read("corrections.csv")
-    assert len(c) == 85 and c.row_id.is_unique
-    assert c.groupby("split").size().to_dict() == {"dev": 16, "test": 68, "train": 1}
-    assert c.groupby(["label_before", "label_after"]).size().to_dict() == {("ham", "spam"): 1, ("spam", "ham"): 84}
+    assert len(c) == 88 and c.row_id.is_unique
+    assert c.groupby("split").size().to_dict() == {"dev": 17, "test": 69, "train": 2}
+    assert c.groupby(["label_before", "label_after"]).size().to_dict() == {("ham", "spam"): 1, ("spam", "ham"): 87}
     assert (c.label_before == c.row_id.map(LABEL)).all()
     assert c.source.value_counts().to_dict() == {
-        "full_review": 30, "audit_flag": 29, "subtype_sample": 17, "audit_flag;subtype_sample": 9}
+        "full_review": 30, "audit_flag": 29, "subtype_sample": 17, "audit_flag;subtype_sample": 9,
+        "unsure_resolution": 3}
     to_spam = c[c.label_after == "spam"]
     assert list(zip(to_spam.row_id, to_spam.subtype_after, to_spam.source_id)) == [("Eminem:361", "self_promotion", "T327")]
     # random-sample estimate of test spam that is not spam (decision 21): 26 of 200
@@ -81,9 +82,12 @@ def test_full_review_labels_record():
         "spam": {("dev", "ham"): 0, ("dev", "spam"): 146, ("test", "ham"): 1, ("test", "spam"): 233},
         "unsure": {("dev", "ham"): 0, ("dev", "spam"): 3, ("test", "ham"): 0, ("test", "spam"): 3},
     }
-    # with the S1 reviews, every test spam comment has now been reviewed once: 67 of 481 judged not spam
+    # with the S1 reviews, every test spam comment has now been reviewed once: 67 of 481 judged not
+    # spam on the first pass, 68 after the second pass on unsure answers
     c = read("corrections.csv")
-    assert ((c.split == "test") & (c.label_before == "spam")).sum() == 67
+    test_spam = (c.split == "test") & (c.label_before == "spam")
+    assert (test_spam & (c.source != "unsure_resolution")).sum() == 67
+    assert test_spam.sum() == 68
 
 
 def test_scoring_exclusions():
@@ -99,9 +103,11 @@ def test_round_trip_through_workbooks(tmp_path):
     answers = f[["subtype", "notes"]].to_dict("index")
     fill(dev, "review", "review_id", answers)
     fill(test, "review", "review_id", answers)
-    tables = apply_review.build(args(pa, ps, dev=dev, test=test))
+    [u] = workbook.build_unsure(tmp_path / "u")
+    fill(u, "unsure", "unsure_id", read("unsure_resolution.csv").set_index("unsure_id")[["answer", "note"]].to_dict("index"))
+    tables = apply_review.build(args(pa, ps, dev=dev, test=test, unsure=u))
     assert set(tables) == {"review_verdicts.csv", "subtype_labels.csv", "full_review_labels.csv",
-                           "corrections.csv", "scoring_exclusions.csv"}
+                           "unsure_resolution.csv", "corrections.csv", "scoring_exclusions.csv"}
     for name, t in tables.items():
         assert apply_review.differences(name, t) == [], name
 
@@ -296,3 +302,13 @@ def test_unsure_needs_a_note(tmp_path):
     answers["U05"] = {"answer": "link", "note": ""}
     with pytest.raises(apply_review.ReviewError, match="U05: note is blank"):
         apply_review.build(unsure_book(tmp_path, answers))
+
+
+def test_unsure_resolution_record():
+    u = read("unsure_resolution.csv")
+    assert list(u.source_id) == list(workbook.unsure_table().source_id)
+    assert u.answer.value_counts().to_dict() == {"bulk": 5, "self_promotion": 5, "not_spam": 3, "link": 1, "scam": 1}
+    assert (u.note != "").all() and "unsure" not in set(u.answer)
+    c = read("corrections.csv")
+    moved = c[c.source == "unsure_resolution"]
+    assert sorted(zip(moved.source_id, moved.row_id)) == [("U02", "KatyPerry:247"), ("U12", "Shakira:307"), ("U14", "LMFAO:213")]
