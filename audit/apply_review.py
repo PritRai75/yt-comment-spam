@@ -1,7 +1,7 @@
 """Read the filled labelling workbooks back, check them, and write the audit record.
 
     python -m audit.apply_review --audit A.xlsx --subtypes S.xlsx
-        [--full-dev D.xlsx --full-test T.xlsx] [--recheck R.xlsx] [--check]
+        [--full-dev D.xlsx --full-test T.xlsx] [--recheck R.xlsx] [--unsure U.xlsx] [--check]
 
 Checks, before anything is written (any failure stops with a list of problems):
   - every sheet has the rows and columns it was built with, in the same order, and the
@@ -11,6 +11,7 @@ Checks, before anything is written (any failure stops with a list of problems):
     subtype; a ham final label has none; every verdict has a reason;
   - subtype sample and full review: an answer that disagrees with the current label,
     and every unsure, needs a note;
+  - unsure second pass: every answer needs a note;
   - the comments in both S1 sheets agree (spam verdict -> same subtype, ham -> not_spam,
     unsure -> unsure).
 
@@ -19,10 +20,12 @@ Writes, in audit/:
   subtype_labels.csv       the 200 subtype answers
   full_review_labels.csv   the option A answers (with --full-dev and --full-test)
   recheck_verdicts.csv     the blind re-check answers beside the first ones (with --recheck)
+  unsure_resolution.csv    the second-pass answers on the unsure ones (with --unsure)
   corrections.csv          one row per comment whose label the review changes
   scoring_exclusions.csv   comments left out of scoring (decision 28)
 
-An unsure answer never changes a label. With --check nothing is written; the fresh
+An unsure answer never changes a label; a second-pass answer on it can, and the
+first-pass record is kept as it was. With --check nothing is written; the fresh
 tables are compared with the files on disk.
 """
 import argparse
@@ -42,7 +45,7 @@ EXCLUSIONS = pd.DataFrame({
     "reason": ["source quoting error merged six comments into one row (decision 28)"],
 })
 OUTPUTS = ["review_verdicts.csv", "subtype_labels.csv", "full_review_labels.csv",
-           "recheck_verdicts.csv", "corrections.csv", "scoring_exclusions.csv"]
+           "recheck_verdicts.csv", "unsure_resolution.csv", "corrections.csv", "scoring_exclusions.csv"]
 
 
 class ReviewError(Exception):
@@ -160,6 +163,19 @@ def recheck_answers(path: Path) -> tuple:
     return df, bad
 
 
+def unsure_answers(path: Path) -> tuple:
+    df = read_sheet(path, "unsure")
+    exp = workbook.unsure_table()
+    bad = _given(df, exp, ["unsure_id", "source_id", "row_id", "video", "text", "first_note"], "unsure")
+    if bad:
+        return df, bad
+    for c in ["answer", "note"]:
+        df[c] = df[c].str.strip()
+    bad += _answers(df, "unsure_id", "answer", workbook.SUBTYPE_SHEET_CHOICES, "unsure")
+    bad += [f"unsure {i}: note is blank" for i, n in zip(df.unsure_id, df.note) if n == ""]
+    return df, bad
+
+
 def cross_check(audit: pd.DataFrame, subtypes: pd.DataFrame) -> list:
     sub = subtypes.set_index("sample_id").subtype
     bad = []
@@ -171,7 +187,7 @@ def cross_check(audit: pd.DataFrame, subtypes: pd.DataFrame) -> list:
     return bad
 
 
-def corrections(audit, subtypes, full=None) -> pd.DataFrame:
+def corrections(audit, subtypes, full=None, unsure=None) -> pd.DataFrame:
     df = load_comments().set_index("row_id")
     found = {}  # row_id -> (label_after, subtype_after, [(source, id, reason)])
 
@@ -196,6 +212,14 @@ def corrections(audit, subtypes, full=None) -> pd.DataFrame:
             after = "ham" if r.subtype == "not_spam" else "spam"
             if after != before:
                 add(r.row_id, after, r.subtype if after == "spam" else "", "full_review", r.review_id, r.notes)
+    if unsure is not None:
+        for r in unsure.itertuples():
+            before = "spam" if df.label[r.row_id] == 1 else "ham"
+            if r.answer == "unsure":
+                continue
+            after = "ham" if r.answer == "not_spam" else "spam"
+            if after != before:
+                add(r.row_id, after, r.answer if after == "spam" else "", "unsure_resolution", r.unsure_id, r.note)
 
     rows = []
     for row_id in sorted(found, key=lambda x: (df.split[x], x)):
@@ -248,6 +272,10 @@ def build(args) -> dict:
     if args.recheck:
         recheck, b = recheck_answers(args.recheck)
         bad += b
+    unsure = None
+    if args.unsure:
+        unsure, b = unsure_answers(args.unsure)
+        bad += b
     if not bad:
         bad += cross_check(audit, subtypes)
     if bad:
@@ -256,13 +284,15 @@ def build(args) -> dict:
     tables = {
         "review_verdicts.csv": audit[["flag_id", "row_id", "current_label", "verdict", "subtype_if_spam", "reason"]],
         "subtype_labels.csv": subtypes[["sample_id", "row_id", "subtype", "notes"]],
-        "corrections.csv": corrections(audit, subtypes, full),
+        "corrections.csv": corrections(audit, subtypes, full, unsure),
         "scoring_exclusions.csv": EXCLUSIONS,
     }
     if full is not None:
         tables["full_review_labels.csv"] = full[["review_id", "row_id", "split", "subtype", "notes"]]
     if recheck is not None:
         tables["recheck_verdicts.csv"] = recheck_table(recheck, audit)
+    if unsure is not None:
+        tables["unsure_resolution.csv"] = unsure[["unsure_id", "source_id", "row_id", "answer", "note"]]
     return tables
 
 
@@ -278,6 +308,9 @@ def summary(tables: dict) -> list:
     if "full_review_labels.csv" in tables:
         f = tables["full_review_labels.csv"]
         lines.append("full review: " + ", ".join(f"{k} {v}" for k, v in f.subtype.value_counts().items()))
+    if "unsure_resolution.csv" in tables:
+        u = tables["unsure_resolution.csv"]
+        lines.append("unsure second pass: " + ", ".join(f"{k} {v}" for k, v in u.answer.value_counts().items()))
     if "recheck_verdicts.csv" in tables:
         r = tables["recheck_verdicts.csv"]
         lines.append(f"blind re-check: same final label on {(r.same_label == 'true').sum()} of {len(r)}")
@@ -323,6 +356,7 @@ def main(argv=None) -> int:
     ap.add_argument("--full-dev", type=Path)
     ap.add_argument("--full-test", type=Path)
     ap.add_argument("--recheck", type=Path)
+    ap.add_argument("--unsure", type=Path)
     ap.add_argument("--check", action="store_true")
     args = ap.parse_args(argv)
     try:

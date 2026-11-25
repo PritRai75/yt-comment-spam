@@ -61,7 +61,7 @@ When a spam comment fits more than one subtype, label the first that applies in 
 10. **One-off off-topic comments** that ask for nothing and are not templated ("anyone here like football?", a personal story, preaching in the commenter's own words): **ham**.
 11. **Pasted religious text**: a set text such as a prayer or a litany (including one posted as a numbered part, "Part 5"), or a sermon that tells readers to spread it ("spread the truth"): **spam, bulk** (P5). Preaching in the commenter's own words that asks for nothing is ham (edge case 10).
 12. **Search directions** ("search X", "type in X", "google X"): not an address, so never link spam on its own (P3). Judge the words: sending viewers to a named outside channel, video, song or creator is **self-promotion** (P2); sending them to this video or this artist is **ham** (P1).
-13. **Phone numbers and email addresses**: **spam, link** (P4), whatever the request around them.
+13. **Phone numbers and email addresses**: written-out addresses, so **spam, link** (P4). The subtype order still applies: a scam or giveaway that gives a phone number or an email address is **scam**, as with any other written-out address.
 14. **Implicit plugs**: generic praise wrapped around a boast about the commenter's own channel or music, with no explicit ask ("great song! my channel is blowing up because my raps are real"): **spam, self-promotion** (P6). This extends edge case 2.
 15. **A bare "subscribe"** with no target ("Subscribe!", "subscribe pls"): **spam, self-promotion** (P7), read as a request to subscribe to the commenter. "Subscribe" aimed at this artist ("total subscribe to Katy") is fan activity: ham (P1).
 16. **Fake-engagement services**: selling views, likes, subscribers or comments: **spam, scam** (P9), even when a link or a named account is given, because scam comes first in the order. A swap between viewers ("sub to me and I'll sub back") sells nothing and is self-promotion.
@@ -83,7 +83,7 @@ Made after the first labelling pass, before any classifier was run on dev or tes
 | P1 | Fan activity for this video's artist with no link is ham | Edge cases 8, 12, 15 |
 | P2 | Sending viewers to any named outside channel, video, song or creator is self-promotion, whoever owns it | Subtypes; edge cases 6, 12 |
 | P3 | A search direction is not an address; judge its words | Which links count; edge case 12 |
-| P4 | Phone numbers and email addresses are link spam | Subtypes; Which links count; edge case 13 |
+| P4 | Phone numbers and email addresses are written-out addresses: link spam, by the subtype order | Subtypes; Which links count; edge case 13 |
 | P5 | Pasted religious texts (set texts, numbered parts) and sermons that tell readers to spread them are bulk; own-words preaching stays ham | Subtypes; edge cases 10, 11 |
 | P6 | Implicit plugs (praise around a boast about the commenter's own channel or music) are self-promotion | Subtypes; edge case 14 |
 | P7 | A bare "subscribe" is self-promotion | Subtypes; edge case 15 |

@@ -37,6 +37,7 @@ Written from the filled workbooks by `audit/apply_review.py`:
 | `subtype_labels.csv` | The subtype (or not_spam, or unsure) and note for each sampled comment |
 | `full_review_labels.csv` | The answer and note for each full-review comment |
 | `recheck_verdicts.csv` | The blind re-check answers beside the first ones, and whether the final label agrees |
+| `unsure_resolution.csv` | The second-pass answer and note on each first-pass `unsure` |
 | `corrections.csv` | One row per comment whose label changes: before, after, subtype, which review(s) found it, reason |
 | `scoring_exclusions.csv` | Comments left out of scoring: `Eminem:269`, one source row that holds six comments |
 
@@ -47,12 +48,13 @@ Written from the filled workbooks by `audit/apply_review.py`:
 - `s1`: `audit_review.xlsx` (the flags, current label shown) and `subtype_labels.xlsx` (the sample).
 - `full`: `review_dev.xlsx` and `review_test.xlsx`. The current label is hidden and spam and ham are shuffled together, so every answer is blind. Answer with a subtype for spam, `not_spam` for ham, or `unsure`.
 - `recheck`: `blind_recheck.xlsx`, the 20 re-check flags in a new order under new IDs (R01–R20), without the first answers.
+- `unsure`: `unsure.xlsx`, a second pass on every `unsure` answer from the flags and the full review (U01–U15), current label hidden, first-pass note shown. Every answer needs a note. The first-pass record is not changed, so the blind re-check still compares with the first answers.
 
 Then:
 
     python -m audit.apply_review --audit labels/audit_review.xlsx --subtypes labels/subtype_labels.xlsx
         [--full-dev labels/review_dev.xlsx --full-test labels/review_test.xlsx]
-        [--recheck labels/blind_recheck.xlsx] [--check]
+        [--recheck labels/blind_recheck.xlsx] [--unsure labels/unsure.xlsx] [--check]
 
 It stops, writing nothing, if a row or a given column was changed, an answer is blank or not a drop-down value, or the two S1 sheets disagree on a comment they share. `--check` compares with the files already in `audit/`.
 
@@ -67,4 +69,4 @@ The reviewer never sees the baselines' scores.
 
 ## What follows the review
 
-An unsure answer never changes a label. `data/splits.json` and the raw data never change: results are reported on the original labels and on the corrected labels, with `Eminem:269` left out of scoring. Agreement between the blind re-check and the first review is reported.
+An unsure answer never changes a label; its second-pass answer can (source `unsure_resolution` in `corrections.csv`). `data/splits.json` and the raw data never change: results are reported on the original labels and on the corrected labels, with `Eminem:269` left out of scoring. Agreement between the blind re-check and the first review is reported.

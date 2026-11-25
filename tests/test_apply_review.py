@@ -37,7 +37,7 @@ def s1_books(tmp_path, audit_edit=None, subtype_edit=None):
 
 def args(pa, ps, **kw):
     return argparse.Namespace(audit=pa, subtypes=ps, full_dev=kw.get("dev"), full_test=kw.get("test"),
-                              recheck=kw.get("recheck"), check=False)
+                              recheck=kw.get("recheck"), unsure=kw.get("unsure"), check=False)
 
 
 # --- the committed record (S1 labels, with the P9 edits) ---
@@ -252,3 +252,47 @@ def test_workbooks_are_never_overwritten(tmp_path):
         workbook.build_full(tmp_path)
     assert not (tmp_path / "review_dev.xlsx").exists()
     assert workbook.main([str(tmp_path), "--set", "full"]) == 1
+
+
+# --- unsure second pass ---
+
+def test_unsure_workbook():
+    t = workbook.unsure_table()
+    assert list(t.columns) == ["unsure_id", "source_id", "row_id", "video", "text", "first_note", "answer", "note"]
+    assert list(t.unsure_id) == [f"U{i:02d}" for i in range(1, 16)]
+    assert list(t.source_id) == ["F003", "F007", "F009", "F016", "F032", "F042", "F049", "F053", "F057",
+                                 "D029", "D090", "D121", "T030", "T059", "T299"]
+    assert "Eminem:269" not in set(t.row_id)
+    assert (t.first_note != "").all() and (t.answer == "").all()
+
+
+def unsure_book(tmp_path, answers):
+    pa, ps = s1_books(tmp_path / "s1")
+    f = read("full_review_labels.csv").set_index("review_id")
+    dev, test = workbook.build_full(tmp_path / "full")
+    full = f[["subtype", "notes"]].to_dict("index")
+    fill(dev, "review", "review_id", full)
+    fill(test, "review", "review_id", full)
+    [u] = workbook.build_unsure(tmp_path / "u")
+    fill(u, "unsure", "unsure_id", answers)
+    return args(pa, ps, dev=dev, test=test, unsure=u)
+
+
+def test_unsure_resolution_corrections(tmp_path):
+    answers = {f"U{i:02d}": {"answer": "bulk", "note": "test"} for i in range(1, 16)}
+    answers["U02"] = {"answer": "not_spam", "note": "P1: view campaign for this artist"}   # F007, labelled spam
+    answers["U15"] = {"answer": "unsure", "note": "still unsure"}
+    tables = apply_review.build(unsure_book(tmp_path, answers))
+    c = tables["corrections.csv"].set_index("source_id")
+    assert len(c) == 86
+    assert (c.row_id["U02"], c.label_after["U02"], c.source["U02"]) == ("KatyPerry:247", "ham", "unsure_resolution")
+    assert len(tables["unsure_resolution.csv"]) == 15
+    # first-pass verdicts are untouched
+    assert apply_review.differences("review_verdicts.csv", tables["review_verdicts.csv"]) == []
+
+
+def test_unsure_needs_a_note(tmp_path):
+    answers = {f"U{i:02d}": {"answer": "bulk", "note": "test"} for i in range(1, 16)}
+    answers["U05"] = {"answer": "link", "note": ""}
+    with pytest.raises(apply_review.ReviewError, match="U05: note is blank"):
+        apply_review.build(unsure_book(tmp_path, answers))

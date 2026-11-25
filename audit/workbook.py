@@ -13,11 +13,13 @@ Sets:
            label hidden, spam and ham shuffled together
   recheck  blind_recheck.xlsx: the 20 flags in audit/blind_recheck.csv in a new order,
            with new IDs (R01-R20) and no first answers
+  unsure   unsure.xlsx: a second pass on every unsure answer (audit flags and full review),
+           current label hidden, first-pass note shown
 
 The CSVs in audit/ stay the record; the workbooks are filled in by hand and read back by
 audit/apply_review.py. An existing workbook is never overwritten.
 
-    python -m audit.workbook <folder> --set {s1,full,recheck}
+    python -m audit.workbook <folder> --set {s1,full,recheck,unsure}
 """
 import argparse
 import json
@@ -114,6 +116,29 @@ def recheck_ids() -> dict:
     return {f"R{i + 1:02d}": flags[j] for i, j in enumerate(order)}
 
 
+def unsure_table() -> pd.DataFrame:
+    """Second pass on every unsure answer (audit flags, then the full review), blind to the
+    current label, with the first-pass note beside it. The first-pass record is unchanged."""
+    review = review_table().set_index("flag_id")
+    verdicts = read("review_verdicts.csv")
+    flags = verdicts[verdicts.verdict == "unsure"]
+    full = read("full_review_labels.csv")
+    full = full[full.subtype == "unsure"]
+    text_of = dict(zip(read("full_review.csv").review_id, read("full_review.csv").text))
+    rows = [(f, r, review.text[f], n) for f, r, n in zip(flags.flag_id, flags.row_id, flags.reason)]
+    rows += [(i, r, text_of[i], n) for i, r, n in zip(full.review_id, full.row_id, full.notes)]
+    return pd.DataFrame({
+        "unsure_id": [f"U{i + 1:02d}" for i in range(len(rows))],
+        "source_id": [r[0] for r in rows],
+        "row_id": [r[1] for r in rows],
+        "video": [video_label(r[1].split(":")[0]) for r in rows],
+        "text": [r[2] for r in rows],
+        "first_note": [r[3] for r in rows],
+        "answer": "",
+        "note": "",
+    })
+
+
 def _save(wb, path: Path) -> Path:
     if path.exists():
         raise FileExistsError(f"{path} exists; a filled workbook is never overwritten")
@@ -197,7 +222,14 @@ def build_recheck(out_dir: Path) -> list:
                   {"E": VERDICTS, "F": SUBTYPES}, out_dir / "blind_recheck.xlsx")]
 
 
-SETS = {"s1": build, "full": build_full, "recheck": build_recheck}
+def build_unsure(out_dir: Path) -> list:
+    _prepare(out_dir, ["unsure.xlsx"])
+    return [_book("unsure", unsure_table(),
+                  {"A": 9, "B": 9, "C": 14, "D": 24, "E": 60, "F": 45, "G": 16, "H": 40},
+                  {"G": SUBTYPE_SHEET_CHOICES}, out_dir / "unsure.xlsx")]
+
+
+SETS = {"s1": build, "full": build_full, "recheck": build_recheck, "unsure": build_unsure}
 
 
 def main(argv=None) -> int:
