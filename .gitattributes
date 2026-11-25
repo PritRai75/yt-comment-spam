@@ -14,3 +14,6 @@ results/llm/** -text
 
 # Final analysis outputs: keep bytes exactly as written
 results/final/** -text
+
+# Red-team outputs and LLM votes: keep bytes exactly as written
+results/adversarial/** -text
