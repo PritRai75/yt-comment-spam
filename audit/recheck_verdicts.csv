@@ -1,0 +1,21 @@
+﻿recheck_id,flag_id,verdict,subtype_if_spam,reason,first_verdict,first_subtype_if_spam,same_label
+R01,F011,correct,,"EC3: likes on the comment itself; ""type 1337"" is a thread game promoting nothing outside the thread",correct,,true
+R02,F039,keep,self_promotion,"EC12, P2: search direction sending viewers to a named outside song or creator",keep,self_promotion,true
+R03,F038,correct,,EC3: likes on the comment itself,correct,,true
+R04,F033,correct,,"EC3: same text as R01, same call",correct,,true
+R05,F030,correct,,EC3: likes on the comment itself,correct,,true
+R06,F026,correct,,"EC3: the policy's own example (""Like if you're watching in 2015"")",correct,,true
+R07,F010,correct,,EC6: opinion comparing songs; sends viewers nowhere,correct,,true
+R08,F003,keep,bulk,"EC11, P5: pasted litany posted as a numbered part (""Part 5"")",unsure,bulk,false
+R09,F059,correct,,EC3: likes on the comment itself,correct,,true
+R10,F040,keep,link,"Which links count: written-out address (miley-celeb-news.co.uk); clickbait but nothing on the scam list, so link",keep,link,true
+R11,F012,correct,,EC6: opinion comparing Canibus and Eminem; sends viewers nowhere,correct,,true
+R12,F051,correct,,"Definition: joke about the comment section; asks for nothing, promotes nothing (EC10)",correct,,true
+R13,F007,correct,,"EC8, P1: no-link view campaign for this video's artist, naming another of her songs",unsure,self_promotion,false
+R14,F009,keep,self_promotion,"EC14, P6: implicit plug, praise around ""im getting popular fast because i rap with meaning""",unsure,self_promotion,false
+R15,F036,correct,,"EC9, EC3: short reaction; ""share"" has no link or outside target, and encouraging shares is allowed",correct,,true
+R16,F063,correct,,"EC3, EC8: like request on the comment plus a no-link view hope for this video",correct,,true
+R17,F016,keep,self_promotion,"EC14, P6: implicit plug, same template as R14",unsure,self_promotion,false
+R18,F050,correct,,"EC3, EC9: ""it"" is either the comment or this video; both are allowed",correct,,true
+R19,F023,correct,,EC3: likes on the comment itself,correct,,true
+R20,F001,correct,,EC3: likes on the comment itself,correct,,true
