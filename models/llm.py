@@ -23,8 +23,13 @@ which is spam votes + 0.99 x mean p_spam when all 5 are valid, so it runs from 0
 5.99 and every extra spam vote outranks any confidence. A comment with no valid vote
 scores 0 and is counted in the run summary.
 
+Text steps: v1 sends the comment after `clean_text`; v2 also runs `data/normalize.py`
+(NFKC, invisible characters, look-alike letters, spaced-out links), in code, on every
+comment and on its few-shot examples. The vote cache is keyed on the text as sent.
+
 One configuration, hashed to 12 characters, is carried by every call: prompt version
-and the SHA-256 of the rendered system prompt (so the policy text is in it), model ID,
+and the SHA-256 of the rendered system prompt (so the policy text and v2's examples are
+in it, and v2's normalisation step), model ID,
 region, temperature, maximum output tokens and the SHA-256 of the pinned data zip.
 
 Cache: one JSON line per vote in results/llm/<version>-<hash>/r<replicate>/calls.jsonl,
@@ -61,6 +66,7 @@ import pandas as pd
 from data.clean import clean_text
 from data.fetch import ROOT
 from data.load import load_comments
+from data.normalize import normalize
 from models import rules
 
 MODEL_ID = "global.anthropic.claude-haiku-4-5-20251001-v1:0"  # decision 19
@@ -81,6 +87,7 @@ RUNS = ROOT / "results" / "llm"
 FAKE_RUNS = ROOT / "results" / "llm-fake"  # offline runs, not committed
 POLICY_SECTIONS = ["Definition", "How to judge", "Subtypes", "Which links count", "Edge cases"]
 ALLOWED_SPLITS = ["dev"]  # the test split is added with the test lock (step 6)
+NORMALIZED = {"v1": False, "v2": True}  # text steps per prompt version
 
 
 # Prompt
@@ -100,10 +107,17 @@ class Prompt:
     version: str
     system: str
     user_template: str
+    normalize: bool = False
 
     @property
     def sha256(self) -> str:
-        return hashlib.sha256((self.system + "\x00" + self.user_template).encode("utf-8")).hexdigest()
+        parts = self.system + "\x00" + self.user_template + ("\x00normalize" if self.normalize else "")
+        return hashlib.sha256(parts.encode("utf-8")).hexdigest()
+
+    def text(self, content: str) -> str:
+        """The comment text as this prompt sends it."""
+        t = clean_text(content)
+        return normalize(t) if self.normalize else t
 
     def user(self, video: str, text: str) -> str:
         return (self.user_template.replace("{{VIDEO}}", describe_video(video))
@@ -119,7 +133,22 @@ def load_prompt(version: str = "v1", policy: Path = POLICY) -> Prompt:
         raise ValueError(f"{version}.md needs '=== SYSTEM ===' and '=== USER ===' lines") from None
     if system.count("{{POLICY}}") != 1 or "{{COMMENT_JSON}}" not in user or "{{VIDEO}}" not in user:
         raise ValueError(f"{version}.md placeholders missing")
-    return Prompt(version, system.strip().replace("{{POLICY}}", policy_text(policy)), user.strip())
+    system = system.strip().replace("{{POLICY}}", policy_text(policy))
+    if "{{EXAMPLES}}" in system:
+        system = system.replace("{{EXAMPLES}}", render_examples())
+    return Prompt(version, system, user.strip(), NORMALIZED.get(version, False))
+
+
+def render_examples() -> str:
+    """The few-shot block: each example's video, comment as a JSON string, and answer."""
+    from models import fewshot
+    answers = pd.read_csv(fewshot.ANSWERS, dtype=str, keep_default_na=False)
+    blocks = []
+    for i, e in enumerate(fewshot.examples(answers).itertuples(), 1):
+        blocks.append(f"Example {i}\nVideo: {describe_video(e.video)}\n"
+                      f"Comment: {json.dumps(e.text, ensure_ascii=False)}\n"
+                      f"Answer: label {e.label}, subtype {e.subtype}")
+    return "\n\n".join(blocks)
 
 
 def describe_video(video: str) -> str:
@@ -318,7 +347,7 @@ def run(rows: pd.DataFrame, client, prompt: Prompt, *, votes: int = N_VOTES, rep
     made = cached = invalid = 0  # cached: votes already in the cache, incl. repeated texts
     started = time.monotonic()
     for i, r in enumerate(rows.itertuples(), 1):
-        text = clean_text(r.content)
+        text = prompt.text(r.content)
         for vote in range(votes):
             key = call_key(config, r.video, text, vote + N_VOTES * replicate)
             if key in cache:
@@ -343,7 +372,7 @@ def scores(rows: pd.DataFrame, prompt: Prompt, *, replicate: int = 0, votes: int
     cache = cache or Cache(run_dir(config, replicate) / "calls.jsonl")
     out = []
     for r in rows.itertuples():
-        text = clean_text(r.content)
+        text = prompt.text(r.content)
         recs = [cache.records.get(call_key(config, r.video, text, v + N_VOTES * replicate)) for v in range(votes)]
         if any(x is None for x in recs):
             raise ValueError(f"{r.row_id}: votes missing from the cache; run first")
@@ -421,7 +450,7 @@ def main(argv=None) -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     for name in ("run", "summary"):
         p = sub.add_parser(name)
-        p.add_argument("--prompt", default="v1")
+        p.add_argument("--prompt", default="v1", choices=sorted(NORMALIZED))
         p.add_argument("--split", choices=ALLOWED_SPLITS, required=True)
         p.add_argument("--replicate", type=int, default=0)
         p.add_argument("--votes", type=int, default=N_VOTES)

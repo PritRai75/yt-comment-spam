@@ -272,3 +272,86 @@ def test_command_line_fake_run(tmp_path, monkeypatch, capsys):
     assert len((tmp_path / C.name / "r0" / "calls.jsonl").read_text().splitlines()) == 4
     assert llm.main(["summary", "--split", "dev", "--fake"]) == 0
     assert "4 calls cached" in capsys.readouterr().out
+
+
+def test_committed_v1_dev_run_is_complete_and_readable():
+    # Keys depend on the config and on the text as sent; this fails if either drifts.
+    s = llm.scores(DEV, P)
+    assert len(s) == 370 and (s.n_valid == 5).all()
+    assert (s.spam_votes.isin([0, 5])).all()
+    u = llm.usage(llm.Cache(llm.run_dir(C) / "calls.jsonl"))
+    assert (u["calls"], u["attempts"], u["invalid"]) == (1620, 1620, 0)
+
+
+def test_v1_sends_cleaned_text_only():
+    assert P.normalize is False
+    assert P.text("ｆｒｅｅ&amp;") == clean_text("ｆｒｅｅ&amp;")
+
+
+
+# LLM v2
+
+P2 = llm.load_prompt("v2")
+C2 = llm.make_config(P2)
+
+
+def test_v2_prompt_and_config_are_pinned():
+    # Changing the prompt file, the policy sections or the examples changes these.
+    assert P2.normalize is True
+    assert P2.sha256[:12] == "63a38054ea1b"
+    assert C2.name == "v2-646be57ed779"
+
+
+def test_v2_is_v1_plus_examples_and_the_normalisation_line():
+    assert llm.policy_text() in P2.system
+    assert P2.user_template == P.user_template
+    block = P2.system.split("<examples>\n")[1].split("</examples>")[0]
+    assert block.count("\nExample ") + block.startswith("Example ") == 8
+    assert block.count("Answer: label spam, subtype ") == 4
+    assert block.count("Answer: label ham, subtype none") == 4
+    assert "text has been normalised" in P2.system and "text has been normalised" not in P.system
+
+
+def test_v2_examples_are_the_reviewed_candidates():
+    import pandas as pd
+    from models import fewshot
+    a = pd.read_csv(fewshot.ANSWERS, dtype=str)
+    assert list(a.columns) == ["candidate", "row_id", "video", "answer"]
+    assert list(a.row_id) == list(fewshot.candidates(df=DF).row_id)
+    labels = DF.set_index("row_id").label
+    assert all((ans != "not_spam") == bool(labels[r]) for r, ans in zip(a.row_id, a.answer))
+    ex = fewshot.examples(a, df=DF)
+    assert sorted(ex.row_id) == sorted(["Psy:057", "Psy:179", "Psy:200", "Psy:059",
+                                        "Psy:321", "KatyPerry:307", "Psy:063", "KatyPerry:223"])
+    assert ex.set_index("row_id").subtype["Psy:200"] == "scam"
+
+
+def test_v2_examples_share_no_text_with_dev_or_test():
+    from models import fewshot
+    held = DF[DF.split != "train"]
+    held_runs = set().union(*(fewshot.word_runs(t) for t in held.content))
+    block = P2.system.split("<examples>\n")[1].split("</examples>")[0]
+    comments = [json.loads(line[len("Comment: "):]) for line in block.splitlines() if line.startswith("Comment: ")]
+    assert len(comments) == 8
+    for text in comments:
+        assert not fewshot.word_runs(text) & held_runs
+
+
+def test_v2_sends_normalised_text(tmp_path):
+    fake = llm.FakeClient()
+    rows = DF[DF.row_id == "Shakira:262"]  # a full-width link
+    cache = llm.Cache(tmp_path / "calls.jsonl")
+    llm.run(rows, fake, P2, cache=cache, pacer=llm.Pacer(0), log=lambda *_: None, votes=1)
+    sent = json.loads(fake.calls[0]["messages"][0]["content"][0]["text"].rsplit("\n", 1)[1])
+    assert sent.startswith("http://www.ebay.com/usr/shoeco")
+    assert sent == llm.normalize(clean_text(rows.content.iloc[0])) != clean_text(rows.content.iloc[0])
+    assert fake.calls[0]["system"][0]["text"] == P2.system
+
+
+def test_v2_request_matches_the_bedrock_service_model():
+    req = llm.request(C2, P2, "Shakira", P2.text(DEV.content[3]))
+    resp = llm.FakeClient().converse(**req)
+    client = _bedrock()
+    with Stubber(client) as st:
+        st.add_response("converse", resp, req)
+        client.converse(**req)

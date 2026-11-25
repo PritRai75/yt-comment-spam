@@ -1,0 +1,13 @@
+candidate,row_id,video,answer
+C01,Psy:321,Psy,not_spam
+C02,Psy:057,Psy,self_promotion
+C03,Psy:200,Psy,scam
+C04,KatyPerry:223,KatyPerry,not_spam
+C05,Psy:059,Psy,self_promotion
+C06,KatyPerry:205,KatyPerry,self_promotion
+C07,Psy:179,Psy,self_promotion
+C08,Psy:345,Psy,not_spam
+C09,KatyPerry:307,KatyPerry,not_spam
+C10,Psy:063,Psy,not_spam
+C11,KatyPerry:154,KatyPerry,not_spam
+C12,KatyPerry:077,KatyPerry,self_promotion
