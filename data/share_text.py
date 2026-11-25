@@ -8,8 +8,8 @@ truncated endings "on YouTu" and "on YouTub". On the pinned data the family is
 
 The pre-registered second result drops the whole family (decision 14a). Whether a
 comment in the family is spam is still decided by the policy: bare share text, or
-share text followed only by stray characters, is bulk; share text followed by the
-commenter's own words is judged by those words.
+share text followed by a tail that says nothing on its own (P10), is bulk; share
+text followed by the commenter's own words is judged by those words.
 """
 import re
 

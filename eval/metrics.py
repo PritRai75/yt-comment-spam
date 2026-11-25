@@ -5,7 +5,10 @@ At a threshold (spam when score >= threshold):
     (precision k = true positives of n = flagged; recall k = true positives of n = spam;
     false-positive rate k = false positives of n = ham);
   F1, with a seeded percentile bootstrap 95% interval (comments resampled with
-    replacement). F1 is not a single proportion, so no Wilson interval exists for it.
+    replacement). F1 is not a single proportion, so no Wilson interval exists for it
+    (decision 36). Every interval here describes one system and is not a test between
+    systems (those are the paired McNemar tests); each covers resampling comments
+    within the scored videos, not variation across new videos.
 Over all thresholds:
   the precision-recall curve, one point per distinct score, and its area as average
     precision: the sum over points of (gain in recall) x (precision there), the
