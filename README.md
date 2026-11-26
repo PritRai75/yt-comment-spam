@@ -130,8 +130,14 @@ New LLM calls need AWS credentials with Bedrock access (`python -m models.llm ru
 | `models/` | The five systems and the LLM prompts |
 | `eval/` | Labels, metrics, thresholds, McNemar and Holm, the pre-registration, the test lock, the final analysis, this README's report |
 | `adversarial/` | The red team |
+| `sql/` | Confusion counts and per-video metrics in SQL, run in BigQuery and checked against Python |
+| `release/` | The audited labels as a Hugging Face dataset (`release/huggingface/`) |
 | `results/` | LLM vote caches, final results, red-team results, tree CV and importance |
 | `tests/` | The test suite run by CI |
+
+## Published labels
+
+The corrected labels, with the review answer and reason for every correction, are on the Hugging Face Hub as [PritRai75/youtube-spam-collection-audited](https://huggingface.co/datasets/PritRai75/youtube-spam-collection-audited), built by `python -m release.hf_dataset`.
 
 ## Credit and licence
 

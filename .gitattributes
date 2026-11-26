@@ -17,3 +17,9 @@ results/final/** -text
 
 # Red-team outputs and LLM votes: keep bytes exactly as written
 results/adversarial/** -text
+
+# Hugging Face dataset files: keep bytes exactly as written
+release/huggingface/** -text
+
+# BigQuery result exports: keep bytes exactly as downloaded
+results/sql/** -text
