@@ -1,0 +1,513 @@
+{
+  "split": "test",
+  "seed": 20261125,
+  "sample_size": 100,
+  "pool": {
+    "corrected_spam": 413,
+    "caught_by_all_four": 391,
+    "quoted_by_policy": 3,
+    "distinct_texts": 248
+  },
+  "sampled": 100,
+  "sampled_by_video": {
+    "Eminem": 69,
+    "LMFAO": 31
+  },
+  "systems": [
+    "rules",
+    "logreg",
+    "tree",
+    "llm_v2"
+  ],
+  "cutoffs": {
+    "rules": 1.0,
+    "logreg": 0.5,
+    "tree": 0.5,
+    "llm_v2": 3.0
+  },
+  "variants_by_transform": {
+    "split_links": 15,
+    "leetspeak": 98,
+    "lookalikes": 98,
+    "zero_width": 98,
+    "benign_wrapper": 100,
+    "injection": 100
+  },
+  "results": {
+    "rules_as_is": {
+      "by_transform": {
+        "split_links": {
+          "variants": 15,
+          "evaded": 2,
+          "rate": 0.13333333333333333,
+          "lo": 0.03736125910306537,
+          "hi": 0.37881982832322364,
+          "auto_removed_before": 13,
+          "left_auto_remove": 4
+        },
+        "leetspeak": {
+          "variants": 98,
+          "evaded": 84,
+          "rate": 0.8571428571428571,
+          "lo": 0.7743875696687049,
+          "hi": 0.9129552945300946,
+          "auto_removed_before": 34,
+          "left_auto_remove": 25
+        },
+        "lookalikes": {
+          "variants": 98,
+          "evaded": 85,
+          "rate": 0.8673469387755102,
+          "lo": 0.7861710985395127,
+          "hi": 0.9208101332078238,
+          "auto_removed_before": 34,
+          "left_auto_remove": 25
+        },
+        "zero_width": {
+          "variants": 98,
+          "evaded": 85,
+          "rate": 0.8673469387755102,
+          "lo": 0.7861710985395127,
+          "hi": 0.9208101332078238,
+          "auto_removed_before": 34,
+          "left_auto_remove": 25
+        },
+        "benign_wrapper": {
+          "variants": 100,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 3.469446951953614e-18,
+          "hi": 0.03699349820698568,
+          "auto_removed_before": 35,
+          "left_auto_remove": 0
+        },
+        "injection": {
+          "variants": 100,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 3.469446951953614e-18,
+          "hi": 0.03699349820698568,
+          "auto_removed_before": 35,
+          "left_auto_remove": 0
+        }
+      },
+      "all_transforms": {
+        "variants": 509,
+        "comments": 100,
+        "evaded": 256,
+        "rate": 0.5029469548133595,
+        "lo": 0.457915719045856,
+        "hi": 0.5463510848126233
+      }
+    },
+    "rules_normalised": {
+      "by_transform": {
+        "split_links": {
+          "variants": 15,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 0.0,
+          "hi": 0.20388330103584862,
+          "auto_removed_before": 13,
+          "left_auto_remove": 0
+        },
+        "leetspeak": {
+          "variants": 98,
+          "evaded": 84,
+          "rate": 0.8571428571428571,
+          "lo": 0.7743875696687049,
+          "hi": 0.9129552945300946,
+          "auto_removed_before": 34,
+          "left_auto_remove": 25
+        },
+        "lookalikes": {
+          "variants": 98,
+          "evaded": 2,
+          "rate": 0.02040816326530612,
+          "lo": 0.0056146141550348985,
+          "hi": 0.07138211106371997,
+          "auto_removed_before": 34,
+          "left_auto_remove": 7
+        },
+        "zero_width": {
+          "variants": 98,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 3.469446951953614e-18,
+          "hi": 0.037719990121680605,
+          "auto_removed_before": 34,
+          "left_auto_remove": 0
+        },
+        "benign_wrapper": {
+          "variants": 100,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 3.469446951953614e-18,
+          "hi": 0.03699349820698568,
+          "auto_removed_before": 35,
+          "left_auto_remove": 0
+        },
+        "injection": {
+          "variants": 100,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 3.469446951953614e-18,
+          "hi": 0.03699349820698568,
+          "auto_removed_before": 35,
+          "left_auto_remove": 0
+        }
+      },
+      "all_transforms": {
+        "variants": 509,
+        "comments": 100,
+        "evaded": 86,
+        "rate": 0.16895874263261296,
+        "lo": 0.15204678362573099,
+        "hi": 0.1850448599303573
+      }
+    },
+    "logreg_as_is": {
+      "by_transform": {
+        "split_links": {
+          "variants": 15,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 0.0,
+          "hi": 0.20388330103584862,
+          "auto_removed_before": 13,
+          "left_auto_remove": 0
+        },
+        "leetspeak": {
+          "variants": 98,
+          "evaded": 35,
+          "rate": 0.35714285714285715,
+          "lo": 0.2693153421722757,
+          "hi": 0.4557475121482044,
+          "auto_removed_before": 73,
+          "left_auto_remove": 33
+        },
+        "lookalikes": {
+          "variants": 98,
+          "evaded": 86,
+          "rate": 0.8775510204081632,
+          "lo": 0.798071601716968,
+          "hi": 0.9285479975789057,
+          "auto_removed_before": 73,
+          "left_auto_remove": 64
+        },
+        "zero_width": {
+          "variants": 98,
+          "evaded": 87,
+          "rate": 0.8877551020408163,
+          "lo": 0.8101006663032684,
+          "hi": 0.9361573005411425,
+          "auto_removed_before": 73,
+          "left_auto_remove": 64
+        },
+        "benign_wrapper": {
+          "variants": 100,
+          "evaded": 62,
+          "rate": 0.62,
+          "lo": 0.5220975529551107,
+          "hi": 0.7090240074752127,
+          "auto_removed_before": 75,
+          "left_auto_remove": 73
+        },
+        "injection": {
+          "variants": 100,
+          "evaded": 17,
+          "rate": 0.17,
+          "lo": 0.10893566114059931,
+          "hi": 0.25548004767601123,
+          "auto_removed_before": 75,
+          "left_auto_remove": 39
+        }
+      },
+      "all_transforms": {
+        "variants": 509,
+        "comments": 100,
+        "evaded": 287,
+        "rate": 0.5638506876227898,
+        "lo": 0.5038759689922481,
+        "hi": 0.6210505068363978
+      }
+    },
+    "logreg_normalised": {
+      "by_transform": {
+        "split_links": {
+          "variants": 15,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 0.0,
+          "hi": 0.20388330103584862,
+          "auto_removed_before": 13,
+          "left_auto_remove": 0
+        },
+        "leetspeak": {
+          "variants": 98,
+          "evaded": 35,
+          "rate": 0.35714285714285715,
+          "lo": 0.2693153421722757,
+          "hi": 0.4557475121482044,
+          "auto_removed_before": 73,
+          "left_auto_remove": 33
+        },
+        "lookalikes": {
+          "variants": 98,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 3.469446951953614e-18,
+          "hi": 0.037719990121680605,
+          "auto_removed_before": 73,
+          "left_auto_remove": 3
+        },
+        "zero_width": {
+          "variants": 98,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 3.469446951953614e-18,
+          "hi": 0.037719990121680605,
+          "auto_removed_before": 73,
+          "left_auto_remove": 0
+        },
+        "benign_wrapper": {
+          "variants": 100,
+          "evaded": 62,
+          "rate": 0.62,
+          "lo": 0.5220975529551107,
+          "hi": 0.7090240074752127,
+          "auto_removed_before": 75,
+          "left_auto_remove": 73
+        },
+        "injection": {
+          "variants": 100,
+          "evaded": 17,
+          "rate": 0.17,
+          "lo": 0.10893566114059931,
+          "hi": 0.25548004767601123,
+          "auto_removed_before": 75,
+          "left_auto_remove": 39
+        }
+      },
+      "all_transforms": {
+        "variants": 509,
+        "comments": 100,
+        "evaded": 114,
+        "rate": 0.22396856581532418,
+        "lo": 0.18003525911570212,
+        "hi": 0.2652389856597001
+      }
+    },
+    "tree_as_is": {
+      "by_transform": {
+        "split_links": {
+          "variants": 15,
+          "evaded": 2,
+          "rate": 0.13333333333333333,
+          "lo": 0.03736125910306537,
+          "hi": 0.37881982832322364,
+          "auto_removed_before": 14,
+          "left_auto_remove": 4
+        },
+        "leetspeak": {
+          "variants": 98,
+          "evaded": 84,
+          "rate": 0.8571428571428571,
+          "lo": 0.7743875696687049,
+          "hi": 0.9129552945300946,
+          "auto_removed_before": 61,
+          "left_auto_remove": 60
+        },
+        "lookalikes": {
+          "variants": 98,
+          "evaded": 84,
+          "rate": 0.8571428571428571,
+          "lo": 0.7743875696687049,
+          "hi": 0.9129552945300946,
+          "auto_removed_before": 61,
+          "left_auto_remove": 60
+        },
+        "zero_width": {
+          "variants": 98,
+          "evaded": 85,
+          "rate": 0.8673469387755102,
+          "lo": 0.7861710985395127,
+          "hi": 0.9208101332078238,
+          "auto_removed_before": 61,
+          "left_auto_remove": 61
+        },
+        "benign_wrapper": {
+          "variants": 100,
+          "evaded": 3,
+          "rate": 0.03,
+          "lo": 0.010254524024038925,
+          "hi": 0.0845193642905276,
+          "auto_removed_before": 63,
+          "left_auto_remove": 34
+        },
+        "injection": {
+          "variants": 100,
+          "evaded": 2,
+          "rate": 0.02,
+          "lo": 0.00550196755016235,
+          "hi": 0.07001179072854388,
+          "auto_removed_before": 63,
+          "left_auto_remove": 19
+        }
+      },
+      "all_transforms": {
+        "variants": 509,
+        "comments": 100,
+        "evaded": 260,
+        "rate": 0.5108055009823183,
+        "lo": 0.46331332722383306,
+        "hi": 0.5566656944560183
+      }
+    },
+    "tree_normalised": {
+      "by_transform": {
+        "split_links": {
+          "variants": 15,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 0.0,
+          "hi": 0.20388330103584862,
+          "auto_removed_before": 14,
+          "left_auto_remove": 0
+        },
+        "leetspeak": {
+          "variants": 98,
+          "evaded": 84,
+          "rate": 0.8571428571428571,
+          "lo": 0.7743875696687049,
+          "hi": 0.9129552945300946,
+          "auto_removed_before": 61,
+          "left_auto_remove": 60
+        },
+        "lookalikes": {
+          "variants": 98,
+          "evaded": 4,
+          "rate": 0.04081632653061224,
+          "lo": 0.015985249179476427,
+          "hi": 0.1002882111363527,
+          "auto_removed_before": 61,
+          "left_auto_remove": 10
+        },
+        "zero_width": {
+          "variants": 98,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 3.469446951953614e-18,
+          "hi": 0.037719990121680605,
+          "auto_removed_before": 61,
+          "left_auto_remove": 0
+        },
+        "benign_wrapper": {
+          "variants": 100,
+          "evaded": 3,
+          "rate": 0.03,
+          "lo": 0.010254524024038925,
+          "hi": 0.0845193642905276,
+          "auto_removed_before": 63,
+          "left_auto_remove": 34
+        },
+        "injection": {
+          "variants": 100,
+          "evaded": 2,
+          "rate": 0.02,
+          "lo": 0.00550196755016235,
+          "hi": 0.07001179072854388,
+          "auto_removed_before": 63,
+          "left_auto_remove": 19
+        }
+      },
+      "all_transforms": {
+        "variants": 509,
+        "comments": 100,
+        "evaded": 93,
+        "rate": 0.18271119842829076,
+        "lo": 0.1612268229506364,
+        "hi": 0.20512820512820512
+      }
+    },
+    "llm_v2_normalised": {
+      "by_transform": {
+        "split_links": {
+          "variants": 15,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 0.0,
+          "hi": 0.20388330103584862,
+          "auto_removed_before": 15,
+          "left_auto_remove": 0
+        },
+        "leetspeak": {
+          "variants": 98,
+          "evaded": 1,
+          "rate": 0.01020408163265306,
+          "lo": 0.0018035477567974675,
+          "hi": 0.055554809913420274,
+          "auto_removed_before": 98,
+          "left_auto_remove": 1
+        },
+        "lookalikes": {
+          "variants": 98,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 3.469446951953614e-18,
+          "hi": 0.037719990121680605,
+          "auto_removed_before": 98,
+          "left_auto_remove": 0
+        },
+        "zero_width": {
+          "variants": 98,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 3.469446951953614e-18,
+          "hi": 0.037719990121680605,
+          "auto_removed_before": 98,
+          "left_auto_remove": 0
+        },
+        "benign_wrapper": {
+          "variants": 100,
+          "evaded": 8,
+          "rate": 0.08,
+          "lo": 0.041093461484380624,
+          "hi": 0.14998107700948735,
+          "auto_removed_before": 100,
+          "left_auto_remove": 8
+        },
+        "injection": {
+          "variants": 100,
+          "evaded": 0,
+          "rate": 0.0,
+          "lo": 3.469446951953614e-18,
+          "hi": 0.03699349820698568,
+          "auto_removed_before": 100,
+          "left_auto_remove": 0
+        }
+      },
+      "all_transforms": {
+        "variants": 509,
+        "comments": 100,
+        "evaded": 9,
+        "rate": 0.01768172888015717,
+        "lo": 0.007796891710469428,
+        "hi": 0.02941611555864947
+      }
+    }
+  },
+  "llm_usage": {
+    "config": "v2-646be57ed779",
+    "calls": 1840,
+    "attempts": 1840,
+    "invalid": 0,
+    "input_tokens": 8253705,
+    "output_tokens": 188004,
+    "latency_s": 2056.0,
+    "votes_needed": 2340,
+    "reused_from_run": 500,
+    "already_made": 1840,
+    "to_make": 0
+  }
+}
