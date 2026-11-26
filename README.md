@@ -9,7 +9,51 @@ A small, complete enforcement-detection workflow for YouTube comment spam: a wri
 Test split: comments under two videos (LMFAO, Eminem) that no system was built or tuned on. Each system decides spam at its own cut-off; the test was pre-registered in `eval/preregistration.md` before any system was scored on it.
 
 <!-- report:results -->
-_Pending: the single test run (`results/final/test.json` is not there yet)._
+**Test: 885 scored comments from videos no system was trained on, 413 spam under the corrected labels.** Each system at its own spam cut-off; 95% intervals (Wilson; F1 by bootstrap).
+
+| System | Spam if | Precision | Recall | F1 | False-positive rate | Avg. precision | TP / FP / FN |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Keyword rules | ≥ 1 rule | 0.924 (0.896–0.946) | 0.978 (0.959–0.988) | 0.951 (0.935–0.965) | 0.070 (0.050–0.097) | 0.930 | 404 / 33 / 9 |
+| TF-IDF + logistic regression | p ≥ 0.5 | 0.934 (0.906–0.954) | 0.961 (0.938–0.976) | 0.947 (0.932–0.963) | 0.059 (0.041–0.084) | 0.966 | 397 / 28 / 16 |
+| Gradient boosting, readable features | p ≥ 0.5 | 0.912 (0.882–0.935) | 0.978 (0.959–0.988) | 0.944 (0.928–0.959) | 0.083 (0.061–0.111) | 0.969 | 404 / 39 / 9 |
+| LLM v1 (policy only) | ≥ 3 of 5 votes | 0.962 (0.940–0.977) | 0.993 (0.979–0.998) | 0.977 (0.966–0.987) | 0.034 (0.021–0.054) | 0.988 | 410 / 16 / 3 |
+| LLM v2 (+ 8 examples, normalisation) | ≥ 3 of 5 votes | 0.976 (0.956–0.987) | 0.985 (0.969–0.993) | 0.981 (0.970–0.989) | 0.021 (0.012–0.039) | 0.990 | 407 / 10 / 6 |
+
+**F1 on other label and comment sets** (secondary; same cut-offs).
+
+| System | Corrected labels (885) | Original labels (885) | Corrected, without share text (732) | Corrected, without the comments the policy quotes (881) |
+|---|---:|---:|---:|---:|
+| Keyword rules | 0.951 | 0.951 | 0.942 | 0.951 |
+| TF-IDF + logistic regression | 0.947 | 0.917 | 0.930 | 0.948 |
+| Gradient boosting, readable features | 0.944 | 0.943 | 0.932 | 0.945 |
+| LLM v1 (policy only) | 0.977 | 0.932 | 0.967 | 0.977 |
+| LLM v2 (+ 8 examples, normalisation) | 0.981 | 0.925 | 0.972 | 0.981 |
+
+**Hypotheses** (exact McNemar on paired predictions, Holm's adjustment across the two, α = 0.05). Discordant: comments only the first system got right / only the second.
+
+| Hypothesis | Systems | Discordant | p | Holm p | Reject H0 | F1 difference (95% CI) |
+|---|---:|---:|---:|---:|---:|---:|
+| H1 | LLM v2 (+ 8 examples, normalisation) vs LLM v1 (policy only) | 6 / 3 | 0.508 | 0.508 | no | +0.003 (-0.004 to +0.011) |
+| H2 | LLM v2 (+ 8 examples, normalisation) vs TF-IDF + logistic regression | 36 / 8 | 2.5e-05 | 5.1e-05 | yes | +0.033 (+0.018 to +0.049) |
+| H1 (original labels) | LLM v2 (+ 8 examples, normalisation) vs LLM v1 (policy only) | 2 / 7 | 0.180 | 0.359 | no | -0.006 (-0.014 to +0.000) |
+| H2 (original labels) | LLM v2 (+ 8 examples, normalisation) vs TF-IDF + logistic regression | 26 / 18 | 0.291 | 0.359 | no | +0.008 (-0.006 to +0.023) |
+
+**Enforcement tiers** (thresholds chosen on dev, corrected labels; `eval/thresholds.json`).
+
+| System | Auto-removed | Auto-removal precision | Spam auto-removed | Sent to review | Review per 1,000 comments | Spam removed or reviewed |
+|---|---:|---:|---:|---:|---:|---:|
+| Keyword rules | 106 | 0.981 (0.934–0.995) | 25.2% | 779 | 880 | 100.0% |
+| TF-IDF + logistic regression | 209 | 0.976 (0.945–0.990) | 49.4% | 341 | 385 | 99.0% |
+| Gradient boosting, readable features | 182 | 0.978 (0.945–0.991) | 43.1% | 345 | 390 | 98.5% |
+| LLM v1 (policy only) | 426 | 0.962 (0.940–0.977) | 99.3% | 0 | 0 | 99.3% |
+| LLM v2 (+ 8 examples, normalisation) | 417 | 0.976 (0.956–0.987) | 98.5% | 0 | 0 | 98.5% |
+
+**LLM running cost** at US$1.00 per million input and US$5.00 per million output tokens (Claude Haiku 4.5 on Amazon Bedrock, Standard tier, global cross-region inference; source: Anthropic model pricing list (Amazon Bedrock section), effective 31 Aug 2026, https://assets.claude.com/9e03129acc36d31970777d336f969bb53dc84355.pdf, read 2026-11-26). Five votes per comment; comments with the same text under one video share their votes.
+
+| System | Calls | Invalid | Input tokens per 1,000 comments | Output tokens per 1,000 | Model minutes per 1,000 | US$ per 1,000 |
+|---|---:|---:|---:|---:|---:|---:|
+| LLM v1 (policy only) | 3,720 | 0 | 15,923,420 | 414,208 | 73 | $17.99 |
+| LLM v2 (+ 8 examples, normalisation) | 3,720 | 0 | 18,652,511 | 412,537 | 75 | $20.72 |
 <!-- /report:results -->
 
 ## Red team

@@ -133,7 +133,7 @@ def render_results(split: str) -> str:
                          f"{NAMES[x['a']]} vs {NAMES[x['b']]}", f"{x['a_only_right']} / {x['b_only_right']}",
                          pval(x["p"]), pval(x["p_holm"]), "yes" if x["reject_at_alpha"] else "no",
                          f"{f['difference']:+.3f} ({f['lo']:+.3f} to {f['hi']:+.3f})"])
-    out.append(table(["Test", "Systems", "Discordant", "p", "Holm p", "Reject H0", "F1 difference (95% CI)"], rows))
+    out.append(table(["Hypothesis", "Systems", "Discordant", "p", "Holm p", "Reject H0", "F1 difference (95% CI)"], rows))
     out += ["", "**Enforcement tiers** (thresholds chosen on dev, corrected labels; `eval/thresholds.json`).", ""]
     rows = []
     for k, e in main["systems"].items():

@@ -68,8 +68,10 @@ def test_readme_data_table_matches_the_data():
         d = df[df.split == split]
         row = f"| {split.capitalize()} | "
         spam, ham = int(d.label.astype(int).sum()), int((d.label.astype(int) == 0).sum())
-        line = next(l for l in readme.splitlines() if l.startswith(row))
-        assert line.endswith(f"| {len(d):,} | {spam:,} | {ham:,} |")
+        # the data table's row for this split: its last three cells are counts
+        lines = [l for l in readme.splitlines() if l.startswith(row) and l.rsplit("|", 4)[1].strip().replace(",", "").isdigit()]
+        assert len(lines) == 1, lines
+        assert lines[0].endswith(f"| {len(d):,} | {spam:,} | {ham:,} |")
 
 
 def test_price_is_stated_with_its_source():

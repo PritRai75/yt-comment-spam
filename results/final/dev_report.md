@@ -26,7 +26,7 @@ Written by `python -m eval.report --split dev` from the result files; the README
 
 **Hypotheses** (exact McNemar on paired predictions, Holm's adjustment across the two, α = 0.05). Discordant: comments only the first system got right / only the second.
 
-| Test | Systems | Discordant | p | Holm p | Reject H0 | F1 difference (95% CI) |
+| Hypothesis | Systems | Discordant | p | Holm p | Reject H0 | F1 difference (95% CI) |
 |---|---:|---:|---:|---:|---:|---:|
 | H1 | LLM v2 (+ 8 examples, normalisation) vs LLM v1 (policy only) | 1 / 0 | 1.000 | 1.000 | no | +0.003 (+0.000 to +0.011) |
 | H2 | LLM v2 (+ 8 examples, normalisation) vs TF-IDF + logistic regression | 28 / 0 | 7.5e-09 | 1.5e-08 | yes | +0.094 (+0.062 to +0.131) |
