@@ -52,7 +52,7 @@ Written by `python -m eval.report --split dev` from the result files; the README
 
 ## Red team
 
-**Dev: 98 spam comments that every attacked system caught** (drawn with seed 20261125 from 98 distinct texts; Keyword rules, TF-IDF + logistic regression, Gradient boosting, readable features). Evaded = scored below the system's own cut-off. Cells: evaded / variants, as is → with normalisation in front.
+**Dev: 98 spam comments that every attacked system caught** (drawn with seed 20261125 from 98 distinct texts; attacked: Keyword rules; TF-IDF + logistic regression; Gradient boosting, readable features). Evaded = scored below the system's own cut-off. Cells: evaded / variants, as is → with normalisation in front.
 
 | Transform | Keyword rules | TF-IDF + logistic regression | Gradient boosting, readable features |
 |---|---:|---:|---:|

@@ -169,7 +169,7 @@ def render_redteam(split: str) -> str:
     pool = r["pool"]
     out = [f"**{split.capitalize()}: {r['sampled']} spam comments that every attacked system caught** "
            f"(drawn with seed {r['seed']} from {pool['distinct_texts']} distinct texts; "
-           f"{', '.join(NAMES[k] for k in r['systems'])}). Evaded = scored below the system's own cut-off. "
+           f"attacked: {'; '.join(NAMES[k] for k in r['systems'])}). Evaded = scored below the system's own cut-off. "
            "Cells: evaded / variants, as is → with normalisation in front.", ""]
     systems = r["systems"]
 
