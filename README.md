@@ -17,7 +17,7 @@ Test split: comments under two videos (LMFAO, Eminem) that no system was built o
 | TF-IDF + logistic regression | p ≥ 0.5 | 0.934 (0.906–0.954) | 0.961 (0.938–0.976) | 0.947 (0.932–0.963) | 0.059 (0.041–0.084) | 0.966 | 397 / 28 / 16 |
 | Gradient boosting, readable features | p ≥ 0.5 | 0.912 (0.882–0.935) | 0.978 (0.959–0.988) | 0.944 (0.928–0.959) | 0.083 (0.061–0.111) | 0.969 | 404 / 39 / 9 |
 | LLM v1 (policy only) | ≥ 3 of 5 votes | 0.962 (0.940–0.977) | 0.993 (0.979–0.998) | 0.977 (0.966–0.987) | 0.034 (0.021–0.054) | 0.988 | 410 / 16 / 3 |
-| LLM v2 (+ 8 examples, normalisation) | ≥ 3 of 5 votes | 0.976 (0.956–0.987) | 0.985 (0.969–0.993) | 0.981 (0.970–0.989) | 0.021 (0.012–0.039) | 0.990 | 407 / 10 / 6 |
+| LLM v2 (+ 8 examples, normalisation) | ≥ 3 of 5 votes | 0.976 (0.956–0.987) | 0.985 (0.969–0.993) | 0.991 (0.970–0.989) | 0.021 (0.012–0.039) | 0.990 | 407 / 10 / 6 |
 
 **F1 on other label and comment sets** (secondary; same cut-offs).
 
