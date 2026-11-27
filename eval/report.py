@@ -1,13 +1,16 @@
 """The README's numbers, written from the result files so every one can be traced.
 
-Three blocks, each rendered from files in the repo and nothing else:
+Four blocks, each rendered from files in the repo and nothing else:
 
   results  results/final/<split>.json (the pre-registered analysis): each system at its
            own cut-off on corrected labels with intervals; F1 on original labels and on
            the two sensitivity sets; H1 and H2; the enforcement tiers; LLM running cost,
            priced at PRICE.
   redteam  results/adversarial/<split>.json: evasion per transform and system, as is
-           and with normalisation in front.
+           and with normalisation in front; LLM v2's red-team calls and their cost.
+  example  one real comment as every system classified it, chosen by a fixed rule
+           (EXAMPLE_RULE) from results/final/<split>_predictions.csv, with the audit's
+           reason and each LLM's first stated reason from its vote cache.
   audit    the label audit record (audit/*.csv through eval/labels.py): corrections,
            the test spam the review judged not spam, the blind re-check.
 
@@ -35,7 +38,7 @@ from eval.metrics import cost_per_1000, wilson
 README = ROOT / "README.md"
 FINAL = ROOT / "results" / "final"
 ADVERSARIAL = ROOT / "results" / "adversarial"
-BLOCKS = ["results", "redteam", "audit"]
+BLOCKS = ["results", "example", "redteam", "audit"]
 
 NAMES = {
     "rules": "Keyword rules",
@@ -86,8 +89,9 @@ def pval(p: float) -> str:
     return f"{p:.3f}" if p >= 0.001 else f"{p:.1e}"
 
 
-def table(header: list, rows: list) -> str:
-    align = ["---"] + ["---:"] * (len(header) - 1)
+def table(header: list, rows: list, left: int = 1) -> str:
+    """Markdown table: the first `left` columns left-aligned, the rest right-aligned (numbers)."""
+    align = ["---"] * left + ["---:"] * (len(header) - left)
     lines = ["| " + " | ".join(header) + " |", "|" + "|".join(align) + "|"]
     lines += ["| " + " | ".join(str(c) for c in r) + " |" for r in rows]
     return "\n".join(lines)
@@ -196,6 +200,69 @@ def render_redteam(split: str) -> str:
                 a = b["all_transforms"]
                 pooled.append(f"{NAMES[k]} {cond.replace('_', ' ')} {pct(a['rate'])} ({pct(a['lo'])}–{pct(a['hi'])})")
     out += ["", "Pooled evasion with a bootstrap 95% interval over comments: " + "; ".join(pooled) + "."]
+    u = r.get("llm_usage")
+    if u:
+        cost = (u["input_tokens"] * PRICE["usd_per_mtok_input"] + u["output_tokens"] * PRICE["usd_per_mtok_output"]) / 1e6
+        out += ["", f"LLM v2's red-team votes: {num(u['calls'])} new calls, {num(u['invalid'])} invalid (another "
+                    f"{num(u['reused_from_run'])} reused from the test run), {num(u['input_tokens'])} input and "
+                    f"{num(u['output_tokens'])} output tokens: US${cost:.2f} at the price above."]
+    return "\n".join(out)
+
+
+EXAMPLE_RULE = ("the first {split} comment, in data order, whose label the audit corrected and on which the "
+                "keyword rules and LLM v2 disagree, leaving out the comments the policy quotes")
+LABEL = {0: "ham", 1: "spam"}
+
+
+def pick_example(preds: pd.DataFrame, quoted) -> pd.Series:
+    """The row EXAMPLE_RULE names, or None. `preds` is in data order, as eval/final.py writes it."""
+    hit = preds[(preds.label_original != preds.label_corrected) & (preds.rules_pred != preds.llm_v2_pred)
+                & ~preds.row_id.isin(list(quoted))]
+    return None if hit.empty else hit.iloc[0]
+
+
+def _llm_votes(version: str, video: str, content: str, split: str) -> list:
+    from models import llm
+    prompt = llm.load_prompt(version)
+    config = llm.make_config(prompt)
+    cache = llm.Cache(llm.run_dir(config) / llm.cache_name(split))
+    text = prompt.text(content)
+    return [cache.records[llm.call_key(config, video, text, v)] for v in range(llm.N_VOTES)]
+
+
+def render_example(split: str) -> str:
+    path = FINAL / f"{split}_predictions.csv"
+    if not path.exists():
+        return pending("the single test run" if split == "test" else f"the {split} analysis", path)
+    from data.clean import clean_text
+    from data.load import load_comments
+    from eval.final import QUOTED
+    rule = EXAMPLE_RULE.format(split=split)
+    row = pick_example(pd.read_csv(path, keep_default_na=False), QUOTED[split])
+    if row is None:
+        return f"_No {split} comment meets the rule ({rule})._"
+    com = load_comments().set_index("row_id").loc[row.row_id]
+    corr = read("corrections.csv").set_index("row_id").loc[row.row_id]
+    out = [f"Chosen by a fixed rule: {rule}. `{row.row_id}`, as every system received it after cleaning:", "",
+           "```", clean_text(com.content), "```", "",
+           f"Dataset label **{LABEL[int(row.label_original)]}**; corrected label **{LABEL[int(row.label_corrected)]}** "
+           f"(audit reason: {corr.reason}).", ""]
+    rows = []
+    for k in NAMES:
+        score, pred = float(row[f"{k}_score"]), int(row[f"{k}_pred"])
+        said = ""
+        if k == "rules":
+            from models.rules import rule_hits
+            shown = f"{int(score)} rule famil{'y' if int(score) == 1 else 'ies'} ({', '.join(rule_hits(com.content))})"
+        elif k in ("logreg", "tree"):
+            shown = f"p = {score:.3f}" if score >= 0.001 else "p < 0.001"
+        else:
+            votes = _llm_votes(k.split("_")[1], com.video, com.content, split)
+            spam = sum(v["valid"] and v["label"] == "spam" for v in votes)
+            shown = f"{spam} of {len(votes)} votes spam"
+            said = f"\"{votes[0]['reason']}\""
+        rows.append([NAMES[k], CUTOFF_TEXT[k], shown, f"**{LABEL[pred]}**", said])
+    out.append(table(["System", "Spam if", "Score", "Decision", "First vote's stated reason"], rows, left=5))
     return "\n".join(out)
 
 
@@ -220,8 +287,10 @@ def render_audit() -> str:
            f"- Ham comments reviewed (100 drawn from each of dev and test): {int((ham.label_corrected == 1).sum())} "
            f"of {len(ham)} judged spam.",
            f"- Blind re-check of {len(rc)} audit flags two days later: {int(same.sum())} of {len(rc)} gave the same "
-           f"label as the first review; of the other {len(rc) - int(same.sum())}, {int(unsure_first)} had been "
-           "answered unsure the first time. One labeller, so this is consistency, not agreement between raters."]
+           f"label as the first review; " + (f"the other {len(rc) - int(same.sum())} had all been answered unsure "
+           "the first time" if int(unsure_first) == len(rc) - int(same.sum()) else
+           f"of the other {len(rc) - int(same.sum())}, {int(unsure_first)} had been answered unsure the first time")
+           + ". One labeller, so this is consistency, not agreement between raters."]
     return "\n".join(out)
 
 
@@ -232,11 +301,14 @@ def render(name: str, split: str) -> str:
         return render_redteam(split)
     if name == "audit":
         return render_audit()
+    if name == "example":
+        return render_example(split)
     raise ValueError(name)
 
 
 def report(split: str) -> str:
-    titles = {"results": "Results", "redteam": "Red team", "audit": "Label audit"}
+    titles = {"results": "Results", "example": "One comment, as each system classified it", "redteam": "Red team",
+              "audit": "Label audit"}
     parts = [f"# Report rehearsal on {split}\n\nWritten by `python -m eval.report --split {split}` "
              "from the result files; the README's blocks are rendered the same way from the test files.\n"]
     for b in BLOCKS:

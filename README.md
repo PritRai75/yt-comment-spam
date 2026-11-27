@@ -2,7 +2,7 @@
 
 A small, complete enforcement-detection workflow for YouTube comment spam: a written spam policy, an audit of the dataset's labels against it, five classifiers (keyword rules, TF-IDF + logistic regression, gradient boosting on readable features, and two versions of an LLM prompt), a three-tier enforcement rule (auto-remove, human review, allow), a pre-registered test of the LLM against itself and a baseline, and a red team of six evasion techniques.
 
-**Status:** the single test run and the red team are complete (26–27 Nov 2026). Every number in the Results, Red team and Label audit sections is written into this file by `python -m eval.report --readme` from the result files, and a test fails if they ever differ.
+**Status:** the single test run and the red team are complete (26–27 Nov 2026). Every number in the Results, Red team and Label audit sections, and the example comment, is written into this file by `python -m eval.report --readme` from the result files, and a test fails if they ever differ.
 
 ## Results
 
@@ -58,11 +58,31 @@ Test split: comments under two videos (LMFAO, Eminem) that no system was built o
 
 ### What the test shows
 
-- **H1 is not supported.** LLM v2 and LLM v1 disagree on 9 of 885 comments (6 go v2's way, 3 v1's; p = 0.51). The 8 examples and the normalisation did not measurably change the error rate on ordinary test comments: F1 0.981 against 0.977, a difference of +0.003 (−0.004 to +0.011).
+- **H1 is not supported.** LLM v2 and LLM v1 disagree on 9 of 885 comments (6 go v2's way, 3 v1's; p = 0.51). The 8 examples and the normalisation did not measurably change the error rate on ordinary test comments: F1 0.981 against 0.977, a difference of +0.003 (-0.004 to +0.011).
 - **H2 is supported on the corrected labels.** LLM v2 makes 16 errors where logistic regression makes 44; they disagree on 44 comments, 36 of them in v2's favour (Holm p = 5.1e-05), and F1 is higher by 0.033 (0.018 to 0.049). The result also holds without the share-text family and without the comments the policy quotes.
 - **On the original labels, neither hypothesis holds**, and the keyword rules have the highest F1 (0.951 against v2's 0.925). The difference between the two label sets is mostly the 68 test comments the audit moved from spam to ham: the rules flag 32 of them, LLM v2 9. The LLM reads the same policy that corrected those labels (see Limitations).
 - **The dev thresholds did not hold 98% auto-removal precision on test for the LLMs:** LLM v2 0.976 (0.956–0.987), LLM v1 0.962 (0.940–0.977). LLM v2 auto-removes 407 of the 413 spam comments and 10 ham comments. The keyword rules reach 0.981 but auto-remove only a quarter of the spam.
 - LLM v2's F1 fell from 0.997 on dev (370 comments, one video) to 0.981 on test.
+
+### One comment, as each system classified it
+
+<!-- report:example -->
+Chosen by a fixed rule: the first test comment, in data order, whose label the audit corrected and on which the keyword rules and LLM v2 disagree, leaving out the comments the policy quotes. `LMFAO:109`, as every system received it after cleaning:
+
+```
+I'm A SUBSCRIBER
+```
+
+Dataset label **spam**; corrected label **ham** (audit reason: statement, not a request (EC9)).
+
+| System | Spam if | Score | Decision | First vote's stated reason |
+|---|---|---|---|---|
+| Keyword rules | ≥ 1 rule | 1 rule family (subscribe) | **spam** |  |
+| TF-IDF + logistic regression | p ≥ 0.5 | p = 0.361 | **ham** |  |
+| Gradient boosting, readable features | p ≥ 0.5 | p = 0.355 | **ham** |  |
+| LLM v1 (policy only) | ≥ 3 of 5 votes | 0 of 5 votes spam | **ham** | "Very short comment expressing viewer status; asks for nothing." |
+| LLM v2 (+ 8 examples, normalisation) | ≥ 3 of 5 votes | 0 of 5 votes spam | **ham** | "Very short comment stating a fact; no request or promotion." |
+<!-- /report:example -->
 
 ## Red team
 
@@ -82,6 +102,8 @@ Test split: comments under two videos (LMFAO, Eminem) that no system was built o
 | **All six** | 256/509 (50%) → 86/509 (17%) | 287/509 (56%) → 114/509 (22%) | 260/509 (51%) → 93/509 (18%) | 9/509 (2%), normalised by the system |
 
 Pooled evasion with a bootstrap 95% interval over comments: Keyword rules as is 50.3% (45.8%–54.6%); Keyword rules normalised 16.9% (15.2%–18.5%); TF-IDF + logistic regression as is 56.4% (50.4%–62.1%); TF-IDF + logistic regression normalised 22.4% (18.0%–26.5%); Gradient boosting, readable features as is 51.1% (46.3%–55.7%); Gradient boosting, readable features normalised 18.3% (16.1%–20.5%); LLM v2 (+ 8 examples, normalisation) normalised 1.8% (0.8%–2.9%).
+
+LLM v2's red-team votes: 1,840 new calls, 0 invalid (another 500 reused from the test run), 8,253,705 input and 188,004 output tokens: US$9.19 at the price above.
 <!-- /report:redteam -->
 
 Normalisation removes most of what look-alike letters, zero-width characters and broken-up links do to the baselines; leetspeak still gets past the rules and the tree (84 of 98), and the benign wrapper gets past logistic regression (62 of 100). LLM v2 missed 9 of 509 variants, 8 of them benign wrappers; the injection note changed none of its decisions.
@@ -90,7 +112,7 @@ A rehearsal on dev (baselines only) is in `results/final/dev_report.md`.
 
 ## Data
 
-[YouTube Spam Collection](https://archive.ics.uci.edu/dataset/380/) from the UCI Machine Learning Repository: 1,956 real comments from five music videos, collected in 2015, each labelled spam or ham.
+[YouTube Spam Collection](https://archive.ics.uci.edu/dataset/380/) from the UCI Machine Learning Repository: 1,956 real comments from five music videos, posted between July 2013 and June 2015 (the dates the dataset gives; 245 comments have none), each labelled spam or ham. The dataset was published in 2015 and added to UCI in 2017.
 
 | Split | Videos | Comments | Spam | Ham |
 |---|---|---:|---:|---:|
@@ -120,7 +142,7 @@ The zip is stored as downloaded in `data/raw/`, with its size and SHA-256 (and t
 
 - Test comments labelled spam that the review judged not spam under the policy: 68 of 481 (14.1%, 95% CI 11.3%–17.5%). Every dev and test spam comment was reviewed.
 - Ham comments reviewed (100 drawn from each of dev and test): 1 of 200 judged spam.
-- Blind re-check of 20 audit flags two days later: 16 of 20 gave the same label as the first review; of the other 4, 4 had been answered unsure the first time. One labeller, so this is consistency, not agreement between raters.
+- Blind re-check of 20 audit flags two days later: 16 of 20 gave the same label as the first review; the other 4 had all been answered unsure the first time. One labeller, so this is consistency, not agreement between raters.
 <!-- /report:audit -->
 
 Results are reported on both label sets: the **corrected labels** are primary (fixed before any test score), and the **original labels** are always shown beside them.
@@ -157,7 +179,7 @@ Each system gets two thresholds, chosen on dev with the corrected labels (`eval/
 
 ## Limitations, and what not to claim
 
-- **Small and old data.** Five music videos from 2015, in English. Today's comment spam looks different; nothing here measures it.
+- **Small and old data.** Five music videos, comments from 2013–2015, in English. Today's comment spam looks different; nothing here measures it.
 - **One person wrote the policy, corrected the labels and checked the prompt examples.** The corrected labels may therefore favour the LLMs, which read the same policy; the original labels are shown beside them for that reason. The blind re-check measures one labeller's consistency, not agreement between labellers.
 - **Possible training-data contamination.** The dataset has been public since 2017 and may be in the model's training data. The red-team variants are new text, which gives a cleaner check.
 - **The audit touched test.** The rules and logistic regression were run on test to find flags, and flags led to corrections, which can favour those two baselines on the corrected labels; every test comment labelled spam was reviewed whatever the flags said. The policy quotes 4 test comments, hence the result without them.
@@ -175,14 +197,18 @@ pip install -r requirements.txt
 pytest -q
 ```
 
-The tests check the pinned data, rebuild the audit files, refit the baselines, read the committed LLM caches back and rerun the analysis on dev. Reading results needs no cloud account:
+The tests check the pinned data, rebuild the audit files, refit the baselines, read the committed LLM caches back, and recompute the committed dev and test results, the red team and this README's numbers. Reading results needs no cloud account:
 
 ```
 python -m eval.final --split dev --check
 python -m eval.final --split test --final --check
 python -m adversarial.redteam analyse --split dev --no-llm --check
+python -m adversarial.redteam analyse --split test --check
+python -m sql.check --require-bigquery
 python -m eval.report --readme --check
 ```
+
+`sql.check` runs the two queries in `sql/` in SQLite and compares them with the Python results and with the BigQuery exports in `results/sql/` (run in BigQuery on 26–27 Nov 2026); all three agree.
 
 New LLM calls need AWS credentials with Bedrock access (`python -m models.llm run --split dev --limit 5`; `--fake` runs offline).
 

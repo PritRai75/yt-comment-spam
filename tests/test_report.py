@@ -48,12 +48,13 @@ def test_missing_files_render_as_pending(monkeypatch, tmp_path):
     monkeypatch.setattr(report, "ROOT", tmp_path.parent)
     assert report.render_results("test").startswith("_Pending: the single test run")
     assert report.render_redteam("test").startswith("_Pending: the red-team run")
+    assert report.render_example("test").startswith("_Pending: the single test run")
 
 
 def test_fill_replaces_each_block_once():
     text = "a\n" + "".join(f"<!-- report:{b} -->\nOLD-BODY\n<!-- /report:{b} -->\n" for b in report.BLOCKS)
     out = report.fill(text, split="dev")
-    assert "OLD-BODY" not in out and out.count("<!-- report:") == 3
+    assert "OLD-BODY" not in out and out.count("<!-- report:") == len(report.BLOCKS)
     assert report.fill(out, split="dev") == out
     with pytest.raises(ValueError):
         report.fill("no blocks here")
@@ -77,3 +78,33 @@ def test_readme_data_table_matches_the_data():
 def test_price_is_stated_with_its_source():
     assert report.PRICE["usd_per_mtok_input"] == 1.00 and report.PRICE["usd_per_mtok_output"] == 5.00
     assert report.PRICE["source"].startswith("Anthropic model pricing list") and report.PRICE["read_on"]
+
+
+# The example comment: chosen by a fixed rule, and its numbers come from the result files
+
+def test_pick_example_takes_the_first_row_the_rule_names():
+    import pandas as pd
+    p = pd.DataFrame({"row_id": ["a", "b", "c", "d"], "label_original": [1, 1, 1, 0],
+                      "label_corrected": [1, 0, 0, 1], "rules_pred": [1, 1, 1, 0], "llm_v2_pred": [0, 1, 0, 1]})
+    assert report.pick_example(p, []).row_id == "c"   # a: label not corrected; b: the two agree
+    assert report.pick_example(p, ["c"]).row_id == "d"
+    assert report.pick_example(p, ["c", "d"]) is None
+
+
+@pytest.mark.parametrize("split", ["dev", "test"])
+def test_example_matches_the_predictions_and_the_audit(split):
+    import pandas as pd
+    from eval.final import QUOTED
+    p = pd.read_csv(report.FINAL / f"{split}_predictions.csv", keep_default_na=False)
+    row = report.pick_example(p, QUOTED[split])
+    earlier = p.iloc[:int(p.index[p.row_id == row.row_id][0])]
+    assert report.pick_example(earlier, QUOTED[split]) is None  # nothing earlier meets the rule
+    assert row.label_original != row.label_corrected and row.rules_pred != row.llm_v2_pred
+    assert row.row_id not in QUOTED[split]
+    block = report.render_example(split)
+    assert f"`{row.row_id}`" in block
+    reason = report.read("corrections.csv").set_index("row_id").loc[row.row_id, "reason"]
+    assert f"(audit reason: {reason})" in block
+    for k in report.NAMES:
+        line = next(l for l in block.splitlines() if l.startswith(f"| {report.NAMES[k]} |"))
+        assert f"| **{report.LABEL[int(row[k + '_pred'])]}** |" in line

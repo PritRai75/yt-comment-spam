@@ -50,6 +50,26 @@ Written by `python -m eval.report --split dev` from the result files; the README
 | LLM v1 (policy only) | 1,620 | 0 | 16,576,189 | 430,819 | 79 | $18.73 |
 | LLM v2 (+ 8 examples, normalisation) | 1,620 | 0 | 19,421,230 | 428,835 | 77 | $21.57 |
 
+## One comment, as each system classified it
+
+Chosen by a fixed rule: the first dev comment, in data order, whose label the audit corrected and on which the keyword rules and LLM v2 disagree, leaving out the comments the policy quotes. `Shakira:132`, as every system received it after cleaning:
+
+```
+Help shakira's waka waka be the first song by a female artist to reach 1 billion views.
+(dark horse is ahead by roughly 100 million more views, and roar has only 50 million more views)
+https://www.youtube.com/watch?v=pRpeEdMmmQ0
+```
+
+Dataset label **spam**; corrected label **ham** (audit reason: EC1/EC8: links this video; view campaign for this artist (P1)).
+
+| System | Spam if | Score | Decision | First vote's stated reason |
+|---|---|---|---|---|
+| Keyword rules | ≥ 1 rule | 1 rule family (link) | **spam** |  |
+| TF-IDF + logistic regression | p ≥ 0.5 | p = 0.332 | **ham** |  |
+| Gradient boosting, readable features | p ≥ 0.5 | p = 1.000 | **spam** |  |
+| LLM v1 (policy only) | ≥ 3 of 5 votes | 0 of 5 votes spam | **ham** | "Fan activity for this artist: view campaign with no request for personal benefit." |
+| LLM v2 (+ 8 examples, normalisation) | ≥ 3 of 5 votes | 0 of 5 votes spam | **ham** | "Fan activity for this video's artist with no request for commenter benefit." |
+
 ## Red team
 
 **Dev: 98 spam comments that every attacked system caught** (drawn with seed 20261125 from 98 distinct texts; attacked: Keyword rules; TF-IDF + logistic regression; Gradient boosting, readable features). Evaded = scored below the system's own cut-off. Cells: evaded / variants, as is → with normalisation in front.
@@ -79,4 +99,4 @@ Pooled evasion with a bootstrap 95% interval over comments: Keyword rules as is 
 
 - Test comments labelled spam that the review judged not spam under the policy: 68 of 481 (14.1%, 95% CI 11.3%–17.5%). Every dev and test spam comment was reviewed.
 - Ham comments reviewed (100 drawn from each of dev and test): 1 of 200 judged spam.
-- Blind re-check of 20 audit flags two days later: 16 of 20 gave the same label as the first review; of the other 4, 4 had been answered unsure the first time. One labeller, so this is consistency, not agreement between raters.
+- Blind re-check of 20 audit flags two days later: 16 of 20 gave the same label as the first review; the other 4 had all been answered unsure the first time. One labeller, so this is consistency, not agreement between raters.
